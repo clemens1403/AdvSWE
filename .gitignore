@@ -1,2 +1,5 @@
-/processing-4.1.2/*
-/Project//ChessOfDuty/.vscode/*
+
+*.class
+*.json
+Project/ChessOfDuty/out/*
+Project/ChessOfDuty/.vscode/tasks.json
