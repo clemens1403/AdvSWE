@@ -1,18 +1,13 @@
-ArrayList<Feld> felder;
+Schachspiel schachspiel;
 GUI gui;
 
 void setup(){
-  size(800,800);
+  size(1200,1200);
   background(0);
-  felder = new ArrayList<Feld>();
-  for(int i = 1; i <= 8; i++){
-    for(int j = 1; j<= 8; j++){
-      felder.add(new Feld(i,j));
-    }
-  }
+  
 
-
-  gui = new GUI(felder);
+  schachspiel = new Schachspiel();
+  gui = new GUI(schachspiel);
 }
 
 void draw(){
@@ -30,6 +25,8 @@ void mousePressed(){
         if(k.checkMausPosition()){
           switch(k.getId()){
             case "Spielen":
+              schachspiel = new Schachspiel();
+              gui.setSchachspiel(schachspiel);
               gui.setStatus("Spiel");
             default:
               break;
