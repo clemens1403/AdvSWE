@@ -1,4 +1,5 @@
 ArrayList<Feld> felder;
+GUI gui;
 
 void setup(){
   size(800,800);
@@ -9,12 +10,12 @@ void setup(){
       felder.add(new Feld(i,j));
     }
   }
+
+
+  gui = new GUI(felder);
 }
 
 void draw(){
-  //fill(123, 231, 0);
-  //ellipse(mouseX,mouseY,5,5);  
-  for(int i = 0; i< felder.size(); i++){
-    felder.get(i).show();
-  }
+  gui.render();
+  
 }
