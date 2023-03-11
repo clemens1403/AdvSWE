@@ -1,9 +1,11 @@
 public class Feld {
+    
     private int zeile;
     private int spalte;
     private int farbe;
     private String name;
     private int groesse;
+    
     public Feld(int zeile, int spalte){
         this.zeile = zeile; 
         this.spalte = spalte;
@@ -21,5 +23,13 @@ public class Feld {
         fill(255 * farbe);
         rect((zeile-1)*groesse, (spalte-1)*groesse, groesse, groesse);
         pop();
+    }
+
+    public int getZeile(){
+        return this.zeile;
+    }
+
+    public int getSpalte(){
+        return this.spalte;
     }
 }

@@ -1,6 +1,8 @@
 public class Laeufer extends Figur{
-    public Laeufer(int farbe, Feld startPosition, Bewegungsmuster muster){
-        super(farbe, startPosition, muster);
+    public Laeufer(int farbe, Feld startPosition){
+        
+        super(farbe, startPosition);
+        
         this.setName("Läufer");
         this.setAbkuerzung("L");
         this.setWert(3);

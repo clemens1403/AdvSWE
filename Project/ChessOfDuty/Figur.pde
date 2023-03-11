@@ -4,15 +4,16 @@ public abstract class Figur{
     private String abkuerzung;
     private int wert;
     private int farbe;
-    private Feld aktuellePosition;
-    private Bewegungsmuster bewegungsmuster;
     private Boolean imSpiel;
 
-    public Figur(int farbe, Feld startPosition, Bewegungsmuster muster){
+    private Feld aktuellePosition;
+    private int[][] moeglicheZuege;
+
+
+    public Figur(int farbe, Feld startPosition){
         
         this.farbe = farbe;
         this.aktuellePosition = startPosition;
-        this.bewegungsmuster = muster;
     }
 
     public boolean istZugAusserhalbVomFeld(){
@@ -42,9 +43,13 @@ public abstract class Figur{
 
     }
 
-    /*public Position getAktuellePosition(){
+    public void pruefeMoeglicheZuege(){
+        
+    }
+
+    public Feld getAktuellePosition(){
         return this.aktuellePosition;
-    }*/
+    }
 
     public void setNeuePosition(Feld feld){
         //Hier müssen definitiv noch einige Fehler abgefangen werden
@@ -73,6 +78,10 @@ public abstract class Figur{
 
     public String getAbkuerzung(){
         return abkuerzung;
+    }
+
+    public int getFarbe(){
+        return this.farbe;
     }
 
 }

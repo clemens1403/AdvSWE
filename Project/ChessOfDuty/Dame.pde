@@ -1,6 +1,8 @@
 public class Dame extends Figur{
-    public Dame(int farbe, Feld startPosition, Bewegungsmuster muster){
-        super(farbe, startPosition, muster);
+    public Dame(int farbe, Feld startPosition){
+        
+        super(farbe, startPosition);
+        
         this.setName("Dame");
         this.setAbkuerzung("D");
         this.setWert(9);
