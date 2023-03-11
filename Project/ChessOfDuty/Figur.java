@@ -1,4 +1,4 @@
-public class Figur{
+public abstract class Figur{
     public Figur(){
 
     }
