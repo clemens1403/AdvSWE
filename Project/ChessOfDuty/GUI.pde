@@ -56,7 +56,7 @@ public class Knopf{
     private color hoverFarbe;
     private color textFarbe;
     private int textGroesse;
-    private boolean hover = false;
+    
     public Knopf(int x, int y, int breite, int hoehe, String text, color hintergrund, color hoverFarbe, color textFarbe, int textGroesse){
         this.x = x;
         this.y = y;
@@ -68,9 +68,10 @@ public class Knopf{
         this.textFarbe = textFarbe;
         this.textGroesse = textGroesse;
     }
+    
     public void render(){
         push();
-        if(hover){
+        if(checkMausPosition()){
             fill(hoverFarbe);
         }else{
             fill(hintergrund);
@@ -82,5 +83,14 @@ public class Knopf{
         textSize(textGroesse);
         text(text, x, y);
         pop();
+    }
+
+    public boolean checkMausPosition(){
+        if(mouseX > x - (breite/2) && mouseX < x + (breite/2)){
+            if(mouseY > y - (hoehe/2) && mouseY < y + (hoehe/2)){
+                return true;
+            }
+        }
+        return false;
     }
 }
