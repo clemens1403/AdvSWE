@@ -21,6 +21,7 @@ public abstract class Figur{
     }
 
     public boolean istZugGueltig(String newPosition) {
+        return true;
         // Implementierung der Überprüfung, ob der Zug der Dame gültig ist
         // Zum Beispiel wenn eine Figur bewegt werden soll und dadurch der eigene König ins Schach gerät
     }
@@ -41,13 +42,37 @@ public abstract class Figur{
 
     }
 
-    public Position getAktuellePosition(){
+    /*public Position getAktuellePosition(){
         return this.aktuellePosition;
-    }
+    }*/
 
     public void setNeuePosition(Feld feld){
         //Hier müssen definitiv noch einige Fehler abgefangen werden
         this.aktuellePosition = feld;
+    }
+
+    public void setName(String name){
+        this.name = name;
+    }
+
+    public String getName(){
+        return name;
+    }
+
+    public void setWert(int wert){
+        this.wert = wert;
+    }
+
+    public int getWert(){
+        return wert;
+    }
+
+    public void setAbkuerzung(String abkuerzung){
+        this.abkuerzung = abkuerzung;
+    }
+
+    public String getAbkuerzung(){
+        return abkuerzung;
     }
 
 }

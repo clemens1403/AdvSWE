@@ -2,10 +2,10 @@ public class Bauer extends Figur{
 
     private boolean doppelschrittMoeglich = true;
 
-    public Bauer(){
-        
-        this.name = "Bauer";
-        this.wert = 1;
+    public Bauer(int farbe, Feld startPosition, Bewegungsmuster muster){
+        super(farbe, startPosition, muster);
+        this.setName("Bauer");
+        this.setWert(1);
 
     }
 

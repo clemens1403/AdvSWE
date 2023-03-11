@@ -1,9 +1,9 @@
 public class Turm extends Figur{
-    public Turm(){
-
-        this.name = "Turm";
-        this.abkuerzung = "T";
-        this.wert = 5;
+    public Turm(int farbe, Feld startPosition, Bewegungsmuster muster){
+        super(farbe, startPosition, muster);
+        this.setName("Turm");
+        this.setAbkuerzung("T");
+        this.setWert(5);
         
     }
 

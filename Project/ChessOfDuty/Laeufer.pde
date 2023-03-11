@@ -1,9 +1,9 @@
 public class Laeufer extends Figur{
-    public Laeufer(){
-
-        this.name = "Läufer";
-        this.abkuerzung = "L";
-        this.wert = 3;
+    public Laeufer(int farbe, Feld startPosition, Bewegungsmuster muster){
+        super(farbe, startPosition, muster);
+        this.setName("Läufer");
+        this.setAbkuerzung("L");
+        this.setWert(3);
 
     }
 
