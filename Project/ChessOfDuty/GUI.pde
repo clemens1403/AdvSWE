@@ -1,12 +1,15 @@
 public class GUI {
     private String status;
-    private Knopf startKnopf = new Knopf(width/2, height/2, 300, 150, "Spielen", color(200), color(230), color(0), 30);
+    private ArrayList<Knopf> startKnoepfe = new ArrayList<Knopf>();
     private ArrayList<Feld> felder;
 
     public GUI(ArrayList<Feld> felder){
         status = "Start";
 
         this.felder = felder;
+
+        Knopf spielKnopf = new Knopf("Spielen", width/2, height/2, 300, 150, "Spielen", color(200), color(230), color(0), 30);
+        startKnoepfe.add(spielKnopf);
     }
 
     public void render(){
@@ -34,19 +37,34 @@ public class GUI {
         text("Chess Of Duty", 100, 100);
         pop();
 
-        startKnopf.render();
+        for(Knopf k : startKnoepfe){
+            k.render();
+        }
         
     }
 
     public void renderSpiel(){
-        for(int i = 0; i< felder.size(); i++){
-            felder.get(i).show();
+        for(Feld f : felder){
+            f.show();
         }
+    }
+
+    public String getStatus(){
+        return status;
+    }
+
+    public void setStatus(String status){
+        this.status = status;
+    }
+
+    public ArrayList<Knopf> getStartKnoepfe(){
+        return startKnoepfe;
     }
 
 }
 
 public class Knopf{
+    private String id;
     private int x;
     private int y;
     private int breite;
@@ -57,7 +75,8 @@ public class Knopf{
     private color textFarbe;
     private int textGroesse;
     
-    public Knopf(int x, int y, int breite, int hoehe, String text, color hintergrund, color hoverFarbe, color textFarbe, int textGroesse){
+    public Knopf(String id, int x, int y, int breite, int hoehe, String text, color hintergrund, color hoverFarbe, color textFarbe, int textGroesse){
+        this.id = id;
         this.x = x;
         this.y = y;
         this.breite = breite;
@@ -93,4 +112,9 @@ public class Knopf{
         }
         return false;
     }
+
+    public String getId(){
+        return id;
+    }
+    
 }

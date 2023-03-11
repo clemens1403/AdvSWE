@@ -19,3 +19,25 @@ void draw(){
   gui.render();
   
 }
+
+// Mausclick-Verarbeitung
+
+void mousePressed(){
+  switch(gui.getStatus()){
+    case "Start":
+      ArrayList<Knopf> knoepfe = gui.getStartKnoepfe();
+      for(Knopf k : knoepfe){
+        if(k.checkMausPosition()){
+          switch(k.getId()){
+            case "Spielen":
+              gui.setStatus("Spiel");
+            default:
+              break;
+          }
+        }
+      }
+      break;
+    default:
+      break;
+  }
+}
