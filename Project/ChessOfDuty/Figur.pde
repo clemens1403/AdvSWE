@@ -25,11 +25,4 @@ public abstract class Figur{
 
     }
 
-    public void setztSchachMatt(){
-
-    }
-
-    public void setztPatt(){
-        
-    }
 }
