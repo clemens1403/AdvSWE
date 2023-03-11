@@ -16,10 +16,10 @@ public class Feld {
         
     }
 
-    public void show(){
+    public void render(){
         push();
         fill(255 * farbe);
-        rect((zeile-1)*groesse, (spalte-1)*groesse, groesse, groesse);
+        rect((zeile-1)*groesse + 200, (spalte-1)*groesse + 200, groesse, groesse);
         pop();
     }
 }

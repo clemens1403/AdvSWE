@@ -2,11 +2,11 @@ public class GUI {
     private String status;
     private ArrayList<Knopf> startKnoepfe = new ArrayList<Knopf>();
     private ArrayList<Feld> felder;
+    private Schachspiel schachspiel;
 
-    public GUI(ArrayList<Feld> felder){
+    public GUI(Schachspiel schachspiel){
+        this.schachspiel = schachspiel;
         status = "Start";
-
-        this.felder = felder;
 
         Knopf spielKnopf = new Knopf("Spielen", width/2, height/2, 300, 150, "Spielen", color(200), color(230), color(0), 30);
         startKnoepfe.add(spielKnopf);
@@ -44,10 +44,38 @@ public class GUI {
     }
 
     public void renderSpiel(){
+        felder = schachspiel.getFelder();
         for(Feld f : felder){
-            f.show();
+            f.render();
+        }
+        for (int i = 1; i <= 8; i++){
+            push();
+            fill(200);
+            textAlign(CENTER, CENTER);
+            textSize(20);
+            text(integerZuBuchstabe(i-1), 250 + (i-1)*100, 1020);
+            text(i, 180, 950 - (i-1)*100);
+            pop();
         }
     }
+
+    public String integerZuBuchstabe(int i){
+
+    if(i < 0){
+        return null;
+    }
+    String s = Integer.toString(i, 26);
+
+    char[] buchstaben = s.toCharArray();
+
+    String ergebnis = "";
+    for(char b : buchstaben){
+        int x = Integer.parseInt(Character.valueOf(b).toString(), 26);
+        ergebnis += String.valueOf((char)(x + 'A'));          
+    }
+
+    return ergebnis;
+}
 
     public String getStatus(){
         return status;
@@ -59,6 +87,10 @@ public class GUI {
 
     public ArrayList<Knopf> getStartKnoepfe(){
         return startKnoepfe;
+    }
+
+    public void setSchachspiel(Schachspiel schachspiel){
+        this.schachspiel = schachspiel;
     }
 
 }

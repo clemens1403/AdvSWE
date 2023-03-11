@@ -42,9 +42,9 @@ public abstract class Figur{
 
     }
 
-    /*public Position getAktuellePosition(){
+    public Feld getAktuellePosition(){
         return this.aktuellePosition;
-    }*/
+    }
 
     public void setNeuePosition(Feld feld){
         //Hier müssen definitiv noch einige Fehler abgefangen werden
