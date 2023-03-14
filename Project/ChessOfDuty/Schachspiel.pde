@@ -1,20 +1,23 @@
 public class Schachspiel {
     private Schachbrett schachbrett;
-    private Figur[] spielfiguren;
+    //private Figur[] spielfiguren = new ArrayList<Figur>;
     
     public Schachspiel(){
         
+        //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
-        //hier müssen die Figuren des Schachspiel instanziiert werden
+        
+        //Figuren des Schachspiels werden instanziiert
+        //Bauer weißerBauer1 = new Bauer
     }
 
     public Schachbrett getSchachbrett(){
         return this.schachbrett;
     }
 
-    public Figur[] getSpielfiguren(){
+    /*public Figur[] getSpielfiguren(){
         return this.spielfiguren;
-    }
+    }*/
 
 
 }
