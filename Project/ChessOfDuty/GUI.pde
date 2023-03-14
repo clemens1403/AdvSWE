@@ -44,7 +44,7 @@ public class GUI {
     }
 
     public void renderSpiel(){
-        felder = schachspiel.getFelder();
+        felder = schachspiel.getSchachbrett().getFelder();
         for(Feld f : felder){
             f.render();
         }
@@ -89,9 +89,9 @@ public class GUI {
         return startKnoepfe;
     }
 
-    public void setSchachspiel(Schachspiel schachspiel){
+    /*public void setSchachspiel(Schachspiel schachspiel){
         this.schachspiel = schachspiel;
-    }
+    }*/
 
 }
 

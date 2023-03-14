@@ -1,17 +1,20 @@
 public class Schachspiel {
-    ArrayList<Feld> felder;
+    private Schachbrett schachbrett;
+    private Figur[] spielfiguren;
     
     public Schachspiel(){
         
-        felder = new ArrayList<Feld>();
-        for(int i = 1; i <= 8; i++){
-            for(int j = 1; j<= 8; j++){
-                felder.add(new Feld(i,j));
-            }
-        }
+        this.schachbrett = new Schachbrett();
+        //hier müssen die Figuren des Schachspiel instanziiert werden
     }
 
-    public ArrayList<Feld> getFelder(){
-        return felder;
+    public Schachbrett getSchachbrett(){
+        return this.schachbrett;
     }
+
+    public Figur[] getSpielfiguren(){
+        return this.spielfiguren;
+    }
+
+
 }
