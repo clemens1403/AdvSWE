@@ -14,4 +14,8 @@ public class Schachbrett {
     public ArrayList<Feld> getFelder(){
         return felder;
     }
+
+    public Feld getFeld(int spalte, int zeile){
+        return null;
+    }
 }
