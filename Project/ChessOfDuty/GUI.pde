@@ -1,7 +1,7 @@
 public class GUI {
     private String status;
     private ArrayList<Knopf> startKnoepfe = new ArrayList<Knopf>();
-    private ArrayList<Feld> felder;
+    private ArrayList<ArrayList<Feld>> felder;
     private Schachspiel schachspiel;
 
     public GUI(Schachspiel schachspiel){
@@ -44,10 +44,15 @@ public class GUI {
     }
 
     public void renderSpiel(){
-        felder = schachspiel.getSchachbrett().getFelder();
-        for(Feld f : felder){
-            f.render();
+        felder = schachspiel.getSchachbrett().getspielfeld();
+
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                Feld f = felder.get(i-1).get(j-1);
+                f.render();
+            }
         }
+
         for (int i = 1; i <= 8; i++){
             push();
             fill(200);
