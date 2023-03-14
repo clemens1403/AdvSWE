@@ -6,7 +6,6 @@ public class Springer extends Figur{
         this.setName("Springer");
         this.setAbkuerzung("S");
         this.setWert(3);
-        
     }
 
 }

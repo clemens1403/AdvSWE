@@ -6,14 +6,14 @@ public abstract class Figur{
     private int farbe;
     private Boolean imSpiel;
 
-    private Feld aktuellePosition;
+    private Feld position;
     private int[][] moeglicheZuege;
 
 
     public Figur(int farbe, Feld startPosition){
         
         this.farbe = farbe;
-        this.aktuellePosition = startPosition;
+        this.position = startPosition;
     }
 
     public boolean istZugAusserhalbVomFeld(){
@@ -47,13 +47,13 @@ public abstract class Figur{
         
     }
 
-    public Feld getAktuellePosition(){
-        return this.aktuellePosition;
+    public Feld getPosition(){
+        return this.position;
     }
 
-    public void setNeuePosition(Feld feld){
+    public void setPosition(Feld feld){
         //Hier müssen definitiv noch einige Fehler abgefangen werden
-        this.aktuellePosition = feld;
+        this.position = feld;
     }
 
     public void setName(String name){
