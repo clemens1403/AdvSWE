@@ -6,7 +6,7 @@ public abstract class Figur{
     private int farbe;
     private Boolean imSpiel;
 
-    private Feld aktuellePosition;
+    private Feld position;
     private int[][] moeglicheZuege;
 
 

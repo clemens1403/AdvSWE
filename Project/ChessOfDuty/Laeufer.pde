@@ -6,7 +6,7 @@ public class Laeufer extends Figur{
         this.setName("Läufer");
         this.setAbkuerzung("L");
         this.setWert(3);
-
+        this.position = startPosition;
     }
 
     public boolean sindZwischenfelderFrei(){

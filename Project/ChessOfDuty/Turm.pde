@@ -6,7 +6,7 @@ public class Turm extends Figur{
         this.setName("Turm");
         this.setAbkuerzung("T");
         this.setWert(5);
-        
+        this.position = startPosition;
     }
 
     public boolean sindZwischenfelderFrei(){

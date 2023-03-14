@@ -11,7 +11,7 @@ public class Bauer extends Figur{
         this.setName("Bauer");
         this.setAbkuerzung("B");
         this.setWert(1);
-
+        this.position = startPosition;
     }
 
     public void wirdUmgewandelt(){
