@@ -48,12 +48,12 @@ public abstract class Figur{
     }
 
     public Feld getPosition(){
-        return this.aktuellePosition;
+        return this.position;
     }
 
     public void setPosition(Feld feld){
         //Hier müssen definitiv noch einige Fehler abgefangen werden
-        this.aktuellePosition = feld;
+        this.position = feld;
     }
 
     public void setName(String name){
