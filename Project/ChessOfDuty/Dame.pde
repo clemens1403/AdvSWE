@@ -6,7 +6,6 @@ public class Dame extends Figur{
         this.setName("Dame");
         this.setAbkuerzung("D");
         this.setWert(9);
-        this.position = startPosition;
     }
 
     public boolean sindZwischenfelderFrei(){

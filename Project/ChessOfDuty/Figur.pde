@@ -13,7 +13,7 @@ public abstract class Figur{
     public Figur(int farbe, Feld startPosition){
         
         this.farbe = farbe;
-        this.aktuellePosition = startPosition;
+        this.position = startPosition;
     }
 
     public boolean istZugAusserhalbVomFeld(){
@@ -47,11 +47,11 @@ public abstract class Figur{
         
     }
 
-    public Feld getAktuellePosition(){
+    public Feld getPosition(){
         return this.aktuellePosition;
     }
 
-    public void setNeuePosition(Feld feld){
+    public void setPosition(Feld feld){
         //Hier müssen definitiv noch einige Fehler abgefangen werden
         this.aktuellePosition = feld;
     }

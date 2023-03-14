@@ -11,7 +11,6 @@ public class Bauer extends Figur{
         this.setName("Bauer");
         this.setAbkuerzung("B");
         this.setWert(1);
-        this.position = startPosition;
     }
 
     public void wirdUmgewandelt(){
@@ -46,7 +45,7 @@ public class Bauer extends Figur{
 
         List<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
 
-        Feld aktuellePosition = getAktuellePosition();
+        Feld aktuellePosition = getPosition();
 
         // Bauern können sich nur vorwärt auf dem Spielfeld bewegen
         if(getFarbe() == 1){

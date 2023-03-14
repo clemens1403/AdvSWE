@@ -9,7 +9,6 @@ public class Koenig extends Figur{
         
         this.setName("König");
         this.setAbkuerzung("K");
-        this.position = startPosition;
     }
 
     public boolean istImSchach() {
