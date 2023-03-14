@@ -37,7 +37,7 @@ public class Bauer extends Figur{
 
         Ein Bauer kann sich in folgende Richtungen bewegen:
             - zwei Felder nach vorne (sofern noch nicht bewegt)
-            - ein Feld nach vorne (sofern bereits bewegt wurden)
+            - ein Feld nach vorne (sofern bereits bewegt wurden und keine Figur blockiert)
             - ein Feld schräg nach links oder rechts vorne (andere Figur wird geschlagen)
             - ein Feld schräg nach links oder rechts vorne (En Passent)
         */
