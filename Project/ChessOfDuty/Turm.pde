@@ -12,5 +12,21 @@ public class Turm extends Figur{
         //Hier muss die Überprüfungsroutine eingebaut werden, ob der Läufer ziehen kann
         return false;
     }
+
+    @Override
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren){
+
+        int spalte = this.getPosition().getSpalte();
+        int zeile = this.getPosition().getZeile();
+
+        for(Figur f : figuren){
+            if(f.getPosition().getZeile() == spalte){
+                System.out.println("ALAAAARM");
+            }
+        }
+
+
+        return new ArrayList<Feld>();
+    }
     
 }

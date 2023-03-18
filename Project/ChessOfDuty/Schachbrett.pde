@@ -4,12 +4,13 @@ public class Schachbrett {
     public Schachbrett(){
         
         felder = new ArrayList<ArrayList<Feld>>();
-        for(int i = 1; i <= 8; i++){
+
+        for(int spalte = 1; spalte <= 8; spalte++){
 
             ArrayList<Feld> tempListe = new ArrayList<Feld>();
 
-            for(int j = 1; j<= 8; j++){
-                tempListe.add(new Feld(i,j));
+            for(int zeile = 1; zeile<= 8; zeile++){
+                tempListe.add(new Feld(spalte,zeile));
             }
 
             felder.add(tempListe);
@@ -29,8 +30,8 @@ public class Schachbrett {
 
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                //Feld f = felder.get(i-1).get(j-1);
-                Feld f = felder.get(j-1).get(i-1);
+                Feld f = felder.get(i-1).get(j-1);
+                //Feld f = felder.get(j-1).get(i-1);
                 f.render();
             }
         }

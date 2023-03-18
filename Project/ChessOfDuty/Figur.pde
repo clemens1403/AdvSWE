@@ -94,8 +94,8 @@ public abstract class Figur{
         
         textAlign(CENTER, CENTER);
         textSize(50);
-        int y = 50 + (this.position.getY());
         int x = 50 + (this.position.getX());
+        int y = 50 + (this.position.getY());
         text(this.abkuerzung, x, y);
         pop();
     }

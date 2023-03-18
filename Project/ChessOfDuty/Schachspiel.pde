@@ -61,8 +61,10 @@ public class Schachspiel {
             if(f.checkFigurGeklickt()) {
                 print(f.getAbkuerzung());
                 print(f.getFarbe()); 
+                print("Zeile: " + f.getPosition().getSpalte());
+                print("Spalte: " + f.getPosition().getZeile());
                 if(f.getFarbe() == this.spielerAmZug){
-                    print("Show possible moves");
+                    //print("Show possible moves");
                     f.getMoeglicheZuege(figuren);
                 }
             }   

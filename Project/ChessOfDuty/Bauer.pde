@@ -29,7 +29,7 @@ public class Bauer extends Figur{
         this.doppelschrittMoeglich = false;
     }
 
-    @Override
+    /*@Override
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figuren> figuren){
         /*
         Prüfe mögliche Züge für die Figur 'Bauer'
@@ -39,7 +39,7 @@ public class Bauer extends Figur{
             - ein Feld nach vorne (sofern bereits bewegt wurden und keine Figur blockiert)
             - ein Feld schräg nach links oder rechts vorne (andere Figur wird geschlagen)
             - ein Feld schräg nach links oder rechts vorne (En Passent)
-        */
+        
 
         // Farbe: 0 = Schwarz, 1 = Weiß
 
@@ -68,5 +68,5 @@ public class Bauer extends Figur{
 
         return moeglicheZuege;
 
-    }
+    }*/
 }

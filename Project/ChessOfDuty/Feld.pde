@@ -13,12 +13,13 @@ public class Feld {
         this.spalte = spalte;
         this.groesse = 100;
         if((zeile + spalte) % 2 == 0){
-            this.farbe = 1;
-        }else{
             this.farbe = 0;
+        }else{
+            this.farbe = 1;
         }
 
-        this.x = 700 - ((zeile-1)*groesse) + 200;
+        //irgendwie wissen wir nicht, warum wir zeile und spalte umdrehen mussten
+        this.x = ((zeile-1)*groesse) + 200;
         this.y = 700 - ((spalte-1)*groesse) + 200;
         
     }
