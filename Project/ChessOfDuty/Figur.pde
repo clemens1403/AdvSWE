@@ -84,4 +84,20 @@ public abstract class Figur{
         return this.farbe;
     }
 
+    public void render(){
+        push();
+        if(this.farbe==1){
+            fill(200);
+        }else{
+            fill(70);
+        }
+        
+        textAlign(CENTER, CENTER);
+        textSize(30);
+        int x = 250 + (this.position.getSpalte()-1)*100;
+        int y = 250 + (this.position.getZeile()-1)*100;
+        text(this.abkuerzung, x, y);
+        pop();
+    }
+
 }
