@@ -30,7 +30,7 @@ public class Bauer extends Figur{
     }
 
     @Override
-    public void pruefeMoeglicheZuege(){
+    public ArrayList<Feld> getMoeglicheZuege(){
         /*
         Prüfe mögliche Züge für die Figur 'Bauer'
 
@@ -43,7 +43,7 @@ public class Bauer extends Figur{
 
         // Farbe: 0 = Schwarz, 1 = Weiß
 
-        List<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         Feld aktuellePosition = getPosition();
 
@@ -53,18 +53,20 @@ public class Bauer extends Figur{
 
             //Einfacher Schritt nach vorne
             int einfacherSchritt = aktuellePosition.getZeile() + 1;
-            moeglicheZuege.add(new SimpleEntry<>(aktuellePosition.getSpalte(), einfacherSchritt));
+            //moeglicheZuege.add((aktuellePosition.getSpalte(), einfacherSchritt));
 
         } else {
             //Die schwarzen Figuren bewegen sich bei den Zeilen in absteigende Richtung
 
             //Einfacher Schritt nach vorne
             int einfacherSchritt = aktuellePosition.getZeile() - 1;
-            moeglicheZuege.add(new SimpleEntry<>(aktuellePosition.getSpalte(), einfacherSchritt));
+            //moeglicheZuege.add(new SimpleEntry<>(aktuellePosition.getSpalte(), einfacherSchritt));
 
         }
         
-        int zeile = aktuellePosition.getZeile();
+        //int zeile = aktuellePosition.getZeile();
+
+        return moeglicheZuege;
 
     }
 }

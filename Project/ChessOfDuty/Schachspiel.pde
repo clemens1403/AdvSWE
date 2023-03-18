@@ -1,11 +1,13 @@
 public class Schachspiel {
     private Schachbrett schachbrett;
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
+    private int spielerAmZug;
     
     public Schachspiel(){
         
         //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
+        this.spielerAmZug = 1;
 
         
         //Figuren des Schachspiels werden instanziiert
@@ -59,6 +61,9 @@ public class Schachspiel {
             if(f.checkFigurGeklickt()) {
                 print(f.getAbkuerzung());
                 print(f.getFarbe()); 
+                if(f.getFarbe() == this.spielerAmZug){
+                    print("Show possible moves");
+                }
             }   
         }
     }
