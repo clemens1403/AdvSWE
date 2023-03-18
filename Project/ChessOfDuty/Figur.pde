@@ -43,7 +43,7 @@ public abstract class Figur{
 
     }
 
-    public ArrayList<Feld> getMoeglicheZuege(){
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren){
         return new ArrayList<Feld>();
     }
 

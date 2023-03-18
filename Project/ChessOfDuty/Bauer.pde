@@ -30,7 +30,7 @@ public class Bauer extends Figur{
     }
 
     @Override
-    public ArrayList<Feld> getMoeglicheZuege(){
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figuren> figuren){
         /*
         Prüfe mögliche Züge für die Figur 'Bauer'
 

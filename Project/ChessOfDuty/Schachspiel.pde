@@ -63,6 +63,7 @@ public class Schachspiel {
                 print(f.getFarbe()); 
                 if(f.getFarbe() == this.spielerAmZug){
                     print("Show possible moves");
+                    f.getMoeglicheZuege(figuren);
                 }
             }   
         }
