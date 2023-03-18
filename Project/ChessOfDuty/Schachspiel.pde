@@ -18,10 +18,6 @@ public class Schachspiel {
         return this.schachbrett;
     }
 
-    /*public Figur[] getSpielfiguren(){
-        return this.spielfiguren;
-    }*/
-
     public void initialisiereFiguren(){
 
         for(int i = 1; i<=8; i++){
@@ -57,4 +53,15 @@ public class Schachspiel {
             f.render();
         }
     }
+
+    public void checkKlicks(){
+        for(Figur f : figuren){
+            if(f.checkFigurGeklickt()) {
+                print(f.getAbkuerzung());
+                print(f.getFarbe()); 
+            }   
+        }
+    }
+
+
 }

@@ -26,7 +26,6 @@ void mousePressed(){
           switch(k.getId()){
             case "Spielen":
               schachspiel = new Schachspiel();
-              //gui.setSchachspiel(schachspiel.getSchachbrett());
               gui.setStatus("Spiel");
             default:
               break;
@@ -34,6 +33,8 @@ void mousePressed(){
         }
       }
       break;
+    case "Spiel":
+      schachspiel.checkKlicks();
     default:
       break;
   }

@@ -94,10 +94,25 @@ public abstract class Figur{
         
         textAlign(CENTER, CENTER);
         textSize(30);
-        int x = 250 + (this.position.getSpalte()-1)*100;
-        int y = 250 + (this.position.getZeile()-1)*100;
+        int y = 50 + (this.position.getY());
+        int x = 50 + (this.position.getX());
         text(this.abkuerzung, x, y);
         pop();
+    }
+
+    public boolean checkFigurGeklickt(){
+
+        int feldX = this.position.getX();
+        int feldY = this.position.getY();
+        int feldGroesse = this.position.getGroesse();
+
+        if((mouseX > feldX) && (mouseX < feldX+feldGroesse)){
+            if((mouseY > feldY) && (mouseY < feldY+feldGroesse)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 }

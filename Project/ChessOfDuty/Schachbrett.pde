@@ -10,7 +10,6 @@ public class Schachbrett {
 
             for(int j = 1; j<= 8; j++){
                 tempListe.add(new Feld(i,j));
-                //felder.get(i-1).add(new Feld(i,j));
             }
 
             felder.add(tempListe);
@@ -22,7 +21,6 @@ public class Schachbrett {
     }
 
     public Feld getFeld(int spalte, int zeile){
-
         return felder.get(zeile-1).get(spalte-1);
     }
 
@@ -31,7 +29,8 @@ public class Schachbrett {
 
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                Feld f = felder.get(i-1).get(j-1);
+                //Feld f = felder.get(i-1).get(j-1);
+                Feld f = felder.get(j-1).get(i-1);
                 f.render();
             }
         }
