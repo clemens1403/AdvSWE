@@ -18,10 +18,8 @@ public class Feld {
             this.farbe = 1;
         }
 
-        //irgendwie wissen wir nicht, warum wir zeile und spalte umdrehen mussten
-        this.x = ((zeile-1)*groesse) + 200;
-        this.y = 700 - ((spalte-1)*groesse) + 200;
-        
+        this.x = ((spalte-1)*groesse) + 200;
+        this.y = 700 - ((zeile-1)*groesse) + 200; 
     }
 
     public void render(){

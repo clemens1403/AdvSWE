@@ -19,9 +19,12 @@ public class Turm extends Figur{
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
+        
+
         for(Figur f : figuren){
-            if(f.getPosition().getZeile() == spalte){
+            if(f.getPosition().getSpalte() == spalte){
                 System.out.println("ALAAAARM");
+
             }
         }
 

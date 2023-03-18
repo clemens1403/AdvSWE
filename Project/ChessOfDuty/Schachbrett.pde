@@ -1,37 +1,31 @@
 public class Schachbrett {
-    ArrayList<ArrayList<Feld>> felder;
+    Feld[][] felder;
 
     public Schachbrett(){
         
-        felder = new ArrayList<ArrayList<Feld>>();
+        felder = new Feld[8][8];
 
         for(int spalte = 1; spalte <= 8; spalte++){
 
-            ArrayList<Feld> tempListe = new ArrayList<Feld>();
-
             for(int zeile = 1; zeile<= 8; zeile++){
-                tempListe.add(new Feld(spalte,zeile));
+                felder[spalte-1][zeile-1] = new Feld(spalte,zeile);
             }
-
-            felder.add(tempListe);
         }
     }
 
-    public ArrayList<ArrayList<Feld>> getFelder(){
+    public Feld[][] getFelder(){
         return felder;
     }
 
     public Feld getFeld(int spalte, int zeile){
-        return felder.get(zeile-1).get(spalte-1);
+        return felder[spalte-1][zeile-1];
     }
 
     public void renderSchachbrett(){
-        felder = felder;
-
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
-                Feld f = felder.get(i-1).get(j-1);
-                //Feld f = felder.get(j-1).get(i-1);
+                Feld f = felder[i-1][j-1];
+                //Feld f = felder[j-1][i-1];
                 f.render();
             }
         }
