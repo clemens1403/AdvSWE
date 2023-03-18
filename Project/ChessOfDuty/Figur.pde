@@ -87,13 +87,13 @@ public abstract class Figur{
     public void render(){
         push();
         if(this.farbe==1){
-            fill(200);
+            fill(169, 172, 176);
         }else{
-            fill(70);
+            fill(160,82,45);
         }
         
         textAlign(CENTER, CENTER);
-        textSize(30);
+        textSize(50);
         int y = 50 + (this.position.getY());
         int x = 50 + (this.position.getX());
         text(this.abkuerzung, x, y);
