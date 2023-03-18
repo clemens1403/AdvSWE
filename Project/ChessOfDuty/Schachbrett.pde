@@ -22,6 +22,7 @@ public class Schachbrett {
     }
 
     public Feld getFeld(int spalte, int zeile){
-        return null;
+
+        return spielfeld.get(zeile).get(spalte);
     }
 }
