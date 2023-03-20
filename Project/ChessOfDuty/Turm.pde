@@ -23,32 +23,17 @@ public class Turm extends Figur{
                 - alle Felder in der aktuellen Zeile
         */
 
-        moeglicheZuege.addAll(getBewegungInZeile());
-        moeglicheZuege.addAll(getBewegungInSpalte());
+        moeglicheZuege.addAll(getBewegungInZeile(figuren));
+        moeglicheZuege.addAll(getBewegungInSpalte(figuren));
 
         for (SimpleEntry<Integer, Integer> eintrag : moeglicheZuege) {
             System.out.println("(" + eintrag.getKey() + ", " + eintrag.getValue() + ")");
         }
 
-        for(Figur f : figuren){
-            for(SimpleEntry<Integer, Integer> moeglicherZug : moeglicheZuege) {
-                if(f.getPosition().getSpalte() == )
-            }
-            
-
-            /*if(f.getPosition().getSpalte() == spalte){
-                if(f.getPosition().getZeile() != zeile){
-                    System.out.println(f);
-                }
-            }*/
-        }
-
-
-
         return new ArrayList<Feld>();
     }
 
-    private ArrayList<SimpleEntry<Integer, Integer>> getBewegungInZeile(){
+    private ArrayList<SimpleEntry<Integer, Integer>> getBewegungInZeile(ArrayList<Figur> figuren){
         
         ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
         
@@ -59,13 +44,36 @@ public class Turm extends Figur{
         if(spalte == 1){
             //Felder 2 bis 8 sind möglich
             System.out.println("SPALTE 1");
-            moeglicheZuege.add(new SimpleEntry<>(2, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(3, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(4, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(5, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(6, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(7, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(8, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(2, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(3, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(4, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(5, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(6, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(7, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(8, zeile));
+
+            for(int spaltenNummer = 2; spaltenNummer <= 8; spaltenNummer++){
+                boolean kollisionGefunden = false;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() != zeile && f.getPosition().getSpalte() != spalte){
+                        System.out.println("Dieses Feld ist leer und ist ein möglicher Zug");
+                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    } else {
+                        kollisionGefunden = true;
+                        if(this.getFarbe() == f.getFarbe()){
+                            System.out.println("Hier steht eine Figur der gleichen Farbe");
+                            break;
+                        } else {
+                            System.out.println("Hier steht eine Figur der anderen Farbe und kann geschlagen werden");
+                            moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                            break;
+                        }
+                    }
+                }
+
+                if(kollisionGefunden) break;
+            }
 
         } else if(spalte > 1 && spalte < 8){
             //Felder 1 bis (x-1) und (x+1) bis 8
@@ -93,7 +101,7 @@ public class Turm extends Figur{
         return moeglicheZuege;
     } 
 
-    private ArrayList<SimpleEntry<Integer, Integer>> getBewegungInSpalte() {
+    private ArrayList<SimpleEntry<Integer, Integer>> getBewegungInSpalte(ArrayList<Figur> figuren) {
         
         ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
         
@@ -137,5 +145,5 @@ public class Turm extends Figur{
 
         return moeglicheZuege;
     }
-    
+
 }
