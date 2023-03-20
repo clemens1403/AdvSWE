@@ -9,7 +9,6 @@ public abstract class Figur{
     private Feld position;
     private int[][] moeglicheZuege;
 
-
     public Figur(int farbe, Feld startPosition){
         
         this.farbe = farbe;
@@ -113,6 +112,17 @@ public abstract class Figur{
         }
 
         return false;
+    }
+
+    @Override
+    public String toString(){
+        return abkuerzung 
+            + " " 
+            +  String.valueOf(farbe) 
+            + ": Spalte:" 
+            + String.valueOf(getPosition().getSpalte()) 
+            + " Zeile:" 
+            + String.valueOf(getPosition().getZeile());
     }
 
 }
