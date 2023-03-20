@@ -75,25 +75,101 @@ public class Turm extends Figur{
         } else if(spalte > 1 && spalte < 8){
             //Felder 1 bis (x-1) und (x+1) bis 8
             System.out.println("SPALTE 2-7");
-            for(int i = 1; i < spalte; i++){
+            /*for(int i = 1; i < spalte; i++){
                 moeglicheZuege.add(new SimpleEntry<>(i, zeile));
             }
 
             for(int i = spalte + 1; i <= 8; i++){
                 moeglicheZuege.add(new SimpleEntry<>(i, zeile));
+            }*/
+
+            //Felder von 1 bis (x-1)
+            for(int spaltenNummer = (spalte-1); spaltenNummer >= 1; spaltenNummer--){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                }
+            }
+
+            //Felder von (x+1) bis 8
+            for(int spaltenNummer = (spalte+1); spaltenNummer <= 8; spaltenNummer++){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                }
             }
 
         } else if(spalte == 8){
             //Felder 1 bis 7 sind möglich
             System.out.println("SPALTE 8");
-            //moeglicheZuege.add(new SimpleEntry<>(1, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(2, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(3, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(4, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(5, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(6, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(7, zeile));
-            
+
+            for(int spaltenNummer = 7; spaltenNummer >= 1; spaltenNummer--){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                }
+            }
+
         }
 
         return moeglicheZuege;
