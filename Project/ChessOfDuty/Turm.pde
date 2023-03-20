@@ -44,35 +44,32 @@ public class Turm extends Figur{
         if(spalte == 1){
             //Felder 2 bis 8 sind möglich
             System.out.println("SPALTE 1");
-            //moeglicheZuege.add(new SimpleEntry<>(2, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(3, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(4, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(5, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(6, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(7, zeile));
-            //moeglicheZuege.add(new SimpleEntry<>(8, zeile));
 
             for(int spaltenNummer = 2; spaltenNummer <= 8; spaltenNummer++){
                 boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
 
                 for(Figur f : figuren){
-                    if(f.getPosition().getZeile() != zeile && f.getPosition().getSpalte() != spalte){
-                        System.out.println("Dieses Feld ist leer und ist ein möglicher Zug");
-                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
-                    } else {
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
                         kollisionGefunden = true;
-                        if(this.getFarbe() == f.getFarbe()){
-                            System.out.println("Hier steht eine Figur der gleichen Farbe");
-                            break;
-                        } else {
-                            System.out.println("Hier steht eine Figur der anderen Farbe und kann geschlagen werden");
-                            moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
-                            break;
-                        }
-                    }
+                        kollidierteFigur = f;
+                        break;
+                    } 
                 }
 
-                if(kollisionGefunden) break;
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                }
             }
 
         } else if(spalte > 1 && spalte < 8){
@@ -89,13 +86,14 @@ public class Turm extends Figur{
         } else if(spalte == 8){
             //Felder 1 bis 7 sind möglich
             System.out.println("SPALTE 8");
-            moeglicheZuege.add(new SimpleEntry<>(1, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(2, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(3, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(4, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(5, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(6, zeile));
-            moeglicheZuege.add(new SimpleEntry<>(7, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(1, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(2, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(3, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(4, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(5, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(6, zeile));
+            //moeglicheZuege.add(new SimpleEntry<>(7, zeile));
+            
         }
 
         return moeglicheZuege;
