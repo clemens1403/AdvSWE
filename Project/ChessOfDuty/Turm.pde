@@ -8,11 +8,6 @@ public class Turm extends Figur{
         this.setWert(5);
     }
 
-    public boolean sindZwischenfelderFrei(){
-        //Hier muss die Überprüfungsroutine eingebaut werden, ob der Läufer ziehen kann
-        return false;
-    }
-
     @Override
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren){
 
@@ -40,7 +35,7 @@ public class Turm extends Figur{
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
         
-        //Erstelle alle möglichen Züge für Spalte
+        //Erstelle alle möglichen Züge innerhalb einer Zeile
         if(spalte == 1){
             //Felder 2 bis 8 sind möglich
             System.out.println("SPALTE 1");
@@ -50,7 +45,7 @@ public class Turm extends Figur{
                 Figur kollidierteFigur = null;
 
                 for(Figur f : figuren){
-                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spaltenNummer){
                         kollisionGefunden = true;
                         kollidierteFigur = f;
                         break;
@@ -75,13 +70,6 @@ public class Turm extends Figur{
         } else if(spalte > 1 && spalte < 8){
             //Felder 1 bis (x-1) und (x+1) bis 8
             System.out.println("SPALTE 2-7");
-            /*for(int i = 1; i < spalte; i++){
-                moeglicheZuege.add(new SimpleEntry<>(i, zeile));
-            }
-
-            for(int i = spalte + 1; i <= 8; i++){
-                moeglicheZuege.add(new SimpleEntry<>(i, zeile));
-            }*/
 
             //Felder von 1 bis (x-1)
             for(int spaltenNummer = (spalte-1); spaltenNummer >= 1; spaltenNummer--){
@@ -89,7 +77,7 @@ public class Turm extends Figur{
                 Figur kollidierteFigur = null;
 
                 for(Figur f : figuren){
-                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spaltenNummer){
                         kollisionGefunden = true;
                         kollidierteFigur = f;
                         break;
@@ -117,7 +105,7 @@ public class Turm extends Figur{
                 Figur kollidierteFigur = null;
 
                 for(Figur f : figuren){
-                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spaltenNummer){
                         kollisionGefunden = true;
                         kollidierteFigur = f;
                         break;
@@ -148,7 +136,7 @@ public class Turm extends Figur{
                 Figur kollidierteFigur = null;
 
                 for(Figur f : figuren){
-                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spalte){
+                    if(f.getPosition().getZeile() == zeile && f.getPosition().getSpalte() == spaltenNummer){
                         kollisionGefunden = true;
                         kollidierteFigur = f;
                         break;
@@ -170,7 +158,7 @@ public class Turm extends Figur{
                 }
             }
 
-        }
+        } else System.out.println("Irgendetwas ist schief gelaufen!");
 
         return moeglicheZuege;
     } 
@@ -182,39 +170,132 @@ public class Turm extends Figur{
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
-        //Erstelle alle möglichen Züge für Spalte
+        //Erstelle alle möglichen Züge innerhalb einer Spalte
         if(zeile == 1){
             //Felder 2 bis 8 sind möglich
             System.out.println("SPALTE 1");
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 2));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 3));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 4));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 5));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 6));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 7));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 8));
+
+            for(int zeilenNummer = 2; zeilenNummer <= 8; zeilenNummer++){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                }
+            }
+
 
         } else if(zeile > 1 && zeile < 8){
             //Felder 1 bis (x-1) und (x+1) bis 8
             System.out.println("SPALTE 2-7");
-            for(int i = 1; i < zeile; i++){
-                moeglicheZuege.add(new SimpleEntry<>(spalte, i));
+
+            //Felder 1 bis (x-1) und (x+1) bis 8
+            System.out.println("SPALTE 2-7");
+
+            //Felder von 1 bis (x-1)
+            for(int zeilenNummer = (zeile-1); zeilenNummer >= 1; zeilenNummer--){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                }
             }
 
-            for(int i = zeile + 1; i <= 8; i++){
-                moeglicheZuege.add(new SimpleEntry<>(spalte, i));
-            }        
+            //Felder von (x+1) bis 8
+            for(int zeilenNummer = (zeile+1); zeilenNummer <= 8; zeilenNummer++){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                }
+            }     
 
         } else if(zeile == 8){
             //Felder 1 bis 7 sind möglich
-            System.out.println("SPALTE 8");#
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 1));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 2));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 3));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 4));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 5));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 6));
-            moeglicheZuege.add(new SimpleEntry<>(spalte, 7));
+            System.out.println("SPALTE 8");
+
+            for(int zeilenNummer = 7; zeilenNummer >= 1; zeilenNummer--){
+                boolean kollisionGefunden = false;
+                Figur kollidierteFigur = null;
+
+                for(Figur f : figuren){
+                    if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spalte){
+                        kollisionGefunden = true;
+                        kollidierteFigur = f;
+                        break;
+                    } 
+                }
+
+                if(kollisionGefunden){
+                    System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
+
+                    if(this.getFarbe() == kollidierteFigur.getFarbe()){
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
+                    } else{
+                        System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
+                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    }
+                    break;
+                } else {
+                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                }
+            }
         }
 
         return moeglicheZuege;
