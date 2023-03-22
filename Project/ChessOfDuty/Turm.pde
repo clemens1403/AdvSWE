@@ -9,28 +9,29 @@ public class Turm extends Figur{
     }
 
     @Override
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren){
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
-        ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
+        //ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         /*
             Die Figur Turm kann folgende Bewegungen ausführen:
                 - alle Felder in der aktuellen Spalte
                 - alle Felder in der aktuellen Zeile
         */
 
-        moeglicheZuege.addAll(getBewegungInZeile(figuren));
-        moeglicheZuege.addAll(getBewegungInSpalte(figuren));
+        moeglicheZuege.addAll(getBewegungInZeile(figuren, schachbrett));
+        moeglicheZuege.addAll(getBewegungInSpalte(figuren, schachbrett));
 
-        for (SimpleEntry<Integer, Integer> eintrag : moeglicheZuege) {
-            System.out.println("(" + eintrag.getKey() + ", " + eintrag.getValue() + ")");
+        for (Feld eintrag : moeglicheZuege) {
+            System.out.println("(" + eintrag.getSpalte() + ", " + eintrag.getZeile() + ")");
         }
 
-        return new ArrayList<Feld>();
+        return moeglicheZuege;
     }
 
-    private ArrayList<SimpleEntry<Integer, Integer>> getBewegungInZeile(ArrayList<Figur> figuren){
+    private ArrayList<Feld> getBewegungInZeile(ArrayList<Figur> figuren, Schachbrett schachbrett){
         
-        ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
@@ -59,11 +60,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                        moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                 }
             }
 
@@ -91,11 +92,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                        moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                 }
             }
 
@@ -119,11 +120,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                        moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                 }
             }
 
@@ -150,11 +151,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                        moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spaltenNummer, zeile));
+                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeile));
                 }
             }
 
@@ -163,9 +164,9 @@ public class Turm extends Figur{
         return moeglicheZuege;
     } 
 
-    private ArrayList<SimpleEntry<Integer, Integer>> getBewegungInSpalte(ArrayList<Figur> figuren) {
+    private ArrayList<Feld> getBewegungInSpalte(ArrayList<Figur> figuren, Schachbrett schachbrett) {
         
-        ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
@@ -194,11 +195,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                        moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                 }
             }
 
@@ -230,11 +231,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                        moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                 }
             }
 
@@ -258,11 +259,11 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                        moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                 }
             }     
 
@@ -289,16 +290,15 @@ public class Turm extends Figur{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
                     } else{
                         System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                        moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                        moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                     }
                     break;
                 } else {
-                    moeglicheZuege.add(new SimpleEntry<>(spalte, zeilenNummer));
+                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeilenNummer));
                 }
             }
         }
 
         return moeglicheZuege;
     }
-
 }
