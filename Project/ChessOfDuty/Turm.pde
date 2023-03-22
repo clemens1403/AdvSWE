@@ -11,7 +11,6 @@ public class Turm extends Figur{
     @Override
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
-        //ArrayList<SimpleEntry<Integer, Integer>> moeglicheZuege = new ArrayList<>();
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         /*
             Die Figur Turm kann folgende Bewegungen ausführen:
