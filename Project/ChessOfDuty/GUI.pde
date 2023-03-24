@@ -20,6 +20,9 @@ public class GUI {
             case "Spiel":
                 renderSpiel();
                 break;
+            case "Zug":
+                renderSpiel();
+                break;
             default:
                 renderStartAnsicht();
                 break;

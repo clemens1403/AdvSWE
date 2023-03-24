@@ -4,7 +4,6 @@ GUI gui;
 void setup(){
   size(1200,1200);
   background(0);
-  
 
   schachspiel = new Schachspiel();
   gui = new GUI(schachspiel);
@@ -34,7 +33,14 @@ void mousePressed(){
       }
       break;
     case "Spiel":
-      schachspiel.checkKlicks();
+      schachspiel.waehleEineFigurAus();
+      gui.setStatus("Zug");
+      break;
+    case "Zug":
+      schachspiel.fuehreZugAus();
+      schachspiel.renderSchachspiel();
+      //gui.setStatus("Spiel");
+      break;
     default:
       break;
   }

@@ -2,17 +2,18 @@ public class Schachspiel {
     private Schachbrett schachbrett;
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
     private int spielerAmZug;
+
+    private Figur ausgewaehltFigur = null;
+    private ArrayList<Feld> moeglicheZuegeDerFigur = new ArrayList<>();
     
     public Schachspiel(){
         
         //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
         this.spielerAmZug = 1;
-
         
         //Figuren des Schachspiels werden instanziiert
         this.initialisiereFiguren();
-
 
     }
 
@@ -56,7 +57,7 @@ public class Schachspiel {
         }
     }
 
-    public void checkKlicks(){
+    public void waehleEineFigurAus(){
         for(Figur f : figuren){
             if(f.checkFigurGeklickt()) {
                 print(f.getAbkuerzung());
@@ -65,11 +66,46 @@ public class Schachspiel {
                 print("Zeile: " + f.getPosition().getZeile());
                 if(f.getFarbe() == this.spielerAmZug){
                     //print("Show possible moves");
-                    f.getMoeglicheZuege(figuren, schachbrett);
+                    this.ausgewaehltFigur = f;
+                    this.moeglicheZuegeDerFigur = f.getMoeglicheZuege(figuren, schachbrett);
                 }
+
+                break;
             }   
         }
     }
 
+    public void fuehreZugAus(){
 
+        Feld ausgewaehltesFeld = null;
+
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                Feld tmp = schachbrett.getFeld(i, j);
+                if(tmp.checkFeldGeklickt() != null){
+                    ausgewaehltesFeld = tmp;
+                }
+            }
+        }
+
+        for(Feld feld : moeglicheZuegeDerFigur){
+
+            Boolean umsetzenMoeglich = false;
+
+            if(ausgewaehltesFeld.getSpalte() == feld.getSpalte() && ausgewaehltesFeld.getZeile() == feld.getZeile()){
+                ausgewaehltFigur.setPosition(ausgewaehltesFeld);
+                print("Die Figur kann umgesetzt werden");
+                umsetzenMoeglich = true;
+            }
+
+            if(umsetzenMoeglich){
+                for(Figur f : figuren){
+                    if(f == ausgewaehltFigur) {
+                        f.setPosition(ausgewaehltesFeld);
+                        break;
+                    }
+                }
+            }
+        }
+    }
 }
