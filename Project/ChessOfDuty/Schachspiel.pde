@@ -24,8 +24,8 @@ public class Schachspiel {
     public void initialisiereFiguren(){
 
         for(int i = 1; i<=8; i++){
-            figuren.add(new Bauer(1, schachbrett.getFeld(i, 2)));
-            figuren.add(new Bauer(0, schachbrett.getFeld(i, 7)));
+            //figuren.add(new Bauer(1, schachbrett.getFeld(i, 2)));
+            //figuren.add(new Bauer(0, schachbrett.getFeld(i, 7)));
         }
 
         figuren.add(new Koenig(1, schachbrett.getFeld(5,1)));
@@ -38,8 +38,7 @@ public class Schachspiel {
         figuren.add(new Laeufer(0, schachbrett.getFeld(3,8)));
         figuren.add(new Laeufer(1, schachbrett.getFeld(6,1)));
         figuren.add(new Laeufer(0, schachbrett.getFeld(6,8)));
-
-        figuren.add(new Springer(1, schachbrett.getFeld(2,1)));
+        figuren.add(new Springer(1, schachbrett.getFeld(3,2)));
         figuren.add(new Springer(0, schachbrett.getFeld(2,8)));
         figuren.add(new Springer(1, schachbrett.getFeld(7,1)));
         figuren.add(new Springer(0, schachbrett.getFeld(7,8)));
@@ -52,12 +51,23 @@ public class Schachspiel {
 
     public void renderSchachspiel(){
         schachbrett.renderSchachbrett();
-        for(Figur f : figuren){
+
+        for(Figur f : this.figuren){
             f.render();
         }
+
+        try{
+            Thread.sleep(2000);
+        } catch(InterruptedException ex){
+            Thread.currentThread().interrupt();
+        }
+
     }
 
     public void waehleEineFigurAus(){
+
+        print("In waehleEineFigurAus");
+
         for(Figur f : figuren){
             if(f.checkFigurGeklickt()) {
                 print(f.getAbkuerzung());
@@ -77,35 +87,59 @@ public class Schachspiel {
 
     public void fuehreZugAus(){
 
-        Feld ausgewaehltesFeld = null;
+        //Feld ausgewaehltesFeld = null;
 
-        for(int i = 1; i <= 8; i++){
+        /*for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
                 Feld tmp = schachbrett.getFeld(i, j);
                 if(tmp.checkFeldGeklickt() != null){
                     ausgewaehltesFeld = tmp;
                 }
             }
-        }
+        }*/
 
-        for(Feld feld : moeglicheZuegeDerFigur){
+        Feld ausgewaehltesFeld = selektiereAusgewaehltesFeld();
+        boolean umsetzenMoeglich = pruefeObFeldInMoeglichenZuegenIst(ausgewaehltesFeld);   
 
-            Boolean umsetzenMoeglich = false;
-
-            if(ausgewaehltesFeld.getSpalte() == feld.getSpalte() && ausgewaehltesFeld.getZeile() == feld.getZeile()){
-                ausgewaehltFigur.setPosition(ausgewaehltesFeld);
-                print("Die Figur kann umgesetzt werden");
-                umsetzenMoeglich = true;
+        if(umsetzenMoeglich){
+            for(Figur f : this.figuren){
+                if(f == ausgewaehltFigur) {
+                    print("Übereinstimmung gefunden bei:" + f);
+                    f.setPosition(ausgewaehltesFeld);
+                    print("Neues Feld: " + f.getPosition().getSpalte() + "|" + f.getPosition().getZeile());
+                    break;
+                }
             }
+        }   
+    }
 
-            if(umsetzenMoeglich){
-                for(Figur f : figuren){
-                    if(f == ausgewaehltFigur) {
-                        f.setPosition(ausgewaehltesFeld);
-                        break;
-                    }
+    private Feld selektiereAusgewaehltesFeld(){
+        for(int i = 1; i <= 8; i++){
+            for(int j = 1; j <= 8; j++){
+                Feld tmp = schachbrett.getFeld(i, j);
+                if(tmp.checkFeldGeklickt() != null){
+                    return tmp;
                 }
             }
         }
+
+        return null;
+    }
+
+    private Boolean pruefeObFeldInMoeglichenZuegenIst(Feld ausgewaehltesFeld){
+
+        for(Feld feld : this.moeglicheZuegeDerFigur){
+
+            if(ausgewaehltesFeld.getSpalte() == feld.getSpalte() && ausgewaehltesFeld.getZeile() == feld.getZeile()){
+                print("Die Figur kann umgesetzt werden");
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public ArrayList<Figur> getFiguren(){
+        return this.figuren;
     }
 }

@@ -42,15 +42,12 @@ public class GUI {
 
         for(Knopf k : startKnoepfe){
             k.render();
-        }
-        
+        } 
     }
 
-    public void renderSpiel(){
+    public void renderSpiel(){        
         this.schachspiel.renderSchachspiel();
     }
-
-    
 
     public String getStatus(){
         return status;
@@ -64,9 +61,9 @@ public class GUI {
         return startKnoepfe;
     }
 
-    /*public void setSchachspiel(Schachspiel schachspiel){
+    public void setSchachspiel(Schachspiel schachspiel){
         this.schachspiel = schachspiel;
-    }*/
+    }
 
 }
 
