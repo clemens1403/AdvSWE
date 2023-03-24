@@ -65,7 +65,7 @@ public class Schachspiel {
                 print("Zeile: " + f.getPosition().getZeile());
                 if(f.getFarbe() == this.spielerAmZug){
                     //print("Show possible moves");
-                    f.getMoeglicheZuege(figuren);
+                    f.getMoeglicheZuege(figuren, schachbrett);
                 }
             }   
         }
