@@ -164,6 +164,7 @@ public class Dame extends Figur{
         } 
 
         //Das hier könnte acutally ziemlich smart sein
+        //Nein, ist doch stupid... bitte überarbeiten
         if(spalte <= 4 && zeile >= 4){
             platzhalter = spalte -1 ;
         } else {
@@ -222,17 +223,11 @@ public class Dame extends Figur{
             return moeglicheZuege;
         } 
 
-        platzhalter = test(spalte, zeile);
+        platzhalter = getAnzahlMoeglicherBewegungen(spalte, zeile);
         System.out.println("Platzhalter: " + platzhalter);
 
-        //Das hier könnte acutally ziemlich smart sein
-        /*if(spalte >= 5 && zeile >= 4){
-            platzhalter = 8 - spalte;
-        } else {
-            platzhalter = zeile - 1;
-        }*/
 
-        for(int i = 1; i < platzhalter; i++){
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -541,99 +536,40 @@ public class Dame extends Figur{
         return moeglicheZuege;
     }
 
-    public int test(int spalte, int zeile){
+    public int getAnzahlMoeglicherBewegungen(int spalte, int zeile){
 
-        int wert = 0;
-    
-        if (spalte == 8 || zeile == 1) {
-            wert = 0;
-        } else if (zeile == 2) {
-            if (spalte >= 1 && spalte <= 7) {
-                wert = 1;
-            } else {
-                wert = 0;
-            }
-        } else if (zeile == 3) {
-            if (spalte >= 1 && spalte <= 6) {
-                wert = 2;
-            } else if (spalte == 7){
-                wert = 1;
-            } else {
-                wert = 0;
-            }
-        } else if (zeile == 4) {
-            if (spalte >= 1 && spalte <= 5) {
-                wert = 3;
-            } else if (spalte == 6) {
-                wert = 2;
-            } else if (spalte == 7){
-                wert = 1; 
-            } else if (spalte == 8){
-                wert = 0;
-            }
-        } else if (zeile == 5) {
-            if (spalte >= 1 && spalte <= 4) {
-                wert = 4;
-            } else if (spalte == 5){
-                wert = 3;
-            } else if (spalte == 6) {
-                wert = 2;
-            } else if (spalte == 7){
-                wert = 1; 
-            } else if (spalte == 8){
-                wert = 0;
-            }
-        } else if (zeile == 6) {
-            if (spalte >= 1 && spalte <= 3) {
-                wert = 5;
-            } else if (spalte == 4) {
-                wert = 4;
-            } else if (spalte == 5){
-                wert = 3;
-            } else if (spalte == 6) {
-                wert = 2;
-            } else if (spalte == 7){
-                wert = 1; 
-            } else if (spalte == 8){
-                wert = 0;
-            }
-        } else if (zeile == 7) {
-            if ((spalte >= 1 && spalte <= 2)) {
-                wert = 6;
-            } else if (spalte == 3) {
-                wert = 5;
-            } else if (spalte == 4) {
-                wert = 4;
-            } else if (spalte == 5){
-                wert = 3;
-            } else if (spalte == 6) {
-                wert = 2;
-            } else if (spalte == 7){
-                wert = 1; 
-            } else if (spalte == 8){
-                wert = 0;
-            }
-        } else if (zeile == 8) {
-            if (spalte == 1) {
-                wert = 7;
-            } else if (spalte == 2) {
-                wert = 6;
-            } else if (spalte == 3) {
-                wert = 5;
-            } else if (spalte == 4) {
-                wert = 4;
-            } else if (spalte == 5){
-                wert = 3;
-            } else if (spalte == 6) {
-                wert = 2;
-            } else if (spalte == 7){
-                wert = 1; 
-            } else if (spalte == 8){
-                wert = 0;
-            }
+        /*int wert = 0;
+
+        // Alle Fälle abdecken, in denen wert nicht 0 ist
+        if (zeile == 2 && spalte >= 1 && spalte <= 7) {
+            wert = 1;
+        } else if (zeile == 3 && spalte >= 1 && spalte <= 7) {
+            wert = (spalte == 7) ? 1 : 2;
+        } else if (zeile == 4 && spalte >= 1 && spalte <= 8) {
+            wert = (spalte == 8) ? 0 : ((spalte == 6) ? 2 : ((spalte == 7) ? 1 : 3));
+        } else if (zeile == 5 && spalte >= 1 && spalte <= 8) {
+            wert = (spalte == 8) ? 0 : ((spalte == 5) ? 3 : ((spalte == 6) ? 2 : ((spalte == 7) ? 1 : 4)));
+        } else if (zeile == 6 && spalte >= 1 && spalte <= 8) {
+            wert = (spalte == 8) ? 0 : ((spalte == 4) ? 4 : ((spalte == 5) ? 3 : ((spalte == 6) ? 2 : ((spalte == 7) ? 1 : 5))));
+        } else if (zeile == 7 && spalte >= 1 && spalte <= 8) {
+            wert = (spalte == 8) ? 0 : ((spalte == 3) ? 5 : ((spalte == 4) ? 4 : ((spalte == 5) ? 3 : ((spalte == 6) ? 2 : ((spalte == 7) ? 1 : 6)))));
+        } else if (zeile == 8 && spalte >= 1 && spalte <= 8) {
+            wert = 8 - spalte;
         }
-    
-        return wert;
+
+        return wert;*/
+
+        int[][] wertematrix = {
+                        {0, 1, 2, 3, 4, 5, 6, 7},
+                        {0, 1, 2, 3, 4, 5, 6, 6},
+                        {0, 1, 2, 3, 4, 5, 5, 5},
+                        {0, 1, 2, 3, 4, 4, 4, 4},
+                        {0, 1, 2, 3, 3, 3, 3, 3},
+                        {0, 1, 2, 2, 2, 2, 2, 2},
+                        {0, 1, 1, 1, 1, 1, 1, 1},
+                        {0, 0, 0, 0, 0, 0, 0, 0}};
+
+        return wertematrix[spalte-1][zeile-1];
     }
-    
+
 }
