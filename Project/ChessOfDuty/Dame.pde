@@ -223,11 +223,10 @@ public class Dame extends Figur{
         } 
 
         platzhalter = test(spalte, zeile);
-
-        /*test(3,6);
+        System.out.println("Platzhalter: " + platzhalter);
 
         //Das hier könnte acutally ziemlich smart sein
-        if(spalte >= 5 && zeile >= 4){
+        /*if(spalte >= 5 && zeile >= 4){
             platzhalter = 8 - spalte;
         } else {
             platzhalter = zeile - 1;
@@ -542,16 +541,99 @@ public class Dame extends Figur{
         return moeglicheZuege;
     }
 
-    public int test(int column, int row){
+    public int test(int spalte, int zeile){
 
-        int[] values = {0, 1, 2, 3, 4, 5, 6, 7, 1};
-
-        row = Math.min(row, 8);
-        column = Math.min(column, 7);
-
-        print("Ergebnis: " + (values[row] - Math.max(0, column - 6) * (row - 1) - 1));
-        return values[row] - Math.max(0, column - 6) * (row - 1) - 1;
-
+        int wert = 0;
+    
+        if (spalte == 8 || zeile == 1) {
+            wert = 0;
+        } else if (zeile == 2) {
+            if (spalte >= 1 && spalte <= 7) {
+                wert = 1;
+            } else {
+                wert = 0;
+            }
+        } else if (zeile == 3) {
+            if (spalte >= 1 && spalte <= 6) {
+                wert = 2;
+            } else if (spalte == 7){
+                wert = 1;
+            } else {
+                wert = 0;
+            }
+        } else if (zeile == 4) {
+            if (spalte >= 1 && spalte <= 5) {
+                wert = 3;
+            } else if (spalte == 6) {
+                wert = 2;
+            } else if (spalte == 7){
+                wert = 1; 
+            } else if (spalte == 8){
+                wert = 0;
+            }
+        } else if (zeile == 5) {
+            if (spalte >= 1 && spalte <= 4) {
+                wert = 4;
+            } else if (spalte == 5){
+                wert = 3;
+            } else if (spalte == 6) {
+                wert = 2;
+            } else if (spalte == 7){
+                wert = 1; 
+            } else if (spalte == 8){
+                wert = 0;
+            }
+        } else if (zeile == 6) {
+            if (spalte >= 1 && spalte <= 3) {
+                wert = 5;
+            } else if (spalte == 4) {
+                wert = 4;
+            } else if (spalte == 5){
+                wert = 3;
+            } else if (spalte == 6) {
+                wert = 2;
+            } else if (spalte == 7){
+                wert = 1; 
+            } else if (spalte == 8){
+                wert = 0;
+            }
+        } else if (zeile == 7) {
+            if ((spalte >= 1 && spalte <= 2)) {
+                wert = 6;
+            } else if (spalte == 3) {
+                wert = 5;
+            } else if (spalte == 4) {
+                wert = 4;
+            } else if (spalte == 5){
+                wert = 3;
+            } else if (spalte == 6) {
+                wert = 2;
+            } else if (spalte == 7){
+                wert = 1; 
+            } else if (spalte == 8){
+                wert = 0;
+            }
+        } else if (zeile == 8) {
+            if (spalte == 1) {
+                wert = 7;
+            } else if (spalte == 2) {
+                wert = 6;
+            } else if (spalte == 3) {
+                wert = 5;
+            } else if (spalte == 4) {
+                wert = 4;
+            } else if (spalte == 5){
+                wert = 3;
+            } else if (spalte == 6) {
+                wert = 2;
+            } else if (spalte == 7){
+                wert = 1; 
+            } else if (spalte == 8){
+                wert = 0;
+            }
+        }
+    
+        return wert;
     }
     
 }
