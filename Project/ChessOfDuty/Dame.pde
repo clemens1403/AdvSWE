@@ -46,6 +46,8 @@ public class Dame extends Figur{
 
     private ArrayList<Feld> moeglicheZeugeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        print("Ping 1");
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -95,6 +97,8 @@ public class Dame extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        print("Ping 2");
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -142,6 +146,8 @@ public class Dame extends Figur{
     }
 
     private ArrayList<Feld> moeglicheZuegeNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
+        //ALARM HIER IST NOCH EIN FEHLER
+        print("Ping 3");
 
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
@@ -191,6 +197,10 @@ public class Dame extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        print("Ping 4");
+
+        int platzhalter = 0;
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -203,7 +213,16 @@ public class Dame extends Figur{
             return moeglicheZuege;
         } 
 
-        for(int i = (zeile-1); i >= 1; i--){
+        //Das hier könnte acutally ziemlich smart sein
+        if(spalte >= 5 && zeile >= 4){
+            platzhalter = 8 - spalte;
+        } else {
+            platzhalter = zeile - 1;
+        }
+
+        for(int i = 1; i < platzhalter; i++){
+
+            print(spaltenNummer + " | " + zeilenNummer);
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -240,6 +259,8 @@ public class Dame extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeInDerZeile(ArrayList<Figur> figuren, Schachbrett schachbrett){
         
+        print("Ping 5");
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         
         int spalte = this.getPosition().getSpalte();
@@ -375,6 +396,8 @@ public class Dame extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeInDerSpalte(ArrayList<Figur> figuren, Schachbrett schachbrett) {
         
+        print("Ping 6");
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         
         int spalte = this.getPosition().getSpalte();
@@ -414,9 +437,6 @@ public class Dame extends Figur{
 
 
         } else if(zeile > 1 && zeile < 8){
-            //Felder 1 bis (x-1) und (x+1) bis 8
-            System.out.println("SPALTE 2-7");
-
             //Felder 1 bis (x-1) und (x+1) bis 8
             System.out.println("SPALTE 2-7");
 

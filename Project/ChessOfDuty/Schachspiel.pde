@@ -86,11 +86,18 @@ public class Schachspiel {
         if(umsetzenMoeglich){
             for(Figur f : this.figuren){
                 if(f == ausgewaehltFigur) {
+                    //Hier kommt jetzt die Überprüfung, ob etwas geschlagen wurde, oder nicht
+                    pruefeFigurGeschlagen(ausgewaehltesFeld);
+
+                    //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
                     break;
                 }
             }
         }   
+
+        
+        
     }
 
     private Feld selektiereAusgewaehltesFeld(){
@@ -118,7 +125,14 @@ public class Schachspiel {
         return false;
     }
 
-    public ArrayList<Figur> getFiguren(){
-        return this.figuren;
+    private void pruefeFigurGeschlagen(Feld zielFeld){
+
+        for(Figur f : this.figuren){
+            if(f.getPosition() == zielFeld && f.getFarbe() != ausgewaehltFigur.getFarbe()){
+                print("BÄÄM HIER WIRD EINE FIGUR GESCHLAGEN");
+            }
+        }
+
     }
+
 }
