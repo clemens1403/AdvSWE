@@ -55,13 +55,6 @@ public class Schachspiel {
         for(Figur f : this.figuren){
             f.render();
         }
-
-        try{
-            Thread.sleep(2000);
-        } catch(InterruptedException ex){
-            Thread.currentThread().interrupt();
-        }
-
     }
 
     public void waehleEineFigurAus(){
@@ -87,26 +80,13 @@ public class Schachspiel {
 
     public void fuehreZugAus(){
 
-        //Feld ausgewaehltesFeld = null;
-
-        /*for(int i = 1; i <= 8; i++){
-            for(int j = 1; j <= 8; j++){
-                Feld tmp = schachbrett.getFeld(i, j);
-                if(tmp.checkFeldGeklickt() != null){
-                    ausgewaehltesFeld = tmp;
-                }
-            }
-        }*/
-
         Feld ausgewaehltesFeld = selektiereAusgewaehltesFeld();
         boolean umsetzenMoeglich = pruefeObFeldInMoeglichenZuegenIst(ausgewaehltesFeld);   
 
         if(umsetzenMoeglich){
             for(Figur f : this.figuren){
                 if(f == ausgewaehltFigur) {
-                    print("Übereinstimmung gefunden bei:" + f);
                     f.setPosition(ausgewaehltesFeld);
-                    print("Neues Feld: " + f.getPosition().getSpalte() + "|" + f.getPosition().getZeile());
                     break;
                 }
             }
@@ -131,7 +111,6 @@ public class Schachspiel {
         for(Feld feld : this.moeglicheZuegeDerFigur){
 
             if(ausgewaehltesFeld.getSpalte() == feld.getSpalte() && ausgewaehltesFeld.getZeile() == feld.getZeile()){
-                print("Die Figur kann umgesetzt werden");
                 return true;
             }
         }

@@ -203,7 +203,7 @@ public class Dame extends Figur{
             return moeglicheZuege;
         } 
 
-        for(int i = (spalte+1); i <= 8; i++){
+        for(int i = (zeile-1); i >= 1; i--){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;

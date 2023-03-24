@@ -33,7 +33,6 @@ public class Feld {
 
         if((mouseX > this.getX()) && (mouseX < this.getX()+this.getGroesse())){
             if((mouseY > this.getY()) && (mouseY < this.getY()+this.getGroesse())){
-                print("Nächster Zug: Spalte[" + spalte + "] Zeile[" + zeile + "]");
                 return this;
             }
         }
