@@ -24,7 +24,7 @@ public class Schachspiel {
     public void initialisiereFiguren(){
 
         for(int i = 1; i<=8; i++){
-            //figuren.add(new Bauer(1, schachbrett.getFeld(i, 2)));
+            figuren.add(new Bauer(1, schachbrett.getFeld(i, 2)));
             //figuren.add(new Bauer(0, schachbrett.getFeld(i, 7)));
         }
 
@@ -38,7 +38,7 @@ public class Schachspiel {
         figuren.add(new Laeufer(0, schachbrett.getFeld(3,8)));
         figuren.add(new Laeufer(1, schachbrett.getFeld(6,1)));
         figuren.add(new Laeufer(0, schachbrett.getFeld(6,8)));
-        figuren.add(new Springer(1, schachbrett.getFeld(3,2)));
+        figuren.add(new Springer(1, schachbrett.getFeld(2,1)));
         figuren.add(new Springer(0, schachbrett.getFeld(2,8)));
         figuren.add(new Springer(1, schachbrett.getFeld(7,1)));
         figuren.add(new Springer(0, schachbrett.getFeld(7,8)));
@@ -81,7 +81,7 @@ public class Schachspiel {
     public void fuehreZugAus(){
 
         Feld ausgewaehltesFeld = selektiereAusgewaehltesFeld();
-        boolean umsetzenMoeglich = pruefeObFeldInMoeglichenZuegenIst(ausgewaehltesFeld);   
+        boolean umsetzenMoeglich = this.moeglicheZuegeDerFigur.contains(ausgewaehltesFeld);   
 
         if(umsetzenMoeglich){
             for(Figur f : this.figuren){
@@ -113,7 +113,7 @@ public class Schachspiel {
         return null;
     }
 
-    private Boolean pruefeObFeldInMoeglichenZuegenIst(Feld ausgewaehltesFeld){
+    /*private Boolean pruefeObFeldInMoeglichenZuegenIst(Feld ausgewaehltesFeld){
 
         for(Feld feld : this.moeglicheZuegeDerFigur){
 
@@ -123,7 +123,7 @@ public class Schachspiel {
         }
 
         return false;
-    }
+    }*/
 
     private void pruefeFigurGeschlagen(Feld zielFeld){
 

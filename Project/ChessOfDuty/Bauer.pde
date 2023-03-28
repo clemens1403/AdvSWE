@@ -5,12 +5,14 @@ import java.util.List;
 public class Bauer extends Figur{
 
     private boolean doppelschrittMoeglich = true;
+    private Feld startPosition;
 
     public Bauer(int farbe, Feld startPosition){
         super(farbe, startPosition);
         this.setName("Bauer");
         this.setAbkuerzung("B");
         this.setWert(1);
+        this.startPosition = startPosition;
     }
 
     public void wirdUmgewandelt(){
@@ -29,8 +31,9 @@ public class Bauer extends Figur{
         this.doppelschrittMoeglich = false;
     }
 
-    /*@Override
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figuren> figuren){
+    @Override
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
+        print("\n Berechne moegliche Zuege \n");
         /*
         Prüfe mögliche Züge für die Figur 'Bauer'
 
@@ -38,22 +41,55 @@ public class Bauer extends Figur{
             - zwei Felder nach vorne (sofern noch nicht bewegt)
             - ein Feld nach vorne (sofern bereits bewegt wurden und keine Figur blockiert)
             - ein Feld schräg nach links oder rechts vorne (andere Figur wird geschlagen)
-            - ein Feld schräg nach links oder rechts vorne (En Passent)
+            - ein Feld schräg nach links oder rechts vorne (En Passent)*/
         
 
         // Farbe: 0 = Schwarz, 1 = Weiß
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
-        Feld aktuellePosition = getPosition();
+        Feld aktuellePosition = this.getPosition();
+        if(aktuellePosition != this.startPosition){
+            this.doppelschrittMoeglich = false;
+        }
+        int aktuelleZeile = aktuellePosition.getZeile();
+        print("aktuelleZeile: " + aktuelleZeile + "\n");
+        int aktuelleSpalte = aktuellePosition.getSpalte();
 
         // Bauern können sich nur vorwärt auf dem Spielfeld bewegen
-        if(getFarbe() == 1){
+        if(this.getFarbe() == 1){
             //Die weißen Figuren bewegen sich bei den Zeilen in aufsteigende Richtung
 
             //Einfacher Schritt nach vorne
-            int einfacherSchritt = aktuellePosition.getZeile() + 1;
+            //int einfacherSchritt = aktuellePosition.getZeile() + 1;
             //moeglicheZuege.add((aktuellePosition.getSpalte(), einfacherSchritt));
+
+            boolean einzelschritt = true;
+            boolean doppelschritt = this.doppelschrittMoeglich;
+            for(Figur f : figuren){
+                Feld positionFigur = f.getPosition();
+                int zeileFigur = positionFigur.getZeile();
+                int spalteFigur = positionFigur.getSpalte();
+                if(aktuelleSpalte == spalteFigur){
+                    if(aktuelleZeile == zeileFigur - 1){
+                        print("Kein Zug möglich wegen Kollision mit \n");
+                        print(f.getAbkuerzung() + " Spalte: " + spalteFigur + " Zeile: " + zeileFigur);
+                        einzelschritt = false;
+                        doppelschritt = false;
+                    }else if(doppelschritt){
+                        if(aktuelleZeile == zeileFigur - 2){
+                            doppelschritt = false;
+                        }
+                    }
+                }
+            }
+
+            if(einzelschritt){
+                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1));
+            }
+            if(doppelschritt){
+                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 2));
+            }
 
         } else {
             //Die schwarzen Figuren bewegen sich bei den Zeilen in absteigende Richtung
@@ -66,7 +102,11 @@ public class Bauer extends Figur{
         
         //int zeile = aktuellePosition.getZeile();
 
+        for (Feld eintrag : moeglicheZuege) {
+            System.out.println("(" + eintrag.getSpalte() + ", " + eintrag.getZeile() + ")");
+        }
+
         return moeglicheZuege;
 
-    }*/
+    }
 }
