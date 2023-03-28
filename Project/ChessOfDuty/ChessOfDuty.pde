@@ -33,14 +33,8 @@ void mousePressed(){
       }
       break;
     case "Spiel":
-      schachspiel.waehleEineFigurAus();
-      gui.setStatus("Zug");
-      break;
-    case "Zug":
-      schachspiel.fuehreZugAus();
+      schachspiel.klickAuswerten();
       gui.setSchachspiel(schachspiel);
-      schachspiel.renderSchachspiel();
-      gui.setStatus("Spiel");
       break;
     default:
       break;

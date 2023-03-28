@@ -55,6 +55,22 @@ public class Schachspiel {
         for(Figur f : this.figuren){
             f.render();
         }
+
+        for(Feld f: this.moeglicheZuegeDerFigur){
+            push();
+            stroke(200,100,100);
+            strokeWeight(7);
+            point(f.getX() + f.getGroesse()/2, f.getY() + f.getGroesse()/2);
+            pop();
+        }
+    }
+
+    public void klickAuswerten(){
+        if (this.ausgewaehltFigur != null){
+            this.fuehreZugAus();
+        }else{
+            this.waehleEineFigurAus();
+        }
     }
 
     public void waehleEineFigurAus(){
@@ -71,6 +87,7 @@ public class Schachspiel {
                     //print("Show possible moves");
                     this.ausgewaehltFigur = f;
                     this.moeglicheZuegeDerFigur = f.getMoeglicheZuege(figuren, schachbrett);
+                    print(this.moeglicheZuegeDerFigur);
                 }
 
                 break;
@@ -98,8 +115,8 @@ public class Schachspiel {
             }
         }   
 
-        
-        
+        this.moeglicheZuegeDerFigur = new ArrayList<Feld>();
+        this.ausgewaehltFigur = null;
     }
 
     private Feld selektiereAusgewaehltesFeld(){
