@@ -42,6 +42,8 @@ public class Laeufer extends Figur{
 
     private ArrayList<Feld> moeglicheZeugeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        int platzhalter = 0;
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -54,7 +56,9 @@ public class Laeufer extends Figur{
             return moeglicheZuege;
         } 
 
-        for(int i = (spalte+1); i <= 8; i++){
+        platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneRechts");
+
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -91,6 +95,8 @@ public class Laeufer extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        int platzhalter = 0;
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -103,7 +109,9 @@ public class Laeufer extends Figur{
             return moeglicheZuege;
         } 
 
-        for(int i = (spalte-1); i >= 1; i--){
+        platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneLinks");
+
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -139,6 +147,8 @@ public class Laeufer extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        int platzhalter = 0;
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -151,7 +161,9 @@ public class Laeufer extends Figur{
             return moeglicheZuege;
         } 
 
-        for(int i = (zeile-1); i >= 1; i--){
+        platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenLinks");
+
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -187,6 +199,8 @@ public class Laeufer extends Figur{
 
     private ArrayList<Feld> moeglicheZuegeNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
+        int platzhalter = 0;
+
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
@@ -199,7 +213,9 @@ public class Laeufer extends Figur{
             return moeglicheZuege;
         } 
 
-        for(int i = (spalte+1); i <= 8; i++){
+        platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenRechts");
+
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -232,5 +248,61 @@ public class Laeufer extends Figur{
 
         return moeglicheZuege;
 
+    }
+
+    public int bekommeMatrixWerte(int spalte, int zeile, String bewegungsRichtung){
+
+        int[][] wertematrix = null;
+    
+                switch(bewegungsRichtung){
+            case "hintenRechts":
+                wertematrix = new int[][]{
+                    {0, 1, 2, 3, 4, 5, 6, 7},
+                    {0, 1, 2, 3, 4, 5, 6, 6},
+                    {0, 1, 2, 3, 4, 5, 5, 5},
+                    {0, 1, 2, 3, 4, 4, 4, 4},
+                    {0, 1, 2, 3, 3, 3, 3, 3},
+                    {0, 1, 2, 2, 2, 2, 2, 2},
+                    {0, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 0, 0, 0, 0, 0, 0, 0}};
+                break;
+            case "hintenLinks":
+                wertematrix = new int[][]{
+                    {0, 0, 0, 0, 0, 0, 0, 0},
+                    {0, 1, 1, 1, 1, 1, 1, 1},
+                    {0, 1, 2, 2, 2, 2, 2, 2},
+                    {0, 1, 2, 3, 3, 3, 3, 3},
+                    {0, 1, 2, 3, 4, 4, 4, 4},
+                    {0, 1, 2, 3, 4, 5, 5, 5},
+                    {0, 1, 2, 3, 4, 5, 6, 6},
+                    {0, 1, 2, 3, 4, 5, 6, 7}};
+                break;
+            case "vorneRechts":
+                wertematrix = new int[][]{
+                    {7, 6, 5, 4, 3, 2, 1, 0},
+                    {6, 6, 5, 4, 3, 2, 1, 0},
+                    {5, 5, 5, 4, 3, 2, 1, 0},
+                    {4, 4, 4, 4, 3, 2, 1, 0},
+                    {3, 3, 3, 3, 3, 2, 1, 0},
+                    {2, 2, 2, 2, 2, 2, 1, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 0},
+                    {0, 0, 0, 0, 0, 0, 0, 0}};
+                break;
+            case "vorneLinks":
+                wertematrix = new int[][]{
+                    {0, 0, 0, 0, 0, 0, 0, 0},
+                    {1, 1, 1, 1, 1, 1, 1, 0},
+                    {2, 2, 2, 2, 2, 2, 1, 0},
+                    {3, 3, 3, 3, 3, 2, 1, 0},
+                    {4, 4, 4, 4, 3, 2, 1, 0},
+                    {5, 5, 5, 4, 3, 2, 1, 0},
+                    {6, 6, 5, 4, 3, 2, 1, 0},
+                    {7, 6, 5, 4, 3, 2, 1, 0}};
+                break;
+            
+        }
+
+        
+        return wertematrix[spalte-1][zeile-1];
     }
 }

@@ -56,7 +56,7 @@ public class Dame extends Figur{
 
         platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneRechts");
 
-        for(int i = 1; i < platzhalter; i++){
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -111,7 +111,7 @@ public class Dame extends Figur{
 
         platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneLinks");
 
-        for(int i = 1; i < platzhalter; i++){
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
@@ -164,7 +164,7 @@ public class Dame extends Figur{
 
         platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenLinks");
 
-        for(int i = 1; i < platzhalter; i++){
+        for(int i = 1; i <= platzhalter; i++){
             
             boolean kollisionGefunden = false;
             Figur kollidierteFigur = null;
