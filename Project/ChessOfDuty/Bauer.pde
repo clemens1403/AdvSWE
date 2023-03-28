@@ -56,6 +56,10 @@ public class Bauer extends Figur{
         print("aktuelleZeile: " + aktuelleZeile + "\n");
         int aktuelleSpalte = aktuellePosition.getSpalte();
 
+
+        boolean einzelschritt = true;
+        boolean doppelschritt = this.doppelschrittMoeglich;
+
         // Bauern können sich nur vorwärt auf dem Spielfeld bewegen
         if(this.getFarbe() == 1){
             //Die weißen Figuren bewegen sich bei den Zeilen in aufsteigende Richtung
@@ -64,8 +68,7 @@ public class Bauer extends Figur{
             //int einfacherSchritt = aktuellePosition.getZeile() + 1;
             //moeglicheZuege.add((aktuellePosition.getSpalte(), einfacherSchritt));
 
-            boolean einzelschritt = true;
-            boolean doppelschritt = this.doppelschrittMoeglich;
+            
             for(Figur f : figuren){
                 Feld positionFigur = f.getPosition();
                 int zeileFigur = positionFigur.getZeile();
@@ -95,8 +98,34 @@ public class Bauer extends Figur{
             //Die schwarzen Figuren bewegen sich bei den Zeilen in absteigende Richtung
 
             //Einfacher Schritt nach vorne
-            int einfacherSchritt = aktuellePosition.getZeile() - 1;
+            //int einfacherSchritt = aktuellePosition.getZeile() - 1;
             //moeglicheZuege.add(new SimpleEntry<>(aktuellePosition.getSpalte(), einfacherSchritt));
+
+
+            for(Figur f : figuren){
+                Feld positionFigur = f.getPosition();
+                int zeileFigur = positionFigur.getZeile();
+                int spalteFigur = positionFigur.getSpalte();
+                if(aktuelleSpalte == spalteFigur){
+                    if(aktuelleZeile == zeileFigur + 1){
+                        print("Kein Zug möglich wegen Kollision mit \n");
+                        print(f.getAbkuerzung() + " Spalte: " + spalteFigur + " Zeile: " + zeileFigur);
+                        einzelschritt = false;
+                        doppelschritt = false;
+                    }else if(doppelschritt){
+                        if(aktuelleZeile == zeileFigur + 2){
+                            doppelschritt = false;
+                        }
+                    }
+                }
+            }
+
+            if(einzelschritt){
+                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 1));
+            }
+            if(doppelschritt){
+                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 2));
+            }
 
         }
         

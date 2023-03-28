@@ -25,7 +25,7 @@ public class Schachspiel {
 
         for(int i = 1; i<=8; i++){
             figuren.add(new Bauer(1, schachbrett.getFeld(i, 2)));
-            //figuren.add(new Bauer(0, schachbrett.getFeld(i, 7)));
+            figuren.add(new Bauer(0, schachbrett.getFeld(i, 7)));
         }
 
         figuren.add(new Koenig(1, schachbrett.getFeld(5,1)));
@@ -91,6 +91,8 @@ public class Schachspiel {
 
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
+                    //Spieler am Zug wechselt
+                    this.spielerAmZug =  (this.spielerAmZug - 1) * (this.spielerAmZug - 1);
                     break;
                 }
             }

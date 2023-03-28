@@ -12,7 +12,7 @@ public class Koenig extends Figur{
     }
 
     public boolean istImSchach() {
-        return true;
+        return false;
         // Implementierung der Überprüfung, ob der König im Schach ist
     }
 
