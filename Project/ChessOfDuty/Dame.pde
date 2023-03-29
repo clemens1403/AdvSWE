@@ -38,7 +38,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZeugeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.OBEN_RECHTS);
+        int platzhalter = Bewegungsmatrizen.OBEN_RECHTS.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8 || zeile == 8){
@@ -51,7 +51,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.OBEN_LINKS);
+        int platzhalter = Bewegungsmatrizen.OBEN_LINKS.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 1 || zeile == 8){
@@ -64,7 +64,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZuegeNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.UNTEN_LINKS);
+        int platzhalter = Bewegungsmatrizen.UNTEN_LINKS.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();   
 
         if(spalte == 1 || zeile == 1){
@@ -77,7 +77,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZuegeNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.UNTEN_RECHTS);
+        int platzhalter = Bewegungsmatrizen.UNTEN_RECHTS.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8 || zeile == 1){
@@ -90,7 +90,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZuegeNachVorne(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.OBEN);
+        int platzhalter = Bewegungsmatrizen.OBEN.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(zeile == 8){
@@ -103,7 +103,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZuegeNachHinten(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.UNTEN);
+        int platzhalter = Bewegungsmatrizen.UNTEN.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(zeile == 1){
@@ -116,7 +116,7 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZuegeNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.LINKS);
+        int platzhalter = Bewegungsmatrizen.LINKS.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 1){
@@ -129,7 +129,7 @@ public class Dame extends Figur{
         private ArrayList<Feld> moeglicheZuegeNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.RECHTS);
+        int platzhalter = Bewegungsmatrizen.RECHTS.erhalteMatrizenWert(spalte, zeile);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8){
@@ -137,105 +137,6 @@ public class Dame extends Figur{
         } 
 
         return ermittleMoeglicheZuege(Bewegungsrichtung.RECHTS, platzhalter, spalte+1, zeile, figuren, schachbrett);
-    }
-
-    private int bekommeMatrixWerte(int spalte, int zeile, Bewegungsrichtung bewegungsRichtung){
-
-        int[][] wertematrix = null;
-
-        switch(bewegungsRichtung){
-            case UNTEN_RECHTS:
-                wertematrix = new int[][]{
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 6},
-                    {0, 1, 2, 3, 4, 5, 5, 5},
-                    {0, 1, 2, 3, 4, 4, 4, 4},
-                    {0, 1, 2, 3, 3, 3, 3, 3},
-                    {0, 1, 2, 2, 2, 2, 2, 2},
-                    {0, 1, 1, 1, 1, 1, 1, 1},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
-                break;
-            case UNTEN_LINKS:
-                wertematrix = new int[][]{
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {0, 1, 1, 1, 1, 1, 1, 1},
-                    {0, 1, 2, 2, 2, 2, 2, 2},
-                    {0, 1, 2, 3, 3, 3, 3, 3},
-                    {0, 1, 2, 3, 4, 4, 4, 4},
-                    {0, 1, 2, 3, 4, 5, 5, 5},
-                    {0, 1, 2, 3, 4, 5, 6, 6},
-                    {0, 1, 2, 3, 4, 5, 6, 7}};
-                break;
-            case OBEN_RECHTS:
-                wertematrix = new int[][]{
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {6, 6, 5, 4, 3, 2, 1, 0},
-                    {5, 5, 5, 4, 3, 2, 1, 0},
-                    {4, 4, 4, 4, 3, 2, 1, 0},
-                    {3, 3, 3, 3, 3, 2, 1, 0},
-                    {2, 2, 2, 2, 2, 2, 1, 0},
-                    {1, 1, 1, 1, 1, 1, 1, 0},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
-                break;
-            case OBEN_LINKS:
-                wertematrix = new int[][]{
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {1, 1, 1, 1, 1, 1, 1, 0},
-                    {2, 2, 2, 2, 2, 2, 1, 0},
-                    {3, 3, 3, 3, 3, 2, 1, 0},
-                    {4, 4, 4, 4, 3, 2, 1, 0},
-                    {5, 5, 5, 4, 3, 2, 1, 0},
-                    {6, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0}};
-                break;
-            case LINKS:
-                wertematrix = new int[][]{
-                    {0, 0, 0, 0, 0, 0, 0, 0},
-                    {1, 1, 1, 1, 1, 1, 1, 1},
-                    {2, 2, 2, 2, 2, 2, 2, 2},
-                    {3, 3, 3, 3, 3, 3, 3, 3},
-                    {4, 4, 4, 4, 4, 4, 4, 4},
-                    {5, 5, 5, 5, 5, 5, 5, 5},
-                    {6, 6, 6, 6, 6, 6, 6, 6},
-                    {7, 7, 7, 7, 7, 7, 7, 7}};
-                break;
-            case RECHTS:
-                wertematrix = new int[][]{
-                    {7, 7, 7, 7, 7, 7, 7, 7},
-                    {6, 6, 6, 6, 6, 6, 6, 6},
-                    {5, 5, 5, 5, 5, 5, 5, 5},
-                    {4, 4, 4, 4, 4, 4, 4, 4},
-                    {3, 3, 3, 3, 3, 3, 3, 3},
-                    {2, 2, 2, 2, 2, 2, 2, 2},
-                    {1, 1, 1, 1, 1, 1, 1, 1},
-                    {0, 0, 0, 0, 0, 0, 0, 0}};
-                break;
-            case UNTEN:
-                wertematrix = new int[][]{
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7},
-                    {0, 1, 2, 3, 4, 5, 6, 7}};
-                break;
-            case OBEN:
-                wertematrix = new int[][]{
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0},
-                    {7, 6, 5, 4, 3, 2, 1, 0}};
-                break;     
-        }
-
-        
-        return wertematrix[spalte-1][zeile-1];
     }
 
     private ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett){
@@ -255,7 +156,6 @@ public class Dame extends Figur{
 
             spalte += bewegungsRichtung.spaltenVerschiebung();
             zeile += bewegungsRichtung.zeilenVerschiebung();
-
         }
 
         return moeglicheZuege;
