@@ -14,19 +14,39 @@ public abstract class Figur{
         this.position = startPosition;
     }
 
-    public boolean istZugAusserhalbVomFeld(){
-        //Implementiere die Überprüfung, ob ein Zug den Springer aus dem Feld herausbringen würde
-        return true;
+    protected ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett){
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+
+        for(int i = 1; i <= beweglicheFelder; i++){
+            Figur kollidierteFigur = findeKollision(figuren, spalte, zeile);
+
+            if(kollidierteFigur != null){
+                if(this.getFarbe() != kollidierteFigur.getFarbe()){
+                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
+                    break;
+                } else break;
+            } else {
+                moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
+            }
+
+            spalte += bewegungsRichtung.spaltenVerschiebung();
+            zeile += bewegungsRichtung.zeilenVerschiebung();
+        }
+
+        return moeglicheZuege;
     }
 
-    public boolean istZugGueltig(String newPosition) {
-        return true;
-        // Implementierung der Überprüfung, ob der Zug der Dame gültig ist
-        // Zum Beispiel wenn eine Figur bewegt werden soll und dadurch der eigene König ins Schach gerät
-    }
+    protected Figur findeKollision(ArrayList<Figur> figuren, int spalte, int zeile){
+        Figur kollidierteFigur = null;
+        
+        for(Figur f : figuren){
+            if(f.getPosition().getSpalte() == spalte && f.getPosition().getZeile() == zeile){
+                kollidierteFigur = f;
+                break;
+            } 
+        }
 
-    public void zugAusfuehren(){
-
+        return kollidierteFigur;
     }
 
     public void wirdGeschlagen(){

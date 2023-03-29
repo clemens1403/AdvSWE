@@ -23,7 +23,7 @@ public class Dame extends Figur{
                 - gerade Bewegungen in der Spalte
         */
 
-        moeglicheZuege.addAll(moeglicheZeugeNachVorneRechts(figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeNachVorneRechts(figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeNachVorneLinks(figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeNachHintenLinks(figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeNachHintenRechts(figuren, schachbrett));
@@ -35,7 +35,7 @@ public class Dame extends Figur{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicheZeugeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
+    private ArrayList<Feld> moeglicheZuegeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
         int platzhalter = Bewegungsmatrizen.OBEN_RECHTS.erhalteMatrizenWert(spalte, zeile);
@@ -139,38 +139,4 @@ public class Dame extends Figur{
         return ermittleMoeglicheZuege(Bewegungsrichtung.RECHTS, platzhalter, spalte+1, zeile, figuren, schachbrett);
     }
 
-    private ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett){
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-        for(int i = 1; i <= beweglicheFelder; i++){
-            Figur kollidierteFigur = findeKollision(figuren, spalte, zeile);
-
-            if(kollidierteFigur != null){
-                if(this.getFarbe() != kollidierteFigur.getFarbe()){
-                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
-                    break;
-                } else break;
-            } else {
-                moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
-            }
-
-            spalte += bewegungsRichtung.spaltenVerschiebung();
-            zeile += bewegungsRichtung.zeilenVerschiebung();
-        }
-
-        return moeglicheZuege;
-    }
-
-    private Figur findeKollision(ArrayList<Figur> figuren, int spalte, int zeile){
-        Figur kollidierteFigur = null;
-        
-        for(Figur f : figuren){
-            if(f.getPosition().getSpalte() == spalte && f.getPosition().getZeile() == zeile){
-                kollidierteFigur = f;
-                break;
-            } 
-        }
-
-        return kollidierteFigur;
-    }
 }
