@@ -6,7 +6,7 @@ public abstract class Figur{
     private int farbe;
     private Boolean imSpiel;
 
-    private Feld position;
+    protected Feld position;
 
     public Figur(int farbe, Feld startPosition){
         

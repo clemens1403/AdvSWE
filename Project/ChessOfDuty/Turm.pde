@@ -1,4 +1,7 @@
 public class Turm extends Figur{
+    int spalte = -1;
+    int zeile = -1;
+
     public Turm(int farbe, Feld startPosition){
         
         super(farbe, startPosition);
@@ -10,71 +13,35 @@ public class Turm extends Figur{
 
     @Override
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
-
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+
+        this.spalte = this.getPosition().getSpalte();
+        this.zeile = this.getPosition().getZeile();
         /*
             Die Figur Turm kann folgende Bewegungen ausführen:
                 - alle Felder in der aktuellen Spalte
                 - alle Felder in der aktuellen Zeile
         */
 
-        moeglicheZuege.addAll(moeglicheZuegeNachVorne(figuren, schachbrett));
-        moeglicheZuege.addAll(moeglicheZuegeNachHinten(figuren,schachbrett));
-        moeglicheZuege.addAll(moeglicheZuegeNachLinks(figuren, schachbrett));
-        moeglicheZuege.addAll(moeglicheZuegeNachRechts(figuren,schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN, Bewegungsmatrizen.OBEN, figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN, Bewegungsmatrizen.UNTEN, figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.LINKS, Bewegungsmatrizen.LINKS, figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.RECHTS, Bewegungsmatrizen.RECHTS, figuren, schachbrett));
 
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicheZuegeNachVorne(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        int spalte = this.getPosition().getSpalte();
-        int zeile = this.getPosition().getZeile();
-        int platzhalter = Bewegungsmatrizen.OBEN.erhalteMatrizenWert(spalte, zeile);
+    private ArrayList<Feld> moeglicheZuegeRichtung(Bewegungsrichtung richtung, Bewegungsmatrizen matrix, ArrayList<Figur> figuren, Schachbrett schachbrett){
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+        int platzhalter = matrix.erhalteMatrizenWert(spalte, zeile);
 
-        if(zeile == 8){
+        if ((spalte == richtung.spaltenVerbot() && richtung.zeilenVerbot() != 0) || (richtung.zeilenVerbot() != 0 && zeile == richtung.zeilenVerbot())) {
             return moeglicheZuege;
-        } 
+        }
 
-        return ermittleMoeglicheZuege(Bewegungsrichtung.OBEN, platzhalter, spalte, zeile+1, figuren, schachbrett);
-    }
+        int naechsteSpalte = spalte + richtung.spaltenVerschiebung();
+        int naechsteZeile = zeile + richtung.zeilenVerschiebung();
 
-    private ArrayList<Feld> moeglicheZuegeNachHinten(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        int spalte = this.getPosition().getSpalte();
-        int zeile = this.getPosition().getZeile();
-        int platzhalter = Bewegungsmatrizen.UNTEN.erhalteMatrizenWert(spalte, zeile);
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-        if(zeile == 1){
-            return moeglicheZuege;
-        } 
-
-        return ermittleMoeglicheZuege(Bewegungsrichtung.UNTEN, platzhalter, spalte, zeile-1, figuren, schachbrett);
-    }
-
-    private ArrayList<Feld> moeglicheZuegeNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        int spalte = this.getPosition().getSpalte();
-        int zeile = this.getPosition().getZeile();
-        int platzhalter = Bewegungsmatrizen.LINKS.erhalteMatrizenWert(spalte, zeile);
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-        if(spalte == 1){
-            return moeglicheZuege;
-        } 
-
-        return ermittleMoeglicheZuege(Bewegungsrichtung.LINKS, platzhalter, spalte-1, zeile, figuren, schachbrett);
-    }
-
-        private ArrayList<Feld> moeglicheZuegeNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        int spalte = this.getPosition().getSpalte();
-        int zeile = this.getPosition().getZeile();
-        int platzhalter = Bewegungsmatrizen.RECHTS.erhalteMatrizenWert(spalte, zeile);
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-        if(spalte == 8){
-            return moeglicheZuege;
-        } 
-
-        return ermittleMoeglicheZuege(Bewegungsrichtung.RECHTS, platzhalter, spalte+1, zeile, figuren, schachbrett);
+        return ermittleMoeglicheZuege(richtung, platzhalter, naechsteSpalte, naechsteZeile, figuren, schachbrett);
     }
 }
