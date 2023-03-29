@@ -37,24 +37,17 @@ public class Dame extends Figur{
     }
 
     private ArrayList<Feld> moeglicheZeugeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
-
-        print("Ping 1");
-
-        int platzhalter = 0; 
-
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-
-        int spaltenNummer = spalte+1;
-        int zeilenNummer = zeile+1;
-
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8 || zeile == 8){
             return moeglicheZuege;
         } 
 
-        platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneRechts");
+        int spaltenNummer = spalte+1;
+        int zeilenNummer = zeile+1;
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneRechts");
 
         for(int i = 1; i <= platzhalter; i++){
             
@@ -92,24 +85,17 @@ public class Dame extends Figur{
     }
 
     private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
-
-        print("Ping 2");
-
-        int platzhalter = 0;
-
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-
-        int spaltenNummer = spalte-1;
-        int zeilenNummer = zeile+1;
-
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 1 || zeile == 8){
             return moeglicheZuege;
         } 
 
-        platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneLinks");
+        int spaltenNummer = spalte-1;
+        int zeilenNummer = zeile+1;
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneLinks");
 
         for(int i = 1; i <= platzhalter; i++){
             
@@ -146,23 +132,17 @@ public class Dame extends Figur{
     }
 
     private ArrayList<Feld> moeglicheZuegeNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        print("Ping 3");
-
-        int platzhalter = 0;
-
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-
-        int spaltenNummer = spalte-1;
-        int zeilenNummer = zeile-1;
-
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();   
 
         if(spalte == 1 || zeile == 1){
             return moeglicheZuege;
         } 
 
-        platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenLinks");
+        int spaltenNummer = spalte-1;
+        int zeilenNummer = zeile-1;
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenLinks");
 
         for(int i = 1; i <= platzhalter; i++){
             
@@ -199,26 +179,17 @@ public class Dame extends Figur{
     }
 
     private ArrayList<Feld> moeglicheZuegeNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
-
-        print("Ping 4");
-
-        int platzhalter = 0;
-
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-
-        int spaltenNummer = spalte+1;
-        int zeilenNummer = zeile-1;
-
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8 || zeile == 1){
             return moeglicheZuege;
         } 
 
-        platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenRechts");
-        //System.out.println("Platzhalter: " + platzhalter);
-
+        int spaltenNummer = spalte+1;
+        int zeilenNummer = zeile-1;
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenRechts");
 
         for(int i = 1; i <= platzhalter; i++){
             
@@ -255,14 +226,11 @@ public class Dame extends Figur{
 
     }
 
-    private ArrayList<Feld> moeglicheZuegeInDerZeile(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        
-        print("Ping 5");
-
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-        
+    private ArrayList<Feld> moeglicheZuegeInDerZeile(ArrayList<Figur> figuren, Schachbrett schachbrett){        
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
+
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         
         //Erstelle alle möglichen Züge innerhalb einer Zeile
         if(spalte == 1){
@@ -392,14 +360,11 @@ public class Dame extends Figur{
         return moeglicheZuege;
     } 
 
-    private ArrayList<Feld> moeglicheZuegeInDerSpalte(ArrayList<Figur> figuren, Schachbrett schachbrett) {
-        
-        print("Ping 6");
-
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-        
+    private ArrayList<Feld> moeglicheZuegeInDerSpalte(ArrayList<Figur> figuren, Schachbrett schachbrett) {        
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
+
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         //Erstelle alle möglichen Züge innerhalb einer Spalte
         if(zeile == 1){

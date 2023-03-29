@@ -7,7 +7,6 @@ public abstract class Figur{
     private Boolean imSpiel;
 
     private Feld position;
-    //private ArrayList<Feld> moeglicheZuege;
 
     public Figur(int farbe, Feld startPosition){
         
