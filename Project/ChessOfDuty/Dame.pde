@@ -1,5 +1,3 @@
-//Ähm... also die Dame muss generell mal ordentlich überarbeitet werden, aber erstmal funktioniert es...
-
 public class Dame extends Figur{
     public Dame(int farbe, Feld startPosition){
         
@@ -39,191 +37,53 @@ public class Dame extends Figur{
     private ArrayList<Feld> moeglicheZeugeNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.OBEN_RECHTS);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8 || zeile == 8){
             return moeglicheZuege;
         } 
 
-        int spaltenNummer = spalte+1;
-        int zeilenNummer = zeile+1;
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneRechts");
-
-        for(int i = 1; i <= platzhalter; i++){
-            
-            boolean kollisionGefunden = false;
-            Figur kollidierteFigur = null;
-
-            for(Figur f : figuren){
-                if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spaltenNummer){
-                    kollisionGefunden = true;
-                    kollidierteFigur = f;
-                    break;
-                } 
-            }
-
-            if(kollisionGefunden){
-                //System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
-
-                if(this.getFarbe() == kollidierteFigur.getFarbe()){
-                    //System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
-                } else{
-                    //System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-                }
-                break;
-            } else {
-                moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-            }
-
-            spaltenNummer++;
-            zeilenNummer++;
-        }
-
-        return moeglicheZuege;
-
+        return ermittleMoeglicheZuege(Bewegungsrichtung.OBEN_RECHTS, platzhalter, spalte+1, zeile+1, figuren, schachbrett);
     }
 
     private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.OBEN_LINKS);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 1 || zeile == 8){
             return moeglicheZuege;
         } 
 
-        int spaltenNummer = spalte-1;
-        int zeilenNummer = zeile+1;
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, "vorneLinks");
-
-        for(int i = 1; i <= platzhalter; i++){
-            
-            boolean kollisionGefunden = false;
-            Figur kollidierteFigur = null;
-
-            for(Figur f : figuren){
-                if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spaltenNummer){
-                    kollisionGefunden = true;
-                    kollidierteFigur = f;
-                    break;
-                } 
-            }
-
-            if(kollisionGefunden){
-                //System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
-
-                if(this.getFarbe() == kollidierteFigur.getFarbe()){
-                    //System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
-                } else{
-                    //System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-                }
-                break;
-            } else {
-                moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-            }
-
-            spaltenNummer--;
-            zeilenNummer++;
-        }
-
-        return moeglicheZuege;
+        return ermittleMoeglicheZuege(Bewegungsrichtung.OBEN_LINKS, platzhalter, spalte-1, zeile+1, figuren, schachbrett);
     }
 
     private ArrayList<Feld> moeglicheZuegeNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.UNTEN_LINKS);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();   
 
         if(spalte == 1 || zeile == 1){
             return moeglicheZuege;
         } 
 
-        int spaltenNummer = spalte-1;
-        int zeilenNummer = zeile-1;
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenLinks");
-
-        for(int i = 1; i <= platzhalter; i++){
-            
-            boolean kollisionGefunden = false;
-            Figur kollidierteFigur = null;
-
-            for(Figur f : figuren){
-                if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spaltenNummer){
-                    kollisionGefunden = true;
-                    kollidierteFigur = f;
-                    break;
-                } 
-            }
-
-            if(kollisionGefunden){
-                //System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
-
-                if(this.getFarbe() == kollidierteFigur.getFarbe()){
-                    //System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
-                } else{
-                    //System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-                }
-                break;
-            } else {
-                moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-            }
-
-            spaltenNummer--;
-            zeilenNummer--;
-        }
-
-        return moeglicheZuege;
+        return ermittleMoeglicheZuege(Bewegungsrichtung.UNTEN_LINKS, platzhalter, spalte-1, zeile-1, figuren, schachbrett);
     }
 
     private ArrayList<Feld> moeglicheZuegeNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett){
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
+        int platzhalter = bekommeMatrixWerte(spalte, zeile, Bewegungsrichtung.UNTEN_RECHTS);
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
         if(spalte == 8 || zeile == 1){
             return moeglicheZuege;
         } 
 
-        int spaltenNummer = spalte+1;
-        int zeilenNummer = zeile-1;
-        int platzhalter = bekommeMatrixWerte(spalte, zeile, "hintenRechts");
-
-        for(int i = 1; i <= platzhalter; i++){
-            
-            boolean kollisionGefunden = false;
-            Figur kollidierteFigur = null;
-
-            for(Figur f : figuren){
-                if(f.getPosition().getZeile() == zeilenNummer && f.getPosition().getSpalte() == spaltenNummer){
-                    kollisionGefunden = true;
-                    kollidierteFigur = f;
-                    break;
-                } 
-            }
-
-            if(kollisionGefunden){
-                ////System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
-
-                if(this.getFarbe() == kollidierteFigur.getFarbe()){
-                    ////System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
-                } else{
-                    ////System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
-                    moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-                }
-                break;
-            } else {
-                moeglicheZuege.add(schachbrett.getFeld(spaltenNummer, zeilenNummer));
-            }
-
-            spaltenNummer++;
-            zeilenNummer--;
-        }
-
-        return moeglicheZuege;
-
+        return ermittleMoeglicheZuege(Bewegungsrichtung.UNTEN_RECHTS, platzhalter, spalte+1, zeile-1, figuren, schachbrett);
     }
 
     private ArrayList<Feld> moeglicheZuegeInDerZeile(ArrayList<Figur> figuren, Schachbrett schachbrett){        
@@ -494,12 +354,12 @@ public class Dame extends Figur{
         return moeglicheZuege;
     }
 
-    public int bekommeMatrixWerte(int spalte, int zeile, String bewegungsRichtung){
+    private int bekommeMatrixWerte(int spalte, int zeile, Bewegungsrichtung bewegungsRichtung){
 
         int[][] wertematrix = null;
 
         switch(bewegungsRichtung){
-            case "hintenRechts":
+            case UNTEN_RECHTS:
                 wertematrix = new int[][]{
                     {0, 1, 2, 3, 4, 5, 6, 7},
                     {0, 1, 2, 3, 4, 5, 6, 6},
@@ -510,7 +370,7 @@ public class Dame extends Figur{
                     {0, 1, 1, 1, 1, 1, 1, 1},
                     {0, 0, 0, 0, 0, 0, 0, 0}};
                 break;
-            case "hintenLinks":
+            case UNTEN_LINKS:
                 wertematrix = new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0},
                     {0, 1, 1, 1, 1, 1, 1, 1},
@@ -521,7 +381,7 @@ public class Dame extends Figur{
                     {0, 1, 2, 3, 4, 5, 6, 6},
                     {0, 1, 2, 3, 4, 5, 6, 7}};
                 break;
-            case "vorneRechts":
+            case OBEN_RECHTS:
                 wertematrix = new int[][]{
                     {7, 6, 5, 4, 3, 2, 1, 0},
                     {6, 6, 5, 4, 3, 2, 1, 0},
@@ -532,7 +392,7 @@ public class Dame extends Figur{
                     {1, 1, 1, 1, 1, 1, 1, 0},
                     {0, 0, 0, 0, 0, 0, 0, 0}};
                 break;
-            case "vorneLinks":
+            case OBEN_LINKS:
                 wertematrix = new int[][]{
                     {0, 0, 0, 0, 0, 0, 0, 0},
                     {1, 1, 1, 1, 1, 1, 1, 0},
@@ -548,5 +408,59 @@ public class Dame extends Figur{
 
         
         return wertematrix[spalte-1][zeile-1];
+    }
+
+    private ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett){
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+
+        for(int i = 1; i <= beweglicheFelder; i++){
+            Figur kollidierteFigur = findeKollision(figuren, spalte, zeile);
+
+            if(kollidierteFigur != null){
+                System.out.println("Kollision gefunden");
+                if(this.getFarbe() != kollidierteFigur.getFarbe()){
+                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
+                    System.out.println("Füge ein im IF");
+                    break;
+                } else break;
+            } else {
+                moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
+                System.out.println("Füge ein im ELSE");
+            }
+
+            spalte += bewegungsRichtung.spaltenVerschiebung();
+            zeile += bewegungsRichtung.zeilenVerschiebung();
+
+        }
+
+        return moeglicheZuege;
+    }
+
+    private Figur findeKollision(ArrayList<Figur> figuren, int spalte, int zeile){
+        Figur kollidierteFigur = null;
+        
+        for(Figur f : figuren){
+            if(f.getPosition().getSpalte() == spalte && f.getPosition().getZeile() == zeile){
+                kollidierteFigur = f;
+                break;
+            } 
+        }
+
+        return kollidierteFigur;
+    }
+
+    private int[] bearbeiteZeilenUndSpalten(String bewegungsRichtung, int spalte, int zeile){
+
+        int[] rueckgabe = new int[2];
+
+        switch(bewegungsRichtung){
+            case "vorneRechts":
+                rueckgabe[0] = spalte++;
+                rueckgabe[1] = zeile++;
+                return rueckgabe;
+            default :
+                return rueckgabe;
+        }
+
     }
 }
