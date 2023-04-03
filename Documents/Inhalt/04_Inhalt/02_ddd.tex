@@ -14,27 +14,62 @@ Auch wenn dies für den ungeübten Programmierer, der das Programmieren nur in E
 Ein Value Object ist ein unveränderliches Objekt, das einen bestimmten Wert repräsentiert und keine eigene Identität besitzt. 
 Es definiert sich durch seine Eigenschaften und nicht durch eine eindeutige Identität, wodurch es austauschbar und vergleichbar wird.
 
+Im Standardschach repräsentiert ein \textbf{Feld} eine Position, die durch eine Kombination aus \texttt{Spalte} und \texttt{Zeile} und \texttt{Farbe} definiert ist. 
+Da Schachfelder keinen Lebenszyklus haben und ihre Gleichheit durch ihre Position bestimmt wird, werden sie als Value Objects geführt. 
+Weiterhin ist es besonders wichtig für die grundlegende Funktion eines Schachspiels, dass Schachfelder als unveränderliche Objekte behandelt werden, da ein Schachspiel auf einer \glqq festen Unterlage\grqq{} spielt wird. 
 
+Ein \textbf{Schachbrett} kann ebenfalls als Value Object betrachtet werden, weil es einen unveränderlichen Zustand repräsentiert. 
+Ein Schachbrett ist in der domainenspezifischen Abbildung eines Schachspiels von der Realität in Programmcode eine übergeordnete Verwaltungsstruktur der einzelnen Felder.
+Dabei werden 64 Schachfelder definiert und als zweidimensionale Spielebene dargestellt.
+Die Gleichheit von zwei Schachbrettern basiert auf der Gleichheit ihrer Felder, unabhängig der tatsächlichen Instanz. 
+Da die Felder jedoch als Value Object geführt werden, kann dies auch auf das Schachbrett übertragen werden. 
+Ds Schachbrett weist keine Verhaltensänderungen auf, sodass ide Integrität des Objekts die ganze Zeit über gewahrt werden muss. 
 
 Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und weiteren Informationen über den Einfluss der Bewegung der betreffenden Figur auf umliegende Figuren zusammen. 
 Dazu zählen Informationen darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob andere Figuren ebenfalls bewegt werden müssen, wie es bei der Rochade der Fall ist. 
 Die Implementierung eines Schachzugs dient der Protokollierung einer gespielten Schachpartie. 
-Ein Schahczug wurde als Value Object klassifiziert, da er keinen erkennbaren Lebenszyklus besitzt und seine Eigenschaften nach der Erstellung nicht mehr verändert werden.
+Ein Schachzug wurde als Value Object klassifiziert, da er keinen erkennbaren Lebenszyklus besitzt und seine Eigenschaften nach der Erstellung nicht mehr verändert werden.
 
-\begin{itemize}
-    \item Schachfeld: 
-    \item Schachbrett    
-\end{itemize}
+Der \textbf{Spielzug} ein Value Object, welches jeweils zwei Schachzüge mit einer ID zusammenfasst. 
+
+Der Spielzug lässt sich eindeutig durch einen \texttt{zugNummer} identifizieren, die mit jedem Spielzug so lange um eins hochzählt wie das Schachspiel geht. 
+Auch wenn somit jeder Spielzug einen eindeutigen Schlüssel aufweist, der mit jedem erzeugten Spielzug um einen Wert inkrementiert, wird der Spielzug als Value Object geführt. 
+Grund dafür ist die immutable Art des Spielzugs, welcher nach Erstellung genau in der Form, in der er erstellt wurde, in die Protokollierung des Spiels geschrieben wird. 
+
+\newpage
 
 \subsection*{Entities}
 
-\begin{itemize}
-    \item Schachbrett
-    \item Figuren (König, Dame, Turm, Läufer, Springer, Bauer)
-    \item Spieler 
-    \item Schachspiel
-    \item Spielzug:
-\end{itemize}
+Eine Entity ist ein Objekt, das innerhalb der Domaine eine einzigartige Identität besitzt und sich im Laufe der Zeit verändern kann. 
+Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und weisen einen Lebenszyklus auf.
+
+Im Domainencode gibt es die Klasse \textbf{Figur}. 
+Diese dient als abstrakte Oberklasse für alle Figuren in einem Schachspiel. 
+Da die Klasse Figur als \textit{abstract class} implementiert ist, kann sie nicht instanziiert werden.
+Daher sind alle Spielfiguren, die von Figur erben, als Entitäten zu betrachten. 
+Zu diesen Spielfiguren gehören \textbf{König, Dame, Turm, Läufer, Springer} und \textbf{Bauer}. 
+Jede Figur kann über das Attribut \texttt{position} eindeutig identifiziert werden. 
+Die Position der Figuren fungiert als natürlicher Schlüssel. 
+Auf einem Feld kann immer nur eine Figur stehen, wodurch die Eindeutigkeit gewährleistet ist. 
+Wenn eine Figur auf ein Feld mit einer anderen Figur zieht, wird die dort stehende Figur geschlagen und aus dem aktiven Spiel entfernt. 
+Auch in diesem Fall steht letztendlich nur eine Figur auf dem Feld. 
+Innerhalb der Domaine \glqq Schach\grqq{} ist dieser Schlüssel veränderlich, da sich die Schachfiguren auf dem Spielfeld bewegen können. 
+Die Verwendung eines Surrogatschlüssel wäre grundsätzlich auch möglich, aber in diesem Fall wird sich an der Domaine orientiert.
+Im analogen Schach wird die Farbe einer Figur, der Figurentyp und die Position zur eindeutigen Identifizierung verwendet.   
+Eine Schachfigur besitzt einen eigenen Lebenszyklus. Sobald ein Schachspiel startet, werden alle Figuren in ihrer Startposition instanziiert. Während des Spiels können sie nahezu unbegrenzt bewegt werden. Wenn eine Figur geschlagen wird, wird sie gelöscht.
+
+Auch die \textbf{Spieler} können als Enität betrachtet werden. 
+Ein Spieler kann durch seinen \texttt{namen} als natürlichen Schlüssel identifiziert werden. 
+Während eines Schachspiels kann ein Spieler in jedem Zug eine Figur bewegen, weiterhin kann er aber auch das Spiel aufgeben. 
+Weiterhin ist der Spieler für das Elosystem nötig und ist veränderbar in seinem Rang. 
+
+%Hier muss noch was zum Schlüssel geschrieben werden
+Ein \textbf{Schachspiel} sollte ebenfalls als Entität behandelt werden. 
+Es besitzt eine eigene Identität und eine eigene Lebenszeit über eine Partie Schach hinweg, in dem es verschiedene Zustände annehmen kann. 
+Das Schachspiel ist eine übergeordnete logische Ebene, welche Spieler, Schachbrett und Figuren zusammenlegt. 
+Auch wenn beim Schach die Ausgangslage der Figuren immer gleich ist, so unterscheidet sich eine Partie Schach in ihrem Verlauf. 
+
+\newpage
 
 \subsection*{Aggregate}
 
