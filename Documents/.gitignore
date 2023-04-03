@@ -1,0 +1,25 @@
+**.aux
+**.vscode
+**.class
+**target
+**.vpp*
+
+##############################
+#Für die komischen LTeX-Files
+#
+**.bbl
+**.bcf
+**.blg
+**.fdb_latexmk
+**.fls
+**.lof
+**.log
+**.lol
+**.out
+**.run.xml
+**synctex.gz
+**.toc
+#
+###############################
+
+**.idea

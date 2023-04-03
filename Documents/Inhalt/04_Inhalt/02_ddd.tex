@@ -1,0 +1,43 @@
+\chapter{Domain Driven Design}
+
+\section{Ubiquitous Language}
+
+Der Auftraggeber des Programmentwurfs ist ein deutscher Kunde. 
+Obwohl in der Programmierung Englisch als die Standardsprache angenommen wird, wird aufgrund der Kundenlokalität die Projektsprache als \glqq Deutsch\grqq{} festgelegt. 
+Dadurch wird versucht die meisten Ausdrücke aus der Domäne ins Deutsche zu übernehmen. 
+Auch wenn dies für den ungeübten Programmierer, der das Programmieren nur in Englisch ausübt, eine zusätzliche Herausforderung darstellt und teilweise zu Namensfindungsschwierigkeiten oder längeren Funktionsnamen führen kann, wird an der Domänensprache festgehalten, um dem Kunden den Code so übersichtlich wie möglich übergeben zu können.
+
+\section{Domainenbausteine}
+
+\subsection*{Value Objects}
+
+Ein Value Object ist ein unveränderliches Objekt, das einen bestimmten Wert repräsentiert und keine eigene Identität besitzt. 
+Es definiert sich durch seine Eigenschaften und nicht durch eine eindeutige Identität, wodurch es austauschbar und vergleichbar wird.
+
+
+
+Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und weiteren Informationen über den Einfluss der Bewegung der betreffenden Figur auf umliegende Figuren zusammen. 
+Dazu zählen Informationen darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob andere Figuren ebenfalls bewegt werden müssen, wie es bei der Rochade der Fall ist. 
+Die Implementierung eines Schachzugs dient der Protokollierung einer gespielten Schachpartie. 
+Ein Schahczug wurde als Value Object klassifiziert, da er keinen erkennbaren Lebenszyklus besitzt und seine Eigenschaften nach der Erstellung nicht mehr verändert werden.
+
+\begin{itemize}
+    \item Schachfeld: 
+    \item Schachbrett    
+\end{itemize}
+
+\subsection*{Entities}
+
+\begin{itemize}
+    \item Schachbrett
+    \item Figuren (König, Dame, Turm, Läufer, Springer, Bauer)
+    \item Spieler 
+    \item Schachspiel
+    \item Spielzug:
+\end{itemize}
+
+\subsection*{Aggregate}
+
+\subsection*{Repositories}
+
+\section{Domainenevents}

@@ -1,0 +1,97 @@
+% ---- Präambel mit Angaben zum Dokument
+\input{Inhalt/00_Latex/praeambel}
+
+% ---- Elektronische Version oder Gedruckte Version?
+% ---- Unterschied: Die elektronische Version enthält keinen Platzhalter für die Unterschrift
+\usepackage{ifthen}
+\newboolean{e-Abgabe}
+\setboolean{e-Abgabe}{false}    % false=gedruckte Fassung
+
+% ---- Persönlichen Daten:
+\newcommand{\titel}{Chess of Duty}
+\newcommand{\titelheader}{Programmentwurf - Chess of Duty}
+\newcommand{\arbeit}{Advanced Software-Engineering}
+\newcommand{\studiengang}{Informatik}
+\newcommand{\studienjahr}{2023}
+\newcommand{\autor}{Clemens Richter \& Johannes Peters}
+\newcommand{\autorReverse}{Richter, Clemens \& Peters, Johannes}
+\newcommand{\verfassungsort}{Karlsruhe}
+\newcommand{\matrikelnr}{xxxxxxx \& 5802185}
+\newcommand{\kurs}{TINF20B1}
+\newcommand{\bearbeitungsmonat}{April 2023}
+\newcommand{\abgabe}{30. April 2023}
+\newcommand{\bearbeitungszeitraum}{04.10.2022 - 30.04.2023}
+\newcommand{\betreuerDhbw}{Herr Daniel Lindner}
+
+\input{Inhalt/00_Latex/kopfundFusszeile}
+
+% ---- Hilfreiches
+\newcommand{\zB}{z.\,B. }   % "z.B." mit kleinem Leeraum dazwischen (ohne wäre nicht korrekt)
+\newcommand{\dash}{d.\,h. }
+
+\newcommand{\code}[1]{\texttt{#1}} % Ist einfacher zu schreiben als ständig \texttt und erlaubt
+                                   % Änderungen im Nachhinein, wenn man z.B. Inline-Code anders stylen möchte.
+
+% ---- Silbentrennung (falls LaTeX defaults falsch / nicht gewünscht sind)
+\hyphenation{Graph-Script} % anstatt GraphS-cript
+
+% ---- Beginn des Dokuments
+\begin{document}
+\setlength{\parindent}{0pt}              % Keine Paragraphen Einrückung.
+                                         % Dafür haben wir den Abstand zwischen den Paragraphen.
+\setcounter{secnumdepth}{2}              % Nummerierungstiefe fürs Inhaltsverzeichnis
+\setcounter{tocdepth}{1}                 % Tiefe des Inhaltsverzeichnisses. Ggf. so anpassen,
+                                         % dass das Verzeichnis auf eine Seite passt.
+\sffamily                                % Serifenlose Schrift verwenden.
+
+% ---- Vorspann
+% ------ Titelseite
+\singlespacing
+\include{Inhalt/01_Standard/titelseite}  % Titelseite
+\newcounter{savepage}
+\pagenumbering{Roman}                    % Römische Seitenzahlen
+\onehalfspacing
+
+% ------ Erklärung, Sperrvermerk, Abstact
+%\include{Inhalt/01_Standard/erklaerung}
+%\include{Inhalt/02_Abstract/abstract-de.tex}
+%\include{Inhalt/02_Abstract/abstract-en.tex}
+
+% ------ Inhaltsverzeichnis
+\singlespacing
+\tableofcontents
+
+% ------ Verzeichnisse
+\renewcommand*{\chapterpagestyle}{plain}
+\pagestyle{plain}
+\setcounter{savepage}{\value{page}}
+
+
+% ---- Inhalt der Arbeit
+\cleardoublepage
+\pagenumbering{arabic}                  % Arabische Seitenzahlen für den Hauptteil
+\setlength{\parskip}{0.5\baselineskip}  % Abstand zwischen Absätzen
+\rmfamily
+\renewcommand*{\chapterpagestyle}{scrheadings}
+\pagestyle{scrheadings}
+\onehalfspacing
+
+%Hier kommen die \include-Statements
+\include{Inhalt/04_Inhalt/01_einleitung.tex}
+\include{Inhalt/04_Inhalt/02_ddd.tex}
+\include{Inhalt/04_Inhalt/03_clean_architecture.tex}
+
+% ---- Literaturverzeichnis
+\cleardoublepage
+\renewcommand*{\chapterpagestyle}{plain}
+\pagestyle{plain}
+\pagenumbering{Roman}                   % Römische Seitenzahlen
+\setcounter{page}{\numexpr\value{savepage}+1}
+
+% ---- Anhang
+\appendix
+%\clearpage
+%\pagenumbering{Roman}  % römische Seitenzahlen für Anhang
+
+\newpage
+\end{document}
