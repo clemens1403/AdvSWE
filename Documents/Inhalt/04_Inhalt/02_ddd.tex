@@ -28,20 +28,12 @@ Ds Schachbrett weist keine Verhaltensänderungen auf, sodass ide Integrität des
 Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und weiteren Informationen über den Einfluss der Bewegung der betreffenden Figur auf umliegende Figuren zusammen. 
 Dazu zählen Informationen darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob andere Figuren ebenfalls bewegt werden müssen, wie es bei der Rochade der Fall ist. 
 Die Implementierung eines Schachzugs dient der Protokollierung einer gespielten Schachpartie. 
-Ein Schachzug wurde als Value Object klassifiziert, da er keinen erkennbaren Lebenszyklus besitzt und seine Eigenschaften nach der Erstellung nicht mehr verändert werden.
-
-Der \textbf{Spielzug} ein Value Object, welches jeweils zwei Schachzüge mit einer ID zusammenfasst. 
-
-Der Spielzug lässt sich eindeutig durch einen \texttt{zugNummer} identifizieren, die mit jedem Spielzug so lange um eins hochzählt wie das Schachspiel geht. 
-Auch wenn somit jeder Spielzug einen eindeutigen Schlüssel aufweist, der mit jedem erzeugten Spielzug um einen Wert inkrementiert, wird der Spielzug als Value Object geführt. 
-Grund dafür ist die immutable Art des Spielzugs, welcher nach Erstellung genau in der Form, in der er erstellt wurde, in die Protokollierung des Spiels geschrieben wird. 
-
-\newpage
+Ein Schachzug wurde als Value Object klassifiziert, da er keinen erkennbaren Lebenszyklus besitzt und seine Eigenschaften nach der Erstellung nicht mehr verändert werden. 
 
 \subsection*{Entities}
 
 Eine Entity ist ein Objekt, das innerhalb der Domaine eine einzigartige Identität besitzt und sich im Laufe der Zeit verändern kann. 
-Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und weisen einen Lebenszyklus auf.
+Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und weisen einen Lebenszyklus auf.o
 
 Im Domainencode gibt es die Klasse \textbf{Figur}. 
 Diese dient als abstrakte Oberklasse für alle Figuren in einem Schachspiel. 
@@ -63,16 +55,46 @@ Ein Spieler kann durch seinen \texttt{namen} als natürlichen Schlüssel identif
 Während eines Schachspiels kann ein Spieler in jedem Zug eine Figur bewegen, weiterhin kann er aber auch das Spiel aufgeben. 
 Weiterhin ist der Spieler für das Elosystem nötig und ist veränderbar in seinem Rang. 
 
+Obwohl ein Schachzug ein Value Object ist, wird in diesem Projekt der \textbf{Spielzug} als Entity gewertet, obwohl nur zwei Schachzüge mit einer ID zusammengefasst werden. 
+Der Spielzug lässt sich eindeutig durch einen \texttt{zugNummer} identifizieren, die mit jedem Spielzug so lange um eins hochzählt wie das Schachspiel geht. 
+Durch den inkrementellen Schlüssel liegt die Vermutung nahe, dass es sich dabei um einen Surrogatschlüssel handelt, aber da diese Art der Zählung und Zugidentifizierung ebenfalls in der Domaine verwendet wird, ist die Einordnung als natürlicher Schlüssel passender. 
+Der Grund, warum der Spielzug als Entity und nicht als Value Object gehandelt wird, liegt am Lebenszyklus des Objektes. 
+Auch wenn es kein besonders umfangreicher Lebenszyklus ist, so wird nach dem Erstellen eines Schachzugs zuerst der weiße Zug gesetzt.
+In einem zweiten Schritt wird der schwarze Zug hinzugefügt, bevor der Schachzug zur weiteren Ausgabe verarbeitet und final wieder gelöscht wird. 
+
+
 %Hier muss noch was zum Schlüssel geschrieben werden
 Ein \textbf{Schachspiel} sollte ebenfalls als Entität behandelt werden. 
 Es besitzt eine eigene Identität und eine eigene Lebenszeit über eine Partie Schach hinweg, in dem es verschiedene Zustände annehmen kann. 
 Das Schachspiel ist eine übergeordnete logische Ebene, welche Spieler, Schachbrett und Figuren zusammenlegt. 
 Auch wenn beim Schach die Ausgangslage der Figuren immer gleich ist, so unterscheidet sich eine Partie Schach in ihrem Verlauf. 
 
-\newpage
-
 \subsection*{Aggregate}
+
+\begin{itemize}
+    \item Figur -> Dame, König, Turm, Läufer, Springer, Bauer
+    \item Spielzug -> Schachzug
+    \item Schachbrett -> Feld
+\end{itemize}
 
 \subsection*{Repositories}
 
+\begin{itemize}
+    \item Persistierung der gesamten Schachpartie als Logdatei
+    \item Persistierung der Spieler mit Elo für das Elosystem
+\end{itemize}
+
 \section{Domainenevents}
+
+domainenrelevante Ereignisse
+
+\begin{itemize}
+    \item Figur wird umgesetzt
+    \item Rochade wird ausgeführt
+    \item Bauer wird umgewandelt
+    \item Figur wird geschlagen
+    \item König steht im Schach
+    \item König wird Matt gesetzt
+    \item Spieler gibt auf
+    \item Spieler gewinnt das Spiel
+\end{itemize}
