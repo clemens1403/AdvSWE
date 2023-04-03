@@ -5,6 +5,8 @@ public class Schachspiel {
 
     private Figur ausgewaehltFigur = null;
     private ArrayList<Feld> moeglicheZuegeDerFigur = new ArrayList<>();
+
+    private Schachzug aktuellerSchachzug = null;
     
     public Schachspiel(){
         
@@ -75,16 +77,9 @@ public class Schachspiel {
 
     public void waehleEineFigurAus(){
 
-        print("In waehleEineFigurAus");
-
         for(Figur f : figuren){
             if(f.checkFigurGeklickt()) {
-                print(f.getAbkuerzung());
-                print(f.getFarbe()); 
-                print("Spalte: " + f.getPosition().getSpalte());
-                print("Zeile: " + f.getPosition().getZeile());
                 if(f.getFarbe() == this.spielerAmZug){
-                    //print("Show possible moves");
                     this.ausgewaehltFigur = f;
                     this.moeglicheZuegeDerFigur = f.getMoeglicheZuege(figuren, schachbrett);
                     print(this.moeglicheZuegeDerFigur);
@@ -131,18 +126,6 @@ public class Schachspiel {
 
         return null;
     }
-
-    /*private Boolean pruefeObFeldInMoeglichenZuegenIst(Feld ausgewaehltesFeld){
-
-        for(Feld feld : this.moeglicheZuegeDerFigur){
-
-            if(ausgewaehltesFeld.getSpalte() == feld.getSpalte() && ausgewaehltesFeld.getZeile() == feld.getZeile()){
-                return true;
-            }
-        }
-
-        return false;
-    }*/
 
     private void pruefeFigurGeschlagen(Feld zielFeld){
 

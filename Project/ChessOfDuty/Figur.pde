@@ -49,15 +49,7 @@ public abstract class Figur{
         return kollidierteFigur;
     }
 
-    public void wirdGeschlagen(){
-
-    }
-
     public void schlaegtFigur(){
-
-    }
-
-    public void setztSchach(){
 
     }
 
