@@ -5,6 +5,8 @@ public class Schachspiel {
     private ArrayList<Figur> geschlageneFigurenWeiss = new ArrayList<Figur>();
     private ArrayList<Figur> geschlageneFigurenSchwarz = new ArrayList<Figur>();
 
+    private ArrayList<String> zuege = new ArrayList<String>();
+
     private int spielerAmZug;
 
     private Figur ausgewaehltFigur = null;
@@ -58,6 +60,8 @@ public class Schachspiel {
     public void renderSchachspiel(){
         schachbrett.renderSchachbrett();
 
+        this.renderZuege();
+
         for(Figur f : this.figuren){
             f.render();
         }
@@ -69,6 +73,34 @@ public class Schachspiel {
             point(f.getX() + f.getGroesse()/2, f.getY() + f.getGroesse()/2);
             pop();
         }
+    }
+
+    public void renderZuege(){
+        push();
+        fill(0);
+        textSize(40);
+        textAlign(CENTER,CENTER);
+        text("Züge:", width - 150, 200);
+        pop();
+
+        push();
+        fill(200);
+        textSize(15);
+        textAlign(LEFT, TOP);
+        String text = "";
+        for(String zug : this.zuege){
+            int index = this.zuege.indexOf(zug);
+            if(index % 2 == 0){
+                int spielzug = index + 1;
+                text += Integer.toString(spielzug) + ":";
+            }
+            text += zug + ";";
+            if(index % 2 == 1){
+                text+="\n";
+            }
+        }
+        text(text, width-185, 300);
+        pop();
     }
 
     public void klickAuswerten(){
@@ -102,12 +134,25 @@ public class Schachspiel {
         if(umsetzenMoeglich){
             for(Figur f : this.figuren){
                 if(f == ausgewaehltFigur) {
-                    //Überprüfung, ob etwas geschlagen wurde, oder nicht
-                    pruefeFigurGeschlagen(ausgewaehltesFeld);
+                    int neueZeile = ausgewaehltesFeld.getZeile();
+                    int neueSpalte = ausgewaehltesFeld.getSpalte();
 
+                    int alteZeile = f.getPosition().getZeile();
+                    int alteSpalte = f.getPosition().getSpalte();
+
+                    String zug = f.getAbkuerzung() + schachbrett.integerZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
+                    //Überprüfung, ob etwas geschlagen wurde, oder nicht
+                    if(pruefeFigurGeschlagen(ausgewaehltesFeld)){
+                        zug += "x";
+                    }else{
+                        zug += "-";
+                    }
+                    zug += schachbrett.integerZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
+                    //TODO: Bei Schach "+" hinzufügen; Bei Schachmatt "++"
 
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
+                    this.zuege.add(zug);
                     //Spieler am Zug wechselt
                     this.spielerAmZug =  (this.spielerAmZug - 1) * (this.spielerAmZug - 1);
                     break;
@@ -132,15 +177,15 @@ public class Schachspiel {
         return null;
     }
 
-    private void pruefeFigurGeschlagen(Feld zielFeld){
+    private boolean pruefeFigurGeschlagen(Feld zielFeld){
 
         for(Figur f : this.figuren){
             if(f.getPosition() == zielFeld && f.getFarbe() != ausgewaehltFigur.getFarbe()){
                 schlageFigur(f);
-                return;
+                return true;
             }
         }
-
+        return false;
     }
 
     private void schlageFigur(Figur f){
