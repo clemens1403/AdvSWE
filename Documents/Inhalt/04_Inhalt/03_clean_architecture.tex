@@ -15,18 +15,19 @@ Diese Schicht stellt den Kern der Applikation dar, wobei dies häufig durch die 
 Im betrachteten Projekt konnte jedoch kein Abstraction Code identifiziert werden, die einigen mathematischen Konzepte eindeutig in den Domänen Code (Bewegungsregeln der Figuren) oder in den Adapter Code (Positionsberechnung für GUI-Elemente) einzuordnen sind. 
 
 \section*{Schicht 3 - Domain Code}
+%Rangliste fehlt hier noch eingeordnet
 
-\begin{itemize}
-    \item Dame
-    \item König
-    \item Turm
-    \item Läufer
-    \item Springer
-    \item Bauer
-    \item Schachbrett
-    \item Feld
-    \item ...
-\end{itemize}
+Der Domänencode beinhaltet alle bereits im Bereich \glqq Domain Driven Design\grqq{} besprochenen Entitäten, Value Objects, Aggregate und Repositories. 
+
+Dazu gehören im Speziellen die folgenden Klassen:
+
+\textbf{Value Objects:} Feld, Schachbrett, Schachzug
+
+\textbf{Entitäten:} Bauer, Läufer, Springer, Turm, Dame, König, Spieler, Spielzug, Schachspiel
+
+\textbf{Repositories:} SpielzugRepository, SpielerRepository
+
+\textbf{Domain Services:} Bewegungsmatrizen, Bewegungsrichtung
 
 \section*{Schicht 2 - Application Code}
 
