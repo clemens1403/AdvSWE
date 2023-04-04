@@ -91,7 +91,7 @@ public class Schachspiel {
         for(String zug : this.zuege){
             int index = this.zuege.indexOf(zug);
             if(index % 2 == 0){
-                int spielzug = index + 1;
+                int spielzug = index/2 + 1;
                 text += Integer.toString(spielzug) + ":";
             }
             text += zug + ";";
