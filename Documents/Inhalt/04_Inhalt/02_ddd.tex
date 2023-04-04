@@ -2,12 +2,19 @@
 
 \section{Ubiquitous Language}
 
+Die Ubiquitous Language bezeichnet das Vokabular, welches zwischen Domänenexperten
+und Entwicklern, wodurch gewährleistet werden soll, dass die gleichen Begriffe in der
+Domäne und im Sourcecode verwendet werden und Missverständnisse minimiert werden.
+
 Der Auftraggeber des Programmentwurfs ist ein deutscher Kunde. 
 Obwohl in der Programmierung Englisch als die Standardsprache angenommen wird, wird aufgrund der Kundenlokalität die Projektsprache als \glqq Deutsch\grqq{} festgelegt. 
 Dadurch wird versucht die meisten Ausdrücke aus der Domäne ins Deutsche zu übernehmen. 
 Auch wenn dies für den ungeübten Programmierer, der das Programmieren nur in Englisch ausübt, eine zusätzliche Herausforderung darstellt und teilweise zu Namensfindungsschwierigkeiten oder längeren Funktionsnamen führen kann, wird an der Domänensprache festgehalten, um dem Kunden den Code so übersichtlich wie möglich übergeben zu können.
 
 \section{Domainenbausteine}
+
+Aus der Ubiquitous Language ergeben sich nun die folgenden taktischen Muster des Domain
+Driven Designs mit den entsprechenden Objekten.
 
 \subsection*{Value Objects}
 
@@ -19,11 +26,11 @@ Da Schachfelder keinen Lebenszyklus haben und ihre Gleichheit durch ihre Positio
 Weiterhin ist es besonders wichtig für die grundlegende Funktion eines Schachspiels, dass Schachfelder als unveränderliche Objekte behandelt werden, da ein Schachspiel auf einer \glqq festen Unterlage\grqq{} spielt wird. 
 
 Ein \textbf{Schachbrett} kann ebenfalls als Value Object betrachtet werden, weil es einen unveränderlichen Zustand repräsentiert. 
-Ein Schachbrett ist in der domainenspezifischen Abbildung eines Schachspiels von der Realität in Programmcode eine übergeordnete Verwaltungsstruktur der einzelnen Felder.
+Ein Schachbrett ist in der domänenspezifischen Abbildung eines Schachspiels von der Realität in Programmcode eine übergeordnete Verwaltungsstruktur der einzelnen Felder.
 Dabei werden 64 Schachfelder definiert und als zweidimensionale Spielebene dargestellt.
 Die Gleichheit von zwei Schachbrettern basiert auf der Gleichheit ihrer Felder, unabhängig der tatsächlichen Instanz. 
 Da die Felder jedoch als Value Object geführt werden, kann dies auch auf das Schachbrett übertragen werden. 
-Ds Schachbrett weist keine Verhaltensänderungen auf, sodass ide Integrität des Objekts die ganze Zeit über gewahrt werden muss. 
+Das Schachbrett weist keine Verhaltensänderungen auf, sodass die Integrität des Objekts die ganze Zeit über gewahrt werden muss. 
 
 Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und weiteren Informationen über den Einfluss der Bewegung der betreffenden Figur auf umliegende Figuren zusammen. 
 Dazu zählen Informationen darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob andere Figuren ebenfalls bewegt werden müssen, wie es bei der Rochade der Fall ist. 
@@ -32,7 +39,7 @@ Ein Schachzug wurde als Value Object klassifiziert, da er keinen erkennbaren Leb
 
 \subsection*{Entities}
 
-Eine Entity ist ein Objekt, das innerhalb der Domaine eine einzigartige Identität besitzt und sich im Laufe der Zeit verändern kann. 
+Eine Entity ist ein Objekt, das innerhalb der Domäne eine einzigartige Identität besitzt und sich im Laufe der Zeit verändern kann. 
 Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und weisen einen Lebenszyklus auf.o
 
 Im Domainencode gibt es die Klasse \textbf{Figur}. 
@@ -45,8 +52,8 @@ Die Position der Figuren fungiert als natürlicher Schlüssel.
 Auf einem Feld kann immer nur eine Figur stehen, wodurch die Eindeutigkeit gewährleistet ist. 
 Wenn eine Figur auf ein Feld mit einer anderen Figur zieht, wird die dort stehende Figur geschlagen und aus dem aktiven Spiel entfernt. 
 Auch in diesem Fall steht letztendlich nur eine Figur auf dem Feld. 
-Innerhalb der Domaine \glqq Schach\grqq{} ist dieser Schlüssel veränderlich, da sich die Schachfiguren auf dem Spielfeld bewegen können. 
-Die Verwendung eines Surrogatschlüssel wäre grundsätzlich auch möglich, aber in diesem Fall wird sich an der Domaine orientiert.
+Innerhalb der Domäne \glqq Schach\grqq{} ist dieser Schlüssel veränderlich, da sich die Schachfiguren auf dem Spielfeld bewegen können. 
+Die Verwendung eines Surrogatschlüssel wäre grundsätzlich auch möglich, aber in diesem Fall wird sich an der Domäne orientiert.
 Im analogen Schach wird die Farbe einer Figur, der Figurentyp und die Position zur eindeutigen Identifizierung verwendet.   
 Eine Schachfigur besitzt einen eigenen Lebenszyklus. Sobald ein Schachspiel startet, werden alle Figuren in ihrer Startposition instanziiert. Während des Spiels können sie nahezu unbegrenzt bewegt werden. Wenn eine Figur geschlagen wird, wird sie gelöscht.
 
@@ -56,33 +63,53 @@ Während eines Schachspiels kann ein Spieler in jedem Zug eine Figur bewegen, we
 Weiterhin ist der Spieler für das Elosystem nötig und ist veränderbar in seinem Rang. 
 
 Obwohl ein Schachzug ein Value Object ist, wird in diesem Projekt der \textbf{Spielzug} als Entity gewertet, obwohl nur zwei Schachzüge mit einer ID zusammengefasst werden. 
-Der Spielzug lässt sich eindeutig durch einen \texttt{zugNummer} identifizieren, die mit jedem Spielzug so lange um eins hochzählt wie das Schachspiel geht. 
-Durch den inkrementellen Schlüssel liegt die Vermutung nahe, dass es sich dabei um einen Surrogatschlüssel handelt, aber da diese Art der Zählung und Zugidentifizierung ebenfalls in der Domaine verwendet wird, ist die Einordnung als natürlicher Schlüssel passender. 
+Der Spielzug lässt sich eindeutig durch einen \texttt{zugNummer} identifizieren, die mit jedem Spielzug so lange um eins inkrementiert wie das Schachspiel geht. 
+Durch den inkrementellen Schlüssel liegt die Vermutung nahe, dass es sich dabei um einen Surrogatschlüssel handelt, aber da diese Art der Zählung und Zugidentifizierung ebenfalls in der Domäne verwendet wird, ist die Einordnung als natürlicher Schlüssel passender. 
 Der Grund, warum der Spielzug als Entity und nicht als Value Object gehandelt wird, liegt am Lebenszyklus des Objektes. 
 Auch wenn es kein besonders umfangreicher Lebenszyklus ist, so wird nach dem Erstellen eines Schachzugs zuerst der weiße Zug gesetzt.
 In einem zweiten Schritt wird der schwarze Zug hinzugefügt, bevor der Schachzug zur weiteren Ausgabe verarbeitet und final wieder gelöscht wird. 
-
 
 %Hier muss noch was zum Schlüssel geschrieben werden
 Ein \textbf{Schachspiel} sollte ebenfalls als Entität behandelt werden. 
 Es besitzt eine eigene Identität und eine eigene Lebenszeit über eine Partie Schach hinweg, in dem es verschiedene Zustände annehmen kann. 
 Das Schachspiel ist eine übergeordnete logische Ebene, welche Spieler, Schachbrett und Figuren zusammenlegt. 
 Auch wenn beim Schach die Ausgangslage der Figuren immer gleich ist, so unterscheidet sich eine Partie Schach in ihrem Verlauf. 
+Um die Schachspiele eindeutig identifizieren zu können, bietet es sich an einen Surrogatschlüssel zu verwenden. 
+Da für die Programmierung die Sprache Processing, also eine Javaerweiterung verwendet wird, bietet sich für den Surrogatschlüssel die Verwendung einer \texttt{UUID} an. 
 
 \subsection*{Aggregate}
 
-\begin{itemize}
-    \item Figur -> Dame, König, Turm, Läufer, Springer, Bauer
-    \item Spielzug -> Schachzug
-    \item Schachbrett -> Feld
-\end{itemize}
+Über Aggregate können Entities und Value Objects als eine Einheit verwaltet werden. 
+Ein Aggregat besteht dabei aus mindestens einer Entität und kann.
+
+\begin{figure}[ht!]
+    \centering
+    \includegraphics*[scale=0.73]{Bilder/DDD_Aggregate.PNG}
+\end{figure}
+
+Das \textbf{Schachbrett} und die Klasse \textbf{Feld} können als Aggregat zusammengefasst werden, da sie in der Domäne logisch miteinander verknüpft sind. 
+Für ein Schachbrett werden 64 Instanzen der Klasse Feld in einer zweidimensionalen Datenstruktur gespeichert. 
+Da über das Schachbrett in der Domäne die gesamte Interaktion des Spiels stattfindet (Figuren werden über das Schachbrett bewegt), besitzt diese Klasse eine zentrale Rolle. 
+Um die feste Anordnung der Felder im zweidimensionalen Rahmen des Spielfeldes durch Zeilen und Spalten positionsgetreu abzufragen wird auch auf jedes Feld auf dem Schachbrett über das übergeordnete Schachbrett zugegriffen.
+Durch diese Art des Zugriffes wirkt die Klasse Schachbrett automatisch als \texttt{Root-Entity} für die Klasse Feld. 
+
+Die Klasse \textbf{Spielzug} dient ebenfalls als Root-Entity für das Aggregat bestehend aus den Klassen Spielzug und \textbf{Schachzug}.
+Sofern man die Domäne betrachtet, dann kann jeder Spieler, sofern er an der Reihe ist einen Schachzug ausführen, indem er eine Figur auf dem Schachbrett von Position A nach Position B bewegt. 
+Ein Spielzug fasst zwei aufeinanderfolgende Schachzüge jeweils vom Spieler Weiß und Spieler Schwarz zusammen.
+Die schriftliche Protokollierung einer Partie Schach erfolgt immer über die Spielzüge, gibt aber jeweils die einzelnen Schachzüge der unterschiedlichen Spieler an. 
+Auf kann man auf die einzelnen Schachzüge nur über die Spielzüge zugreifen, was für die Betrachtung als Aggregat spricht. 
 
 \subsection*{Repositories}
 
-\begin{itemize}
-    \item Persistierung der gesamten Schachpartie als Logdatei
-    \item Persistierung der Spieler mit Elo für das Elosystem
-\end{itemize}
+Im Domain Driven Design werden Repositories genutzt, um Daten in einem Projekt zu persistieren und einzulesen. 
+
+Das programmierte Schachspiel soll nach jedem abgeschlossenen Schachspiel als lesbares Protokoll in eine eigene Datei exportiert werden. 
+In diesem Fall sollen Daten persistiert werden, aber nie gelesen werden. 
+Trotzdem wird für die Klasse \textbf{Spielzug} ein Repository benötigt, welches die Spielzüge nacheinander in die Protokolldatei schreibt. 
+
+Ein zweiter Anwendungsfall für ein Repository ist die Persistierung der \textbf{Spieler} im Zusammenhang mit dem Elosystem. 
+Jedem Spieler soll eine gewisse Elo zugeordnet werden können, die je nach Anzahl der Siege und Niederlagen steigt oder sinkt. 
+Um die Elo der Spieler nicht beim erneuten Start der Software neu zu setzen, sollten diese Informationen mittels Repository verarbeitet werden. 
 
 \section{Domainenevents}
 
