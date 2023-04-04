@@ -85,7 +85,18 @@ public class Bauer extends Figur{
                         }
                     }
                 }
+
+                if(aktuelleSpalte - 1 == spalteFigur || aktuelleSpalte + 1 == spalteFigur){
+                    if(aktuelleZeile == zeileFigur - 1){
+                        if(this.getFarbe() != f.getFarbe()){
+                            print("\nSchlagen möglich");
+                            moeglicheZuege.add(positionFigur);
+                        } 
+                    }
+                }
             }
+
+            
 
             if(einzelschritt){
                 moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1));
@@ -116,6 +127,15 @@ public class Bauer extends Figur{
                         if(aktuelleZeile == zeileFigur + 2){
                             doppelschritt = false;
                         }
+                    }
+                }
+
+                if(aktuelleSpalte - 1 == spalteFigur || aktuelleSpalte + 1 == spalteFigur){
+                    if(aktuelleZeile == zeileFigur + 1){
+                        if(this.getFarbe() != f.getFarbe()){
+                            print("\nSchlagen möglich");
+                            moeglicheZuege.add(positionFigur);
+                        } 
                     }
                 }
             }

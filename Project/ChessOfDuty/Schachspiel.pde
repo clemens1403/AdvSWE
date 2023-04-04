@@ -1,6 +1,10 @@
 public class Schachspiel {
     private Schachbrett schachbrett;
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
+
+    private ArrayList<Figur> geschlageneFigurenWeiss = new ArrayList<Figur>();
+    private ArrayList<Figur> geschlageneFigurenSchwarz = new ArrayList<Figur>();
+
     private int spielerAmZug;
 
     private Figur ausgewaehltFigur = null;
@@ -98,8 +102,9 @@ public class Schachspiel {
         if(umsetzenMoeglich){
             for(Figur f : this.figuren){
                 if(f == ausgewaehltFigur) {
-                    //Hier kommt jetzt die Überprüfung, ob etwas geschlagen wurde, oder nicht
+                    //Überprüfung, ob etwas geschlagen wurde, oder nicht
                     pruefeFigurGeschlagen(ausgewaehltesFeld);
+
 
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
@@ -131,10 +136,24 @@ public class Schachspiel {
 
         for(Figur f : this.figuren){
             if(f.getPosition() == zielFeld && f.getFarbe() != ausgewaehltFigur.getFarbe()){
-                print("BÄÄM HIER WIRD EINE FIGUR GESCHLAGEN");
+                schlageFigur(f);
+                return;
             }
         }
 
+    }
+
+    private void schlageFigur(Figur f){
+        //Figur zu Array der geschlagenen Figuren hinzufügen
+        //Array nach Farbe aufgeteilt
+        //Wenn Figur weiß dann zu geschlageneFigurenWeiss hinzufügen sonst zu geschlageneFigurenSchwarz
+        print("Schlage Figur");
+        if(f.getFarbe()== 1){
+            this.geschlageneFigurenWeiss.add(f);
+        }else{
+            this.geschlageneFigurenSchwarz.add(f);
+        }
+        this.figuren.remove(f);
     }
 
 }
