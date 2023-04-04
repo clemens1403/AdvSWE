@@ -61,6 +61,7 @@ public class Schachspiel {
         schachbrett.renderSchachbrett();
 
         this.renderZuege();
+        this.renderGeschlageneFiguren();
 
         for(Figur f : this.figuren){
             f.render();
@@ -73,6 +74,30 @@ public class Schachspiel {
             point(f.getX() + f.getGroesse()/2, f.getY() + f.getGroesse()/2);
             pop();
         }
+    }
+
+    public void renderGeschlageneFiguren(){
+        push();
+        fill(160,82,45);
+        String textS = "";
+        for(Figur f : geschlageneFigurenSchwarz){
+            textS += f.getAbkuerzung();
+        }
+        textAlign(LEFT, CENTER);
+        textSize(20);
+        text(textS, 200, 1100);
+        pop();
+
+        push();
+        fill(169, 172, 176);
+        String textW = "";
+        for(Figur f : geschlageneFigurenWeiss){
+            textW += f.getAbkuerzung();
+        }
+        textAlign(RIGHT, CENTER);
+        textSize(20);
+        text(textW, 1000, 1100);
+        pop();
     }
 
     public void renderZuege(){

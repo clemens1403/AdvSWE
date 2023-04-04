@@ -45,7 +45,15 @@ public class GUI {
         } 
     }
 
-    public void renderSpiel(){        
+    public void renderSpiel(){      
+        background(51);  
+
+        //Titel
+        push();
+        fill(255);
+        textSize(50);
+        text("Chess Of Duty", 100, 100);
+        pop();
         this.schachspiel.renderSchachspiel();
     }
 
