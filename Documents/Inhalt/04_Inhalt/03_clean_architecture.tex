@@ -1,10 +1,18 @@
 \chapter{Clean Architecture}
 
+Das Projekt soll die Clean Architecture umsetzen, indem jede Schicht als eigenes Modul implementiert wird. 
+Dadurch wird sichergestellt, dass nur von den äußeren Schichten auf die inneren zugegriffen werden kann und nicht umgekehrt. 
+
+Das Projekt wird sich an der Schichtenarchitektur orientieren, wobei jedes Modul eine eigene Schicht repräsentiert. 
+Der Einsatz von einzelnen Schichten ermöglicht eine fachliche Unabhängigkeit der Anwendung von der sonstigen Infrastruktur. 
+Dadurch können die einzelnen Komponenten leichter wiederverwendet, getestet und weiterentwickelt werden. 
+Zudem ist es einfacher, einzelne Komponenten der Infrastruktur auszutauschen. 
+Dabei gilt: je weiter außenliegend, desto leichter austauschbar.
+
 \section*{Schicht 4 - Abstraction Code}
 
-\begin{itemize}
-    \item Bewegungsmatrizen
-\end{itemize}
+Diese Schicht stellt den Kern der Applikation dar, wobei dies häufig durch die verwendete Programmiersprache realisiert wird, wie in Java beispielsweise durch Klassen wie String.
+Im betrachteten Projekt konnte jedoch kein Abstraction Code identifiziert werden, die einigen mathematischen Konzepte eindeutig in den Domänen Code (Bewegungsregeln der Figuren) oder in den Adapter Code (Positionsberechnung für GUI-Elemente) einzuordnen sind. 
 
 \section*{Schicht 3 - Domain Code}
 
