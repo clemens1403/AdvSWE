@@ -111,17 +111,11 @@ Ein zweiter Anwendungsfall für ein Repository ist die Persistierung der \textbf
 Jedem Spieler soll eine gewisse Elo zugeordnet werden können, die je nach Anzahl der Siege und Niederlagen steigt oder sinkt. 
 Um die Elo der Spieler nicht beim erneuten Start der Software neu zu setzen, sollten diese Informationen mittels Repository verarbeitet werden. 
 
-\section{Domainenevents}
+\subsection*{Domain Service}
 
-domainenrelevante Ereignisse
+Ein Domain Service ist ein Konzept, welches genutzt wird, um Logik abzubilden, die nicht in direkter Verknüpfung zu einer Entität oder einem Aggregat steht. 
 
-\begin{itemize}
-    \item Figur wird umgesetzt
-    \item Rochade wird ausgeführt
-    \item Bauer wird umgewandelt
-    \item Figur wird geschlagen
-    \item König steht im Schach
-    \item König wird Matt gesetzt
-    \item Spieler gibt auf
-    \item Spieler gewinnt das Spiel
-\end{itemize}
+In einem Schachspiel sind alle Arten an Figuren als Entitäten zu betrachten. 
+Jede einzelne Figur hat eigene Regeln, auf dessen Basis sich diese Figuren auf dem Schachbrett bewegen dürfen. 
+Die Funktionalität wie für die verschiedenen Figurtypen die möglichen Bewegungen ausgehend von der aktuellen Position der Figur berechnet werden, findet sich in den Klassen \textbf{Bewegungsmatrizen} und \textbf{Bewegungsrichtung}.
+Beide Klassen lassen sich daher als Services betrachten.
