@@ -1,4 +1,13 @@
+import java.util.Date;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.Files;
+import java.io.File;
+import java.io.IOException;
+
 public class Schachspiel {
+    private long gameID;
+
     private Schachbrett schachbrett;
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
 
@@ -21,6 +30,7 @@ public class Schachspiel {
     private Schachzug aktuellerSchachzug = null;
     
     public Schachspiel(){
+        this.gameID = new Date().getTime();
         
         //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
@@ -381,6 +391,77 @@ public class Schachspiel {
         }
         print("Schachmatt");
         return true;
+    }
+
+    private void exportZuege(){
+        String pathString = null;
+
+        try {
+            Process p =  Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
+            p.waitFor();
+
+            InputStream in = p.getInputStream();
+            byte[] b = new byte[in.available()];
+            in.read(b);
+            in.close();
+
+            pathString = new String(b);
+            pathString = pathString.split("\\s\\s+")[4];
+
+        } catch(Throwable t) {
+            t.printStackTrace();
+        }
+
+        pathString += "\\SchachLogs\\";
+
+        try {
+
+            Path path = Paths.get(pathString);
+
+            //java.nio.file.Files;
+            Files.createDirectories(path);
+
+            System.out.println("Directory is created!");
+
+        } catch (IOException e) {
+
+            System.err.println("Failed to create directory!" + e.getMessage());
+
+        }
+        String fileNameString = pathString + this.gameID + ".txt";
+        print(fileNameString);
+        try {
+            File logFile = new File(fileNameString);
+            if (logFile.createNewFile()) {
+                System.out.println("File created: " + logFile.getName());
+            } else {
+                System.out.println("File already exists.");
+            }
+        } catch (IOException e) {
+            System.out.println("An error occurred.");
+            e.printStackTrace();
+        }
+        Path p = Path.of(fileNameString);
+        String text = "";
+        for(String zug : this.zuege){
+            int index = this.zuege.indexOf(zug);
+            if(index % 2 == 0){
+                int spielzug = index/2 + 1;
+                text += Integer.toString(spielzug) + ":";
+            }
+            text += zug + ";";
+            if(index % 2 == 1){
+                text+="\n";
+            }
+        }
+        try {
+
+            Path filePath = Files.writeString(p, text);
+            String s = Files.readString(filePath);
+            System.out.println(s);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

@@ -14,9 +14,12 @@ public class GUI {
 
         Knopf startKnopf = new Knopf("Start", width - 250, 50, 80, 30, "Start", color(200), color(230), color(0), 20);
         Knopf neustartKnopf = new Knopf("neustart", width - 160, 50, 110, 30, "neues Spiel", color(200), color(230), color(0), 20);
+        Knopf exportKnopf = new Knopf("export", width - 160, height-50, 110, 30, "Exportieren", color(200), color(230), color(0), 20);
         
+
         spielKnoepfe.add(startKnopf);
         spielKnoepfe.add(neustartKnopf);
+        spielKnoepfe.add(exportKnopf);
     }
 
     public void render(){

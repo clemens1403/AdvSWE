@@ -47,6 +47,9 @@ void mousePressed(){
             case "Start":
               gui.setStatus("Start");
               break;
+            case "export":
+              schachspiel.exportZuege();
+              break;
             default:
               break;
           }
