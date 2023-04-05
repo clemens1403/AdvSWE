@@ -87,6 +87,14 @@ public class Schachspiel {
             }
         }
 
+        if(this.ausgewaehltFigur != null){
+            Feld f = this.ausgewaehltFigur.getPosition();
+            push();
+            fill(100,200,100,200);
+            rect(f.getX(), f.getY(), f.getGroesse(), f.getGroesse());
+            pop();
+        }
+
         for(Feld f: this.moeglicheZuegeDerFigur){
             push();
             stroke(200,100,100);
@@ -203,6 +211,17 @@ public class Schachspiel {
                         if(checkMatt()){
                             zug+="+";
                         }
+                        if(this.spielerAmZug == 1){
+                            this.schachSchwarz = true;
+                        }else{
+                            this.schachWeiss = true;
+                        }
+                    }else{
+                        if(this.spielerAmZug == 1){
+                            this.schachSchwarz = false;
+                        }else{
+                            this.schachWeiss = false;
+                        }
                     }
 
                     this.zuege.add(zug);
@@ -282,11 +301,6 @@ public class Schachspiel {
                 print("Königposition: \n");
                 print(koenigPosition);
                 if(mglZuege.contains(koenigPosition)){
-                    if(this.spielerAmZug == 1){
-                        this.schachSchwarz = true;
-                    }else{
-                        this.schachWeiss = true;
-                    }
                     print("Schach!");
                     return true;
                 } 
@@ -295,11 +309,7 @@ public class Schachspiel {
         
         
          
-        if(this.spielerAmZug == 1){
-            this.schachSchwarz = false;
-        }else{
-            this.schachWeiss = false;
-        }
+        
         return false;
     }
 
