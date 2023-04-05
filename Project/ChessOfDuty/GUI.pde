@@ -1,6 +1,7 @@
 public class GUI {
     private String status;
     private ArrayList<Knopf> startKnoepfe = new ArrayList<Knopf>();
+    private ArrayList<Knopf> spielKnoepfe = new ArrayList<Knopf>();
     private ArrayList<ArrayList<Feld>> felder;
     private Schachspiel schachspiel;
 
@@ -10,6 +11,12 @@ public class GUI {
 
         Knopf spielKnopf = new Knopf("Spielen", width/2, height/2, 300, 150, "Spielen", color(200), color(230), color(0), 30);
         startKnoepfe.add(spielKnopf);
+
+        Knopf startKnopf = new Knopf("Start", width - 250, 50, 80, 30, "Start", color(200), color(230), color(0), 20);
+        Knopf neustartKnopf = new Knopf("neustart", width - 160, 50, 110, 30, "neues Spiel", color(200), color(230), color(0), 20);
+        
+        spielKnoepfe.add(startKnopf);
+        spielKnoepfe.add(neustartKnopf);
     }
 
     public void render(){
@@ -48,6 +55,10 @@ public class GUI {
     public void renderSpiel(){      
         background(51);  
 
+        for(Knopf k : spielKnoepfe){
+            k.render();
+        }
+
         //Titel
         push();
         fill(255);
@@ -67,6 +78,10 @@ public class GUI {
 
     public ArrayList<Knopf> getStartKnoepfe(){
         return startKnoepfe;
+    }
+
+    public ArrayList<Knopf> getSpielKnoepfe(){
+        return spielKnoepfe;
     }
 
     public void setSchachspiel(Schachspiel schachspiel){
