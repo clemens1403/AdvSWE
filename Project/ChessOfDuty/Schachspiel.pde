@@ -9,6 +9,12 @@ public class Schachspiel {
 
     private int spielerAmZug;
 
+    private boolean schachWeiss = false;
+    private boolean schachSchwarz = false;
+
+    private boolean mattWeiss = false;
+    private boolean mattSchwarz = false;
+
     private Figur ausgewaehltFigur = null;
     private ArrayList<Feld> moeglicheZuegeDerFigur = new ArrayList<>();
 
@@ -65,6 +71,20 @@ public class Schachspiel {
 
         for(Figur f : this.figuren){
             f.render();
+
+            if(schachWeiss && f.getAbkuerzung() == "K" && f.getFarbe() == 1){
+                Feld feld = f.getPosition();
+                push();
+                fill(200,100,100,200);
+                rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
+                pop();
+            }else if(schachSchwarz && f.getAbkuerzung() == "K" && f.getFarbe() == 0) {
+                Feld feld = f.getPosition();
+                push();
+                fill(200,100,100,200);
+                rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
+                pop();
+            }
         }
 
         for(Feld f: this.moeglicheZuegeDerFigur){
@@ -74,6 +94,7 @@ public class Schachspiel {
             point(f.getX() + f.getGroesse()/2, f.getY() + f.getGroesse()/2);
             pop();
         }
+
     }
 
     public void renderGeschlageneFiguren(){
@@ -173,11 +194,27 @@ public class Schachspiel {
                         zug += "-";
                     }
                     zug += schachbrett.integerZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
-                    //TODO: Bei Schach "+" hinzufügen; Bei Schachmatt "++"
 
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
+
+                    if(checkSchach(this.figuren)){
+                        zug+="+";
+                        if(checkMatt()){
+                            zug+="+";
+                        }
+                    }
+
                     this.zuege.add(zug);
+
+                    //Wenn der Gegner im vorherigen Zug schach gegeben haben sollte, wird falls es sich nicht um Matt handelt, mit dem nächsten Zug das Schach aufgehoben
+                    if(this.spielerAmZug == 1){
+                        this.schachWeiss = false;
+                    }else{
+                        this.schachSchwarz = false;
+                    }
+
+
                     //Spieler am Zug wechselt
                     this.spielerAmZug =  (this.spielerAmZug - 1) * (this.spielerAmZug - 1);
                     break;
@@ -213,6 +250,7 @@ public class Schachspiel {
         return false;
     }
 
+
     private void schlageFigur(Figur f){
         //Figur zu Array der geschlagenen Figuren hinzufügen
         //Array nach Farbe aufgeteilt
@@ -224,6 +262,86 @@ public class Schachspiel {
             this.geschlageneFigurenSchwarz.add(f);
         }
         this.figuren.remove(f);
+    }
+
+    private boolean checkSchach(ArrayList<Figur> figuren){
+
+        Figur koenig;
+        Feld koenigPosition = null;
+        for(Figur fg : figuren){
+            if(fg.getFarbe() != this.spielerAmZug && fg.getAbkuerzung() =="K"){
+                koenig = fg;
+                koenigPosition = koenig.getPosition();
+                break;
+            }
+        }
+        
+        for(Figur f: figuren){
+            if(f.getFarbe()==this.spielerAmZug){
+                ArrayList<Feld> mglZuege = f.getMoeglicheZuege(figuren, this.schachbrett);
+                print("Königposition: \n");
+                print(koenigPosition);
+                if(mglZuege.contains(koenigPosition)){
+                    if(this.spielerAmZug == 1){
+                        this.schachSchwarz = true;
+                    }else{
+                        this.schachWeiss = true;
+                    }
+                    print("Schach!");
+                    return true;
+                } 
+            }
+        }
+        
+        
+         
+        if(this.spielerAmZug == 1){
+            this.schachSchwarz = false;
+        }else{
+            this.schachWeiss = false;
+        }
+        return false;
+    }
+
+    private boolean checkMatt(){
+        for(Figur f : this.figuren){
+            ArrayList<Figur> kopieFiguren = (ArrayList<Figur>)this.figuren.clone();
+            Feld startPosition = f.getPosition();
+            if(f.getFarbe() != this.spielerAmZug){
+                ArrayList<Feld> mglZuege = f.getMoeglicheZuege(this.figuren, this.schachbrett);
+                for(Feld zug: mglZuege){
+                    boolean geschlagen = false;
+                    Figur geschlageneFigur = null;
+                    //f.setPosition(zug);
+                    int index = kopieFiguren.indexOf(f);
+                    Figur kopieFigur = kopieFiguren.get(index);
+                    kopieFiguren.get(index).setPosition(zug);
+                    for(Figur fg : this.figuren){
+                        if(fg.getPosition() == zug && fg.getFarbe() == this.spielerAmZug){
+                            geschlageneFigur = fg;
+                            print("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
+                            kopieFiguren.remove(fg);
+                            geschlagen = true;
+                        }
+                    }
+                    if(!checkSchach(kopieFiguren)){
+                        
+                        print(kopieFigur.getAbkuerzung());
+                        print(kopieFigur.getPosition().getSpalte());
+                        print(kopieFigur.getPosition().getZeile());
+                        kopieFigur.setPosition(startPosition);
+                        print("\nno Mate");
+                        return false;
+                    }
+                    if(geschlagen){
+                        kopieFiguren.add(geschlageneFigur);
+                    }
+                }
+            }
+            f.setPosition(startPosition);       
+        }
+        print("Schachmatt");
+        return true;
     }
 
 }

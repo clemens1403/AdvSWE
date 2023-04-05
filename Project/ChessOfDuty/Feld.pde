@@ -59,4 +59,9 @@ public class Feld {
     public int getGroesse(){
         return this.groesse;
     }
+
+    @Override
+    public String toString(){
+        return "Spalte: " + this.getSpalte() + ";  Zeile: " + this.getZeile() + "\n"; 
+    }
 }
