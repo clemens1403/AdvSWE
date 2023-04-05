@@ -172,12 +172,44 @@ public class Schachspiel {
                 if(f.getFarbe() == this.spielerAmZug){
                     this.ausgewaehltFigur = f;
                     this.moeglicheZuegeDerFigur = f.getMoeglicheZuege(figuren, schachbrett);
+                    this.moeglicheZuegeDerFigur = this.getValideZuege(this.moeglicheZuegeDerFigur);
                     print(this.moeglicheZuegeDerFigur);
                 }
 
                 break;
             }   
         }
+    }
+
+    public ArrayList<Feld> getValideZuege(ArrayList<Feld> zuege){
+        ArrayList<Feld> valideZuege = new ArrayList<Feld>();
+        ArrayList<Figur> kopieFiguren = (ArrayList<Figur>)this.figuren.clone();
+        Feld startPosition = this.ausgewaehltFigur.getPosition();
+        for(Feld zug : zuege){
+            boolean geschlagen = false;
+            Figur geschlageneFigur = null;
+            int index = kopieFiguren.indexOf(this.ausgewaehltFigur);
+            Figur kopieFigur = kopieFiguren.get(index);
+            kopieFiguren.get(index).setPosition(zug);
+            for(Figur fg : this.figuren){
+                if(fg.getPosition() == zug && fg.getFarbe() != this.spielerAmZug){
+                    geschlageneFigur = fg;
+                    print("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
+                    kopieFiguren.remove(fg);
+                    geschlagen = true;
+                }
+            }
+            if(!checkSchach(kopieFiguren, (this.spielerAmZug-1)*(this.spielerAmZug-1))){        
+                kopieFigur.setPosition(startPosition);
+                print("\nmove valid");   
+                valideZuege.add(zug);
+            }
+            if(geschlagen){
+                kopieFiguren.add(geschlageneFigur);
+            }
+            this.ausgewaehltFigur.setPosition(startPosition);       
+        }
+        return valideZuege;
     }
 
     public void fuehreZugAus(){
@@ -206,7 +238,7 @@ public class Schachspiel {
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
 
-                    if(checkSchach(this.figuren)){
+                    if(checkSchach(this.figuren, this.spielerAmZug)){
                         zug+="+";
                         if(checkMatt()){
                             zug+="+";
@@ -283,12 +315,12 @@ public class Schachspiel {
         this.figuren.remove(f);
     }
 
-    private boolean checkSchach(ArrayList<Figur> figuren){
+    private boolean checkSchach(ArrayList<Figur> figuren, int spieler){
 
         Figur koenig;
         Feld koenigPosition = null;
         for(Figur fg : figuren){
-            if(fg.getFarbe() != this.spielerAmZug && fg.getAbkuerzung() =="K"){
+            if(fg.getFarbe() != spieler && fg.getAbkuerzung() =="K"){
                 koenig = fg;
                 koenigPosition = koenig.getPosition();
                 break;
@@ -296,7 +328,7 @@ public class Schachspiel {
         }
         
         for(Figur f: figuren){
-            if(f.getFarbe()==this.spielerAmZug){
+            if(f.getFarbe()==spieler){
                 ArrayList<Feld> mglZuege = f.getMoeglicheZuege(figuren, this.schachbrett);
                 print("Königposition: \n");
                 print(koenigPosition);
@@ -306,9 +338,6 @@ public class Schachspiel {
                 } 
             }
         }
-        
-        
-         
         
         return false;
     }
@@ -334,7 +363,7 @@ public class Schachspiel {
                             geschlagen = true;
                         }
                     }
-                    if(!checkSchach(kopieFiguren)){
+                    if(!checkSchach(kopieFiguren, this.spielerAmZug)){
                         
                         print(kopieFigur.getAbkuerzung());
                         print(kopieFigur.getPosition().getSpalte());
