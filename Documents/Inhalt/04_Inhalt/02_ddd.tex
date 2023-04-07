@@ -41,42 +41,39 @@ Sobald ein Spieler in einem Spiel eine Figur von Position A zu Position B bewegt
 \subsection*{Entities}
 
 Eine Entity ist ein Objekt, das innerhalb der Domäne eine einzigartige Identität besitzt und sich im Laufe der Zeit verändern kann. 
-Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und weisen einen Lebenszyklus auf.o
+Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und können einen Lebenszyklus vorweisen. 
 
-Im Domainencode gibt es die Klasse \textbf{Figur}. 
-Diese dient als abstrakte Oberklasse für alle Figuren in einem Schachspiel. 
-Da die Klasse Figur als \textit{abstract class} implementiert ist, kann sie nicht instanziiert werden.
-Daher sind alle Spielfiguren, die von Figur erben, als Entitäten zu betrachten. 
-Zu diesen Spielfiguren gehören \textbf{König, Dame, Turm, Läufer, Springer} und \textbf{Bauer}. 
-Jede Figur kann über das Attribut \texttt{position} eindeutig identifiziert werden. 
-Die Position der Figuren fungiert als natürlicher Schlüssel. 
-Auf einem Feld kann immer nur eine Figur stehen, wodurch die Eindeutigkeit gewährleistet ist. 
-Wenn eine Figur auf ein Feld mit einer anderen Figur zieht, wird die dort stehende Figur geschlagen und aus dem aktiven Spiel entfernt. 
-Auch in diesem Fall steht letztendlich nur eine Figur auf dem Feld. 
-Innerhalb der Domäne \glqq Schach\grqq{} ist dieser Schlüssel veränderlich, da sich die Schachfiguren auf dem Spielfeld bewegen können. 
-Die Verwendung eines Surrogatschlüssel wäre grundsätzlich auch möglich, aber in diesem Fall wird sich an der Domäne orientiert.
-Im analogen Schach wird die Farbe einer Figur, der Figurentyp und die Position zur eindeutigen Identifizierung verwendet.   
-Eine Schachfigur besitzt einen eigenen Lebenszyklus. Sobald ein Schachspiel startet, werden alle Figuren in ihrer Startposition instanziiert. Während des Spiels können sie nahezu unbegrenzt bewegt werden. Wenn eine Figur geschlagen wird, wird sie gelöscht.
-
-Auch die \textbf{Spieler} können als Enität betrachtet werden. 
-Ein Spieler kann durch seinen \texttt{namen} als natürlichen Schlüssel identifiziert werden. 
-Während eines Schachspiels kann ein Spieler in jedem Zug eine Figur bewegen, weiterhin kann er aber auch das Spiel aufgeben. 
-Weiterhin ist der Spieler für das Elosystem nötig und ist veränderbar in seinem Rang. 
+Im Domainencode existiert die Klasse \textbf{Figur}, die als abstrakte Oberklasse für alle Figuren in einem Schachspiel dient. 
+Da die Figur als \textit{abstract class} implementiert ist, kann sie nicht instanziiert werden. 
+Aus diesem Grund wird nicht die Klasse Figur selbst, sondern alle Spielfiguren, die von Figur erben, als Entitäten zu betrachten. 
+Zu diesen Spielfiguren gehören \textbf{König, Dame, Turm, Läufer, Springer} und \textbf{Bauer}.
+Jede Figur kann über das Attribut \texttt{position} eindeutig identifiziert werden.
+Der Schlüssel, den das genannte Attribut darstellt, ist kein natürlicher Schlüssel, da es kein wirklicher Identifikator aus der Domaine ist, sondern eine für den Betrachtungszeitpunkt eindeutige Eigenschaft der Figur. 
+Da auf einem Feld im Schach immer nur eine Figur stehen kann, ist die Eindeutigkeit durch die Positionen gewährleistet. 
+Wenn eine Figur auf ein Feld zieht, auf dem sich bereits eine andere Figur befindet, wird die Figur, welche ursprünglich auf dem Feld stand, geschlagen und aus dem Spiel entfernt. 
+Somit steht letztendlich nur eine Figur auf dem Feld. 
+Innerhalb der Domäne \glqq Schach\grqq{} ist dieser Eigenschaftsschlüssel mit jedem Schachzug veränderlich, da sich die Schachfiguren auf dem Spielfeld bewegen können. 
+Die Verwendung eines Surrogatschlüssels wäre grundsätzlich auch möglich, aber in diesem Fall wird sich so gut es geht an der Domaine orientiert. 
+Im analogen Schach wird der Figurentyp und die Position zur eindeutigen Identifizierung verwendet. 
+Die Farbe kann indirekt durch die Anordnung der Angaben bestimmt werden.
+Jede Schachfigur besitzt einen eigenen Lebenszyklus.
+Sobald ein Schachspiel startet, werden alle Figuren in ihrer Startposition instanziiert.
+Während des Spiels können die Figuren nahezu unbegrenzt bewegt werden. 
+Wenn eine Figur geschlagen wird, wird sie wieder gelöscht. 
 
 Obwohl ein Schachzug ein Value Object ist, wird in diesem Projekt der \textbf{Spielzug} als Entity gewertet, obwohl nur zwei Schachzüge mit einer ID zusammengefasst werden. 
-Der Spielzug lässt sich eindeutig durch einen \texttt{zugNummer} identifizieren, die mit jedem Spielzug so lange um eins inkrementiert wie das Schachspiel geht. 
-Durch den inkrementellen Schlüssel liegt die Vermutung nahe, dass es sich dabei um einen Surrogatschlüssel handelt, aber da diese Art der Zählung und Zugidentifizierung ebenfalls in der Domäne verwendet wird, ist die Einordnung als natürlicher Schlüssel passender. 
-Der Grund, warum der Spielzug als Entity und nicht als Value Object gehandelt wird, liegt am Lebenszyklus des Objektes. 
-Auch wenn es kein besonders umfangreicher Lebenszyklus ist, so wird nach dem Erstellen eines Schachzugs zuerst der weiße Zug gesetzt.
-In einem zweiten Schritt wird der schwarze Zug hinzugefügt, bevor der Schachzug zur weiteren Ausgabe verarbeitet und final wieder gelöscht wird. 
+Der Spielzug lässt sich eindeutig durch eine \texttt{zugNummer} identifizieren, die mit jedem Spielzug um eins inkrementiert wird.
+Da diese Art der Zählung und Zugidentifizierung ebenfalls in der Domaine verwendet wird, ist die Einordnung als natürlicher Schlüssel passender als eine Bezeichnung als Surrogatschlüssel.
+Der Grund, warum der Spielzug als Entity und nicht als Value Object gehandelt wird, liegt am Lebenszyklus des Objekts. 
+Nach dem Erstellen einer Instanz des Spielzugs wird zuerst der Zug des Spielers \glqq Weiß\grqq{} gesetzt.
+Im zweiten Schritt wird der schwarze Zug hinzugefügt, bevor der Schachzug zur Protokollierung der Schachpartie verarbeitet und final wieder verworfen wird.  
 
-%Hier muss noch was zum Schlüssel geschrieben werden
-Ein \textbf{Schachspiel} sollte ebenfalls als Entität behandelt werden. 
-Es besitzt eine eigene Identität und eine eigene Lebenszeit über eine Partie Schach hinweg, in dem es verschiedene Zustände annehmen kann. 
-Das Schachspiel ist eine übergeordnete logische Ebene, welche Spieler, Schachbrett und Figuren zusammenlegt. 
-Auch wenn beim Schach die Ausgangslage der Figuren immer gleich ist, so unterscheidet sich eine Partie Schach in ihrem Verlauf. 
-Um die Schachspiele eindeutig identifizieren zu können, bietet es sich an einen Surrogatschlüssel zu verwenden. 
-Da für die Programmierung die Sprache Processing, also eine Javaerweiterung verwendet wird, bietet sich für den Surrogatschlüssel die Verwendung einer \texttt{UUID} an. 
+Die Klasse \textbf{Schachspiel} sollte als Entity behandelt werden, da sie eine eindeutige Identität besitzt und sich im Verlauf der Schachpartie in verschiedensten Zuständen befindet. 
+Sie bildet die übergeordnete logische Ebene, welche eine bestimmte Figurenkonstellation auf dem Schachbrett zu einem bestimmten Zeitpunkt zusammenführt. 
+Im Schach sind pro Zug durchschnittlich 35 unterschiedliche Züge möglich, was die Anzahl der Stellungen in einem Schachspiel exponentiell steigen lässt, abhängig von der Anzahl bereits gespielter Züge, der Positionierung der Figuren und der Anzahl der geschlagenen Figuren. 
+Obwohl die Ausgangslage der Figuren immer gleich ist, unterscheidet sich die Partie Schach individuell sehr stark in ihrem Verlauf.
+Um die Schachspiele eindeutig zu identifizieren, bietet sich die Verwendung eines Surrogatschlüssels an.
+In der verwendeten Programmiersprache Processing, einer Java-Erweiterung, eignet sich hierfür die Verwendung einer \texttt{UUID}.
 
 \subsection*{Aggregate}
 
