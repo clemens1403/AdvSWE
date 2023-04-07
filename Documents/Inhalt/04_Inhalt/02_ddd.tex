@@ -18,24 +18,25 @@ Driven Designs mit den entsprechenden Objekten.
 
 \subsection*{Value Objects}
 
-Ein Value Object ist ein unveränderliches Objekt, das einen bestimmten Wert repräsentiert und keine eigene Identität besitzt. 
-Es definiert sich durch seine Eigenschaften und nicht durch eine eindeutige Identität, wodurch es austauschbar und vergleichbar wird.
+Ein Value Object repräsentiert ein bestimmtes unveränderliches Objekt, das einen bestimmten Wert besitzt und keine eigene Identität aufweist. 
+Es definiert sich durch seine Eigenschaften und wird daher als austauschbar und vergleichbar angesehen.
 
-Im Standardschach repräsentiert ein \textbf{Feld} eine Position, die durch eine Kombination aus \texttt{Spalte} und \texttt{Zeile} und \texttt{Farbe} definiert ist. 
-Da Schachfelder keinen Lebenszyklus haben und ihre Gleichheit durch ihre Position bestimmt wird, werden sie als Value Objects geführt. 
-Weiterhin ist es besonders wichtig für die grundlegende Funktion eines Schachspiels, dass Schachfelder als unveränderliche Objekte behandelt werden, da ein Schachspiel auf einer \glqq festen Unterlage\grqq{} spielt wird. 
+Im Standardschach repräsentiert ein \textbf{Feld} eine Position, die durch eine Kombination aus \texttt{Spalte}, \texttt{Zeile} und \texttt{Farbe} definiert wird. 
+Schachfelder haben keinen Lebenszyklus und werden aus diesem Grund als Value Objects betrachtet. 
+Es ist von grundlegender Bedeutung für die Funktion eines Schachspiels, dass Schachfelder als unveränderliche Objekte behandelt werden, da ein Schachspiel auf einer \glqq festen Unterlage\grqq{} gespielt wird. 
 
-Ein \textbf{Schachbrett} kann ebenfalls als Value Object betrachtet werden, weil es einen unveränderlichen Zustand repräsentiert. 
-Ein Schachbrett ist in der domänenspezifischen Abbildung eines Schachspiels von der Realität in Programmcode eine übergeordnete Verwaltungsstruktur der einzelnen Felder.
-Dabei werden 64 Schachfelder definiert und als zweidimensionale Spielebene dargestellt.
-Die Gleichheit von zwei Schachbrettern basiert auf der Gleichheit ihrer Felder, unabhängig der tatsächlichen Instanz. 
-Da die Felder jedoch als Value Object geführt werden, kann dies auch auf das Schachbrett übertragen werden. 
-Das Schachbrett weist keine Verhaltensänderungen auf, sodass die Integrität des Objekts die ganze Zeit über gewahrt werden muss. 
+Ein \textbf{Schachbrett} kann ebenfalls als Value Object betrachtet werden, da es einen unveränderlichen Zustand repräsentiert. 
+In der domänenspezifischen Abbildung eines Schachspiels wird es als übergeordnete Verwaltungsstruktur der einzelnen Spielfelder betrachtet. 
+Es besteht aus 64 Schachfeldern, die als zweidimensionale Spielebene dargestellt werden.
+Die Gleichheit von zwei Schachbrettern basiert auf der Gleichheit ihrer Felder, unabhängig von ihrer tatsächlichen Instanz. 
+Da die Felder als Value Objects behandelt werden und ein Schachbrett zu Beginn eines Spiels initial erzeugt und danach unverändert bleibt, wird diese Klasse auch als Value Object geführt. 
+Die Integrität des Objekts muss während des Spiels gewahrt bleiben, da es keine Verhaltensänderungen aufweist. 
 
-Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und weiteren Informationen über den Einfluss der Bewegung der betreffenden Figur auf umliegende Figuren zusammen. 
-Dazu zählen Informationen darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob andere Figuren ebenfalls bewegt werden müssen, wie es bei der Rochade der Fall ist. 
-Die Implementierung eines Schachzugs dient der Protokollierung einer gespielten Schachpartie. 
-Ein Schachzug wurde als Value Object klassifiziert, da er keinen erkennbaren Lebenszyklus besitzt und seine Eigenschaften nach der Erstellung nicht mehr verändert werden. 
+Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und textuellen Darstellung des Zugs zusammen.
+Bei der textuellen Darstellung werden Angaben darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob eine Rochade durchgeführt wird, berücksichtigt. 
+Die Implementierung eines Schachzugs als eigene Klasse dient der Protokollierung der gespielten Schachpartie. 
+Ein Schachzug wird als Value Objekt klassifiziert, da er keinen erkennbaren Lebenszyklus vorweisen kann. 
+Sobald ein Spieler in einem Spiel eine Figur von Position A zu Position B bewegt, wird eine Instanz der Klasse Schachzug erstellt und kann nicht nachträglich bearbeitet werden, da auch im Spiel ein Schachzug nicht zurückgenommen oder geändert werden kann. 
 
 \subsection*{Entities}
 
