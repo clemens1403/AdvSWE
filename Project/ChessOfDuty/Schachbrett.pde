@@ -1,5 +1,5 @@
-public class Schachbrett {
-    Feld[][] felder;
+public final class Schachbrett {
+    private final Feld[][] felder;
 
     public Schachbrett(){
         
@@ -11,14 +11,6 @@ public class Schachbrett {
                 felder[spalte-1][zeile-1] = new Feld(spalte,zeile);
             }
         }
-    }
-
-    public Feld[][] getFelder(){
-        return felder;
-    }
-
-    public Feld getFeld(int spalte, int zeile){
-        return felder[spalte-1][zeile-1];
     }
 
     public void renderSchachbrett(){
@@ -56,5 +48,33 @@ public class Schachbrett {
         }
 
         return ergebnis;
+    }
+
+    @Override
+    public boolean equals(Object objekt){
+        if(objekt == this){
+            return true;
+        }
+
+        if(!(objekt instanceof Schachbrett)){
+            return false;
+        }
+
+        Schachbrett schachbrett = (Schachbrett) objekt;
+
+        return Arrays.deepEquals(this.felder, schachbrett.felder);
+    }
+
+    @Override
+    public int hashCode(){
+        return Arrays.deepHashCode(felder);
+    }
+
+    public Feld[][] getFelder(){
+        return felder;
+    }
+
+    public Feld getFeld(int spalte, int zeile){
+        return felder[spalte-1][zeile-1];
     }
 }
