@@ -4,9 +4,10 @@ import java.nio.file.Paths;
 import java.nio.file.Files;
 import java.io.File;
 import java.io.IOException;
+import java.util.UUID;
 
 public class Schachspiel {
-    private long gameID;
+    private UUID gameID;
 
     private Schachbrett schachbrett;
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
@@ -30,7 +31,7 @@ public class Schachspiel {
     private Schachzug aktuellerSchachzug = null;
     
     public Schachspiel(){
-        this.gameID = new Date().getTime();
+        this.gameID = UUID.randomUUID();
         
         //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
