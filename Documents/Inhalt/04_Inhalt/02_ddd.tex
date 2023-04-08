@@ -77,25 +77,27 @@ In der verwendeten Programmiersprache Processing, einer Java-Erweiterung, eignet
 
 \subsection*{Aggregate}
 
-Über Aggregate können Entities und Value Objects als eine Einheit verwaltet werden. 
-Ein Aggregat besteht dabei aus mindestens einer Entität und kann.
+Aggregate ermöglichen die Verwaltung von Entities und Value Objects als eine zusammengehörende Einheit.
+Ein Aggregat besteht dabei aus mindestens einer Entität und kann weitere Entitäten und Value Objects enthalten.
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics*[scale=0.73]{Bilder/DDD_Aggregate.PNG}
+    \includegraphics*[scale=0.73]{Bilder/DDD_Aggregate_v2.PNG}
+    \caption{Ausschnitt aus dem Domainenmodell eines Schachspiels}
 \end{figure}
 
-Das \textbf{Schachbrett} und die Klasse \textbf{Feld} können als Aggregat zusammengefasst werden, da sie in der Domäne logisch miteinander verknüpft sind. 
+In der Domaine \glqq Schach\grqq{} können die Klassen \textbf{Schachbrett} und \textbf{Feld} als Aggregat zusammengefasst werden, da sie logisch miteinander verknüpft sind. 
 Für ein Schachbrett werden 64 Instanzen der Klasse Feld in einer zweidimensionalen Datenstruktur gespeichert. 
-Da über das Schachbrett in der Domäne die gesamte Interaktion des Spiels stattfindet (Figuren werden über das Schachbrett bewegt), besitzt diese Klasse eine zentrale Rolle. 
-Um die feste Anordnung der Felder im zweidimensionalen Rahmen des Spielfeldes durch Zeilen und Spalten positionsgetreu abzufragen wird auch auf jedes Feld auf dem Schachbrett über das übergeordnete Schachbrett zugegriffen.
-Durch diese Art des Zugriffes wirkt die Klasse Schachbrett automatisch als \texttt{Root-Entity} für die Klasse Feld. 
+Da über das Schachbrett in der Domaine die gesamte Handlung des Spiels stattfindet (Figuren werden über das Schachbrett bewegt), hat die Klasse Schachbrett eine zentrale Rolle.
+Um die feste Anordnung der Felder im zweidimensionalen Rahmen des Spielfeldes durch Zeilen und Spaten positionsgetreu abzufragen, kann auf jedes Feld auf dem Schachbrett nur über das übergeordnete Schachbrett zugegriffen werden. 
+Durch diese Art des Zugriffs fungiert die Klasse Schachbrett automatisch als \texttt{Root-Entity} für die Klasse Feld.
+Zwischen der Root-Entität Schachbrett und der Entität Schachspiel kann die Assoziation nicht durch eine Entity-ID gelöst werden, da es sich bei dem Schachbrett um ein Value Object handelt und einem Schachbrett daher keine ID zugewiesen wird. 
 
-Die Klasse \textbf{Spielzug} dient ebenfalls als Root-Entity für das Aggregat bestehend aus den Klassen Spielzug und \textbf{Schachzug}.
-Sofern man die Domäne betrachtet, dann kann jeder Spieler, sofern er an der Reihe ist einen Schachzug ausführen, indem er eine Figur auf dem Schachbrett von Position A nach Position B bewegt. 
-Ein Spielzug fasst zwei aufeinanderfolgende Schachzüge jeweils vom Spieler Weiß und Spieler Schwarz zusammen.
-Die schriftliche Protokollierung einer Partie Schach erfolgt immer über die Spielzüge, gibt aber jeweils die einzelnen Schachzüge der unterschiedlichen Spieler an. 
-Auf kann man auf die einzelnen Schachzüge nur über die Spielzüge zugreifen, was für die Betrachtung als Aggregat spricht. 
+Die Klasse \textbf{Spielzug} dient ebenfalls als \texttt{Root-Entity} für das Aggregat, das aus den Klassen  Spielzug und \textbf{Schachzug} besteht. 
+In der Domaine kann jeder Spieler, wenn er an der Reihe ist, einen Schachzug ausführen, indem er eine Figur von Position A nach Position B bewegt. 
+Ein Spielzug fasst jeweils zwei aufeinanderfolgende Schachzüge von Spieler \glqq Weiß\grqq{} und Spieler \glqq Schwarz\grqq{} zusammen. 
+Die schriftliche Protokollierung einer Partie Schach erfolgt immer über die Spielzüge und gibt jeweils die einzelnen Schachzüge der unterschiedlichen Spieler an. 
+Auf diese Weise kann man auf die einzelnen Schachzüge nur über die Spielzüge zugreifen, was für eine Betrachtung als Aggregat spricht.  
 
 \subsection*{Repositories}
 
