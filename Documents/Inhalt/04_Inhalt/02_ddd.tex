@@ -82,7 +82,7 @@ Ein Aggregat besteht dabei aus mindestens einer Entität und kann weitere Entit�
 
 \begin{figure}[ht!]
     \centering
-    \includegraphics*[scale=0.73]{Bilder/DDD_Aggregate_v2.PNG}
+    \includegraphics*[scale=0.6]{Bilder/DDD_Aggregate_v2.PNG}
     \caption{Ausschnitt aus dem Domainenmodell eines Schachspiels}
 \end{figure}
 
@@ -101,21 +101,19 @@ Auf diese Weise kann man auf die einzelnen Schachzüge nur über die Spielzüge 
 
 \subsection*{Repositories}
 
-Im Domain Driven Design werden Repositories genutzt, um Daten in einem Projekt zu persistieren und einzulesen. 
+Im Domain Driven Design werden Repositories genutzt, um Daten in einem Projekt zu persistieren und zu laden. 
 
-Das programmierte Schachspiel soll nach jedem abgeschlossenen Schachspiel als lesbares Protokoll in eine eigene Datei exportiert werden. 
-In diesem Fall sollen Daten persistiert werden, aber nie gelesen werden. 
-Trotzdem wird für die Klasse \textbf{Spielzug} ein Repository benötigt, welches die Spielzüge nacheinander in die Protokolldatei schreibt. 
+Im Falle des programmierten Schachspiels soll nach jedem abgeschlossenen Spiel ein lesbares Protokoll in eine eigene Datei exportiert werden.
+Obwohl die Daten nie gelesen werden, ist es erforderlich, dass für die Klasse Spielzug ein Repository verwendet wird, um die Spielzüge nacheinander in der Protokolldatei zu persistieren. 
 
-Ein zweiter Anwendungsfall für ein Repository ist die Persistierung der \textbf{Spieler} im Zusammenhang mit dem Elosystem. 
-Jedem Spieler soll eine gewisse Elo zugeordnet werden können, die je nach Anzahl der Siege und Niederlagen steigt oder sinkt. 
-Um die Elo der Spieler nicht beim erneuten Start der Software neu zu setzen, sollten diese Informationen mittels Repository verarbeitet werden. 
+In den Vorlesungsfolien wird beschrieben, dass meist zu jedem Aggregat auch ein entsprechendes Repository existiert. 
+Für das Aggregat Schachbrett ist dies nicht der Fall. 
+Das Schachbrett muss in keinem Fall persistiert werden und darum wird kein Repository benötigt. 
 
 \subsection*{Domain Service}
 
-Ein Domain Service ist ein Konzept, welches genutzt wird, um Logik abzubilden, die nicht in direkter Verknüpfung zu einer Entität oder einem Aggregat steht. 
+Ein Domain Service ist ein Konzept, das genutzt wird, um Logik abzubilden, die nicht direkt mit einer Entität oder einem Aggregat verbunden ist.
 
-In einem Schachspiel sind alle Arten an Figuren als Entitäten zu betrachten. 
-Jede einzelne Figur hat eigene Regeln, auf dessen Basis sich diese Figuren auf dem Schachbrett bewegen dürfen. 
-Die Funktionalität wie für die verschiedenen Figurtypen die möglichen Bewegungen ausgehend von der aktuellen Position der Figur berechnet werden, findet sich in den Klassen \textbf{Bewegungsmatrizen} und \textbf{Bewegungsrichtung}.
-Beide Klassen lassen sich daher als Services betrachten.
+Im Schachspiel sind alle Figuren als Entitäten zu betrachten, wobei jede Figur eigene Regeln hat, nach denen sie sich auf dem Schachbrett bewegen darf.
+Die Funktionalität, die die möglichen Bewegungen der verschiedenen Figurtypen ausgehend von ihrer aktuellen Position wiedergibt, befindet sich in den Klassen \textbf{Bewegungsmatrizen} und \textbf{Bewegungsrichtung}.
+Beide Klassen können daher als Services in der Domaine betrachtet werden.
