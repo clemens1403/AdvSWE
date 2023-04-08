@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public final class Schachbrett {
     private final Feld[][] felder;
 

@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public final class Schachzug {
 
     private final int farbe;
@@ -25,7 +27,7 @@ public final class Schachzug {
         Schachzug schachzug = (Schachzug) objekt;
 
         return farbe == schachzug.farbe &&
-               abkürzung.equals(schachzug.abkuerzung) &&
+               abkuerzung.equals(schachzug.abkuerzung) &&
                altePosition.equals(schachzug.altePosition) &&
                neuePosition.equals(schachzug.neuePosition);
     }
