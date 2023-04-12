@@ -1,10 +1,16 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
+import processing.core.PApplet;
+import processing.core.PGraphics;
+
 import java.util.Arrays;
 
-public final class Schachbrett {
+public final class Schachbrett extends PApplet {
+    private PGraphics g;
     private final Feld[][] felder;
 
     public Schachbrett(){
-        
+
         felder = new Feld[8][8];
 
         for(int spalte = 1; spalte <= 8; spalte++){
@@ -15,22 +21,22 @@ public final class Schachbrett {
         }
     }
 
-    public void renderSchachbrett(){
+    public void renderSchachbrett(PGraphics g, int mausX, int mausY){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
                 Feld f = felder[i-1][j-1];
-                f.render();
+                f.render(g, mausX, mausY);
             }
         }
 
         for (int i = 1; i <= 8; i++){
-            push();
-            fill(200);
-            textAlign(CENTER, CENTER);
-            textSize(20);
-            text(integerZuBuchstabe(i-1), 250 + (i-1)*100, 1020);
-            text(i, 180, 950 - (i-1)*100);
-            pop();
+            g.pushStyle();
+            g.fill(200);
+            g.textAlign(CENTER, CENTER);
+            g.textSize(20);
+            g.text(integerZuBuchstabe(i-1), 250 + (i-1)*100, 1020);
+            g.text(i, 180, 950 - (i-1)*100);
+            g.popStyle();
         }
     }
 
@@ -46,7 +52,7 @@ public final class Schachbrett {
         String ergebnis = "";
         for(char b : buchstaben){
             int x = Integer.parseInt(Character.valueOf(b).toString(), 26);
-            ergebnis += String.valueOf((char)(x + 'A'));          
+            ergebnis += String.valueOf((char)(x + 'A'));
         }
 
         return ergebnis;
@@ -80,3 +86,4 @@ public final class Schachbrett {
         return felder[spalte-1][zeile-1];
     }
 }
+

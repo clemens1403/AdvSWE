@@ -1,3 +1,5 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
 public enum Bewegungsrichtung {
 
     OBEN_RECHTS(1, 1, 8, 8),
@@ -12,7 +14,7 @@ public enum Bewegungsrichtung {
     private int spalte;
     private int zeile;
     private int spaltenVerbot;
-    private int zeilenVerbot; 
+    private int zeilenVerbot;
 
     Bewegungsrichtung(int spalte, int zeile, int spaltenVerbot, int zeilenVerbot){
         this.spalte = spalte;

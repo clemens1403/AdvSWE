@@ -1,3 +1,5 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
 import java.util.Arrays;
 
 public final class Schachzug {
@@ -27,8 +29,9 @@ public final class Schachzug {
         Schachzug schachzug = (Schachzug) objekt;
 
         return farbe == schachzug.farbe &&
-               abkuerzung.equals(schachzug.abkuerzung) &&
-               altePosition.equals(schachzug.altePosition) &&
-               neuePosition.equals(schachzug.neuePosition);
+                abkuerzung.equals(schachzug.abkuerzung) &&
+                altePosition.equals(schachzug.altePosition) &&
+                neuePosition.equals(schachzug.neuePosition);
     }
 }
+

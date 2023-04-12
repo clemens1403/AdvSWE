@@ -1,3 +1,5 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
 public class Spielzug {
 
     private int zugNummer;
@@ -10,3 +12,4 @@ public class Spielzug {
         this.zugSchwarz = zugSchwarz;
     }
 }
+

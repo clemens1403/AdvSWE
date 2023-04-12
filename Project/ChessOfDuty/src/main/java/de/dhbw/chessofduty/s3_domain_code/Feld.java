@@ -1,14 +1,20 @@
-public final class Feld {
-    
+package de.dhbw.chessofduty.s3_domain_code;
+
+import processing.core.PApplet;
+import processing.core.PGraphics;
+
+public final class Feld extends PApplet {
+
+    private int mausX, mausY;
     private final int zeile;
     private final int spalte;
     private final int farbe;
     private final int groesse;
     private final int x;
     private final int y;
-    
+
     public Feld(int spalte, int zeile){
-        this.zeile = zeile; 
+        this.zeile = zeile;
         this.spalte = spalte;
         this.groesse = 100;
         if((zeile + spalte) % 2 == 0){
@@ -18,20 +24,24 @@ public final class Feld {
         }
 
         this.x = ((spalte-1)*groesse) + 200;
-        this.y = 700 - ((zeile-1)*groesse) + 200; 
+        this.y = 700 - ((zeile-1)*groesse) + 200;
     }
 
-    public void render(){
-        push();
-        fill(255 * farbe);
-        rect(x, y, groesse, groesse);
-        pop();
+    public void render(PGraphics g, int mausX, int mausY){
+        this.mausX = mausX;
+        this.mausY = mausY;
+
+        g.pushMatrix();
+        g.fill(255 * farbe);
+        g.rectMode(CORNER);
+        g.rect(x, y, groesse, groesse);
+        g.popMatrix();
     }
 
     public Feld checkFeldGeklickt(){
 
-        if((mouseX > this.getX()) && (mouseX < this.getX()+this.getGroesse())){
-            if((mouseY > this.getY()) && (mouseY < this.getY()+this.getGroesse())){
+        if((mausX > this.getX()) && (mausX < this.getX()+this.getGroesse())){
+            if((mausY > this.getY()) && (mausY < this.getY()+this.getGroesse())){
                 return this;
             }
         }
@@ -53,11 +63,11 @@ public final class Feld {
         Feld feld = (Feld) objekt;
 
         return zeile == feld.zeile &&
-               spalte == feld.spalte &&
-               farbe == feld.farbe &&
-               groesse == feld.groesse &&
-               x == feld.x &&
-               y == feld.y;
+                spalte == feld.spalte &&
+                farbe == feld.farbe &&
+                groesse == feld.groesse &&
+                x == feld.x &&
+                y == feld.y;
     }
 
     @Override
@@ -75,7 +85,7 @@ public final class Feld {
 
     @Override
     public String toString(){
-        return "Spalte: " + this.getSpalte() + ";  Zeile: " + this.getZeile() + "\n"; 
+        return "Spalte: " + this.getSpalte() + ";  Zeile: " + this.getZeile() + "\n";
     }
 
     public int getZeile(){
@@ -98,3 +108,4 @@ public final class Feld {
         return this.groesse;
     }
 }
+

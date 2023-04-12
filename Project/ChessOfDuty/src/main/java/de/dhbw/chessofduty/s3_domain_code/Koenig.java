@@ -1,12 +1,16 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
+import java.util.ArrayList;
+
 public class Koenig extends Figur{
 
     private boolean imSchach = false;
     private boolean schachMatt = false;
 
     public Koenig(int farbe, Feld startPosition){
-        
+
         super(farbe, startPosition);
-        
+
         this.setName("König");
         this.setAbkuerzung("K");
     }
@@ -81,7 +85,7 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte, zeile+1));
         }
-           
+
         return moeglicheZuege;
     }
 
@@ -113,7 +117,7 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte-1, zeile+1));
         }
-           
+
         return moeglicheZuege;
     }
 
@@ -145,7 +149,7 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte+1, zeile+1));
         }
-           
+
         return moeglicheZuege;
     }
 
@@ -177,7 +181,7 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte, zeile-1));
         }
-           
+
         return moeglicheZuege;
     }
 
@@ -209,12 +213,12 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte-1, zeile-1));
         }
-           
+
         return moeglicheZuege;
     }
 
     private ArrayList<Feld> moeglicherZugNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile) {
-        
+
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
@@ -241,7 +245,7 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte+1, zeile-1));
         }
-           
+
         return moeglicheZuege;
     }
 
@@ -273,7 +277,7 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte+1, zeile));
         }
-           
+
         return moeglicheZuege;
     }
 
@@ -305,7 +309,8 @@ public class Koenig extends Figur{
         } else {
             moeglicheZuege.add(schachbrett.getFeld(spalte-1, zeile));
         }
-           
+
         return moeglicheZuege;
     }
 }
+

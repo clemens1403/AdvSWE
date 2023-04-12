@@ -1,14 +1,18 @@
-public class Turm extends Figur{
+package de.dhbw.chessofduty.s3_domain_code;
+
+import java.util.ArrayList;
+
+public class Dame extends Figur{
     int spalte = -1;
     int zeile = -1;
 
-    public Turm(int farbe, Feld startPosition){
-        
+    public Dame(int farbe, Feld startPosition){
+
         super(farbe, startPosition);
-        
-        this.setName("Turm");
-        this.setAbkuerzung("T");
-        this.setWert(5);
+
+        this.setName("Dame");
+        this.setAbkuerzung("D");
+        this.setWert(9);
     }
 
     @Override
@@ -17,12 +21,21 @@ public class Turm extends Figur{
 
         this.spalte = this.getPosition().getSpalte();
         this.zeile = this.getPosition().getZeile();
+
         /*
-            Die Figur Turm kann folgende Bewegungen ausführen:
-                - alle Felder in der aktuellen Spalte
-                - alle Felder in der aktuellen Zeile
+            Die Figur Dame kann folgende Bewegungen ausführen
+                - diagonale Bewegungen nach vorne links
+                - diagonale Bewegungen nach vorne rechts
+                - diagonale Bewegungen nach hinten links
+                - diagonale Bewegungen nach hinten rechts
+                - gerade Bewegungen in der Zeile
+                - gerade Bewegungen in der Spalte
         */
 
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN_RECHTS, Bewegungsmatrizen.OBEN_RECHTS, figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN_LINKS, Bewegungsmatrizen.OBEN_LINKS, figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN_RECHTS, Bewegungsmatrizen.UNTEN_RECHTS, figuren, schachbrett));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN_LINKS, Bewegungsmatrizen.UNTEN_LINKS, figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN, Bewegungsmatrizen.OBEN, figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN, Bewegungsmatrizen.UNTEN, figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.LINKS, Bewegungsmatrizen.LINKS, figuren, schachbrett));

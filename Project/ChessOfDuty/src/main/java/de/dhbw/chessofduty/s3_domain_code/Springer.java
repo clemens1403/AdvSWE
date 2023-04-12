@@ -1,8 +1,12 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
+import java.util.ArrayList;
+
 public class Springer extends Figur{
     public Springer(int farbe, Feld startPosition){
-        
+
         super(farbe, startPosition);
-        
+
         this.setName("Springer");
         this.setAbkuerzung("S");
         this.setWert(3);
@@ -15,7 +19,7 @@ public class Springer extends Figur{
 
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
-        
+
         /*
             Die Figur Springer kann folgenden Bewegungen ausführen
                 - zwei Schritte nach vorne und einen nach links
@@ -77,7 +81,7 @@ public class Springer extends Figur{
     }
 
     private ArrayList<Feld> zweiNachVorneEinsNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
-        
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -109,7 +113,7 @@ public class Springer extends Figur{
     }
 
     private ArrayList<Feld> zweiNachRechtsEinesNachOben(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
-        
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -140,8 +144,8 @@ public class Springer extends Figur{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachRechtsEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){        
-        
+    private ArrayList<Feld> zweiNachRechtsEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -172,7 +176,7 @@ public class Springer extends Figur{
         return moeglicheZuege;}
 
     private ArrayList<Feld> zweiNachUntenEinesNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
-        
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -204,7 +208,7 @@ public class Springer extends Figur{
     }
 
     private ArrayList<Feld> zweiNachUntenEinesNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
-        
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -236,7 +240,7 @@ public class Springer extends Figur{
     }
 
     private ArrayList<Feld> zweiNachLinksEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
-        
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -268,7 +272,7 @@ public class Springer extends Figur{
     }
 
     private ArrayList<Feld> zweiNachLinksEinensNachOben(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
-    
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -298,5 +302,5 @@ public class Springer extends Figur{
 
         return moeglicheZuege;
     }
-
 }
+

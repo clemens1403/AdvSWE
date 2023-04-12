@@ -1,3 +1,10 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
+import processing.core.PApplet;
+import processing.core.PGraphics;
+
+import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Date;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -6,8 +13,9 @@ import java.io.File;
 import java.io.IOException;
 import java.util.UUID;
 
-public class Schachspiel {
+public class Schachspiel extends PApplet {
     private UUID gameID;
+    PGraphics g;
 
     private Schachbrett schachbrett;
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
@@ -29,21 +37,18 @@ public class Schachspiel {
     private ArrayList<Feld> moeglicheZuegeDerFigur = new ArrayList<>();
 
     private Schachzug aktuellerSchachzug = null;
-    
-    public Schachspiel(){
+
+    public Schachspiel(PGraphics g){
         this.gameID = UUID.randomUUID();
-        
+        this.g = g;
+
         //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
         this.spielerAmZug = 1;
-        
+
         //Figuren des Schachspiels werden instanziiert
         this.initialisiereFiguren();
 
-    }
-
-    public Schachbrett getSchachbrett(){
-        return this.schachbrett;
     }
 
     public void initialisiereFiguren(){
@@ -74,84 +79,85 @@ public class Schachspiel {
         figuren.add(new Turm(0, schachbrett.getFeld(8,8)));
     }
 
-    public void renderSchachspiel(){
-        schachbrett.renderSchachbrett();
+    public void renderSchachspiel(PGraphics g, int mausX, int mausY){
+        this.g = g;
+        schachbrett.renderSchachbrett(this.g, mausX, mausY);
 
         this.renderZuege();
         this.renderGeschlageneFiguren();
 
         for(Figur f : this.figuren){
-            f.render();
+            f.render(g, mausX, mausY);
 
             if(schachWeiss && f.getAbkuerzung() == "K" && f.getFarbe() == 1){
                 Feld feld = f.getPosition();
-                push();
-                fill(200,100,100,200);
-                rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
-                pop();
+                g.pushMatrix();
+                g.fill(200,100,100,200);
+                g.rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
+                g.popMatrix();
             }else if(schachSchwarz && f.getAbkuerzung() == "K" && f.getFarbe() == 0) {
                 Feld feld = f.getPosition();
-                push();
-                fill(200,100,100,200);
-                rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
-                pop();
+                g.pushMatrix();
+                g.fill(200,100,100,200);
+                g.rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
+                g.popMatrix();
             }
         }
 
         if(this.ausgewaehltFigur != null){
             Feld f = this.ausgewaehltFigur.getPosition();
-            push();
-            fill(100,200,100,200);
-            rect(f.getX(), f.getY(), f.getGroesse(), f.getGroesse());
-            pop();
+            g.pushMatrix();
+            g.fill(100,200,100,200);
+            g.rect(f.getX(), f.getY(), f.getGroesse(), f.getGroesse());
+            g.popMatrix();
         }
 
         for(Feld f: this.moeglicheZuegeDerFigur){
-            push();
-            stroke(200,100,100);
-            strokeWeight(7);
-            point(f.getX() + f.getGroesse()/2, f.getY() + f.getGroesse()/2);
-            pop();
+            g.pushStyle();
+            g.stroke(200,100,100);
+            g.strokeWeight(7);
+            g.point(f.getX() + f.getGroesse()/2, f.getY() + f.getGroesse()/2);
+            g.popStyle();
         }
 
     }
 
     public void renderGeschlageneFiguren(){
-        push();
-        fill(160,82,45);
+        g.pushStyle();
+        g.fill(160,82,45);
         String textS = "";
         for(Figur f : geschlageneFigurenSchwarz){
             textS += f.getAbkuerzung();
         }
-        textAlign(LEFT, CENTER);
-        textSize(20);
-        text(textS, 200, 1100);
-        pop();
+        g.textAlign(LEFT, CENTER);
+        g.textSize(20);
+        g.text(textS, 200, 1100);
+        g.popStyle();
 
-        push();
-        fill(169, 172, 176);
+        g.pushStyle();
+        g.fill(169, 172, 176);
         String textW = "";
         for(Figur f : geschlageneFigurenWeiss){
             textW += f.getAbkuerzung();
         }
-        textAlign(RIGHT, CENTER);
-        textSize(20);
-        text(textW, 1000, 1100);
-        pop();
+        g.textAlign(RIGHT, CENTER);
+        g.textSize(20);
+        g.text(textW, 1000, 1100);
+        g.popStyle();
     }
 
     public void renderZuege(){
-        push();
-        fill(0);
-        textSize(40);
-        textAlign(CENTER,CENTER);
-        text("Züge:", width - 150, 200);
-        pop();
+        g.pushStyle();
+        g.fill(0);
+        g.textSize(40);
+        g.textAlign(CENTER,CENTER);
+        g.text("Züge:", g.width - 140, 200);
+        g.popStyle();
 
-        push();
-        fill(200);
-        textSize(15);
-        textAlign(LEFT, TOP);
+        g.pushStyle();
+        g.fill(200);
+        g.textSize(15);
+        g.textAlign(LEFT, TOP);
         String text = "";
         for(String zug : this.zuege){
             int index = this.zuege.indexOf(zug);
@@ -164,8 +170,8 @@ public class Schachspiel {
                 text+="\n";
             }
         }
-        text(text, width-185, 300);
-        pop();
+        g.text(text, g.width-185, 300);
+        g.popStyle();
     }
 
     public void klickAuswerten(){
@@ -184,11 +190,11 @@ public class Schachspiel {
                     this.ausgewaehltFigur = f;
                     this.moeglicheZuegeDerFigur = f.getMoeglicheZuege(figuren, schachbrett);
                     this.moeglicheZuegeDerFigur = this.getValideZuege(this.moeglicheZuegeDerFigur);
-                    print(this.moeglicheZuegeDerFigur);
+                    System.out.println(this.moeglicheZuegeDerFigur);
                 }
 
                 break;
-            }   
+            }
         }
     }
 
@@ -205,20 +211,20 @@ public class Schachspiel {
             for(Figur fg : this.figuren){
                 if(fg.getPosition() == zug && fg.getFarbe() != this.spielerAmZug){
                     geschlageneFigur = fg;
-                    print("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
+                    System.out.println("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
                     kopieFiguren.remove(fg);
                     geschlagen = true;
                 }
             }
-            if(!checkSchach(kopieFiguren, (this.spielerAmZug-1)*(this.spielerAmZug-1))){        
+            if(!checkSchach(kopieFiguren, (this.spielerAmZug-1)*(this.spielerAmZug-1))){
                 kopieFigur.setPosition(startPosition);
-                print("\nmove valid");   
+                System.out.println("\nmove valid");
                 valideZuege.add(zug);
             }
             if(geschlagen){
                 kopieFiguren.add(geschlageneFigur);
             }
-            this.ausgewaehltFigur.setPosition(startPosition);       
+            this.ausgewaehltFigur.setPosition(startPosition);
         }
         return valideZuege;
     }
@@ -226,7 +232,7 @@ public class Schachspiel {
     public void fuehreZugAus(){
 
         Feld ausgewaehltesFeld = selektiereAusgewaehltesFeld();
-        boolean umsetzenMoeglich = this.moeglicheZuegeDerFigur.contains(ausgewaehltesFeld);   
+        boolean umsetzenMoeglich = this.moeglicheZuegeDerFigur.contains(ausgewaehltesFeld);
 
         if(umsetzenMoeglich){
             for(Figur f : this.figuren){
@@ -282,7 +288,7 @@ public class Schachspiel {
                     break;
                 }
             }
-        }   
+        }
 
         this.moeglicheZuegeDerFigur = new ArrayList<Feld>();
         this.ausgewaehltFigur = null;
@@ -312,12 +318,11 @@ public class Schachspiel {
         return false;
     }
 
-
     private void schlageFigur(Figur f){
         //Figur zu Array der geschlagenen Figuren hinzufügen
         //Array nach Farbe aufgeteilt
         //Wenn Figur weiß dann zu geschlageneFigurenWeiss hinzufügen sonst zu geschlageneFigurenSchwarz
-        print("Schlage Figur");
+        System.out.println("Schlage Figur");
         if(f.getFarbe()== 1){
             this.geschlageneFigurenWeiss.add(f);
         }else{
@@ -337,19 +342,19 @@ public class Schachspiel {
                 break;
             }
         }
-        
+
         for(Figur f: figuren){
             if(f.getFarbe()==spieler){
                 ArrayList<Feld> mglZuege = f.getMoeglicheZuege(figuren, this.schachbrett);
-                print("Königposition: \n");
-                print(koenigPosition);
+                System.out.println("Königposition: \n");
+                System.out.println(koenigPosition);
                 if(mglZuege.contains(koenigPosition)){
-                    print("Schach!");
+                    System.out.println("Schach!");
                     return true;
-                } 
+                }
             }
         }
-        
+
         return false;
     }
 
@@ -369,18 +374,18 @@ public class Schachspiel {
                     for(Figur fg : this.figuren){
                         if(fg.getPosition() == zug && fg.getFarbe() == this.spielerAmZug){
                             geschlageneFigur = fg;
-                            print("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
+                            System.out.println("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
                             kopieFiguren.remove(fg);
                             geschlagen = true;
                         }
                     }
                     if(!checkSchach(kopieFiguren, this.spielerAmZug)){
-                        
-                        print(kopieFigur.getAbkuerzung());
-                        print(kopieFigur.getPosition().getSpalte());
-                        print(kopieFigur.getPosition().getZeile());
+
+                        System.out.println(kopieFigur.getAbkuerzung());
+                        System.out.println(kopieFigur.getPosition().getSpalte());
+                        System.out.println(kopieFigur.getPosition().getZeile());
                         kopieFigur.setPosition(startPosition);
-                        print("\nno Mate");
+                        System.out.println("\nno Mate");
                         return false;
                     }
                     if(geschlagen){
@@ -388,13 +393,13 @@ public class Schachspiel {
                     }
                 }
             }
-            f.setPosition(startPosition);       
+            f.setPosition(startPosition);
         }
-        print("Schachmatt");
+        System.out.println("Schachmatt");
         return true;
     }
 
-    private void exportZuege(){
+    public void exportZuege(){
         String pathString = null;
 
         try {
@@ -430,7 +435,7 @@ public class Schachspiel {
 
         }
         String fileNameString = pathString + this.gameID + ".txt";
-        print(fileNameString);
+        System.out.println(fileNameString);
         try {
             File logFile = new File(fileNameString);
             if (logFile.createNewFile()) {
@@ -464,5 +469,5 @@ public class Schachspiel {
             e.printStackTrace();
         }
     }
-
 }
+

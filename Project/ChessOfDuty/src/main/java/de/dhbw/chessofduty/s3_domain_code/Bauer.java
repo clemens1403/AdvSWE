@@ -1,3 +1,5 @@
+package de.dhbw.chessofduty.s3_domain_code;
+
 import java.util.AbstractMap.SimpleEntry;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,7 @@ public class Bauer extends Figur{
     }
 
     public void wirdUmgewandelt(){
-        
+
     }
 
     public void istEnPassantMoeglich(){
@@ -42,7 +44,7 @@ public class Bauer extends Figur{
             - ein Feld nach vorne (sofern bereits bewegt wurden und keine Figur blockiert)
             - ein Feld schräg nach links oder rechts vorne (andere Figur wird geschlagen)
             - ein Feld schräg nach links oder rechts vorne (En Passent)*/
-        
+
 
         // Farbe: 0 = Schwarz, 1 = Weiß
 
@@ -68,7 +70,7 @@ public class Bauer extends Figur{
             //int einfacherSchritt = aktuellePosition.getZeile() + 1;
             //moeglicheZuege.add((aktuellePosition.getSpalte(), einfacherSchritt));
 
-            
+
             for(Figur f : figuren){
                 Feld positionFigur = f.getPosition();
                 int zeileFigur = positionFigur.getZeile();
@@ -91,12 +93,12 @@ public class Bauer extends Figur{
                         if(this.getFarbe() != f.getFarbe()){
                             print("\nSchlagen möglich");
                             moeglicheZuege.add(positionFigur);
-                        } 
+                        }
                     }
                 }
             }
 
-            
+
 
             if(einzelschritt){
                 moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1));
@@ -135,7 +137,7 @@ public class Bauer extends Figur{
                         if(this.getFarbe() != f.getFarbe()){
                             print("\nSchlagen möglich");
                             moeglicheZuege.add(positionFigur);
-                        } 
+                        }
                     }
                 }
             }
@@ -146,9 +148,8 @@ public class Bauer extends Figur{
             if(doppelschritt){
                 moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 2));
             }
-
         }
-        
+
         //int zeile = aktuellePosition.getZeile();
 
         for (Feld eintrag : moeglicheZuege) {
@@ -156,6 +157,5 @@ public class Bauer extends Figur{
         }
 
         return moeglicheZuege;
-
     }
 }

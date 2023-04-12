@@ -1,5 +1,13 @@
-public abstract class Figur{
+package de.dhbw.chessofduty.s3_domain_code;
 
+import processing.core.PApplet;
+import processing.core.PGraphics;
+
+import java.util.ArrayList;
+
+public abstract class Figur extends PApplet {
+
+    private int mausX, mausY;
     private String name;
     private String abkuerzung;
     private int wert;
@@ -9,7 +17,7 @@ public abstract class Figur{
     protected Feld position;
 
     public Figur(int farbe, Feld startPosition){
-        
+
         this.farbe = farbe;
         this.position = startPosition;
     }
@@ -38,19 +46,15 @@ public abstract class Figur{
 
     protected Figur findeKollision(ArrayList<Figur> figuren, int spalte, int zeile){
         Figur kollidierteFigur = null;
-        
+
         for(Figur f : figuren){
             if(f.getPosition().getSpalte() == spalte && f.getPosition().getZeile() == zeile){
                 kollidierteFigur = f;
                 break;
-            } 
+            }
         }
 
         return kollidierteFigur;
-    }
-
-    public void schlaegtFigur(){
-
     }
 
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
@@ -70,16 +74,8 @@ public abstract class Figur{
         this.name = name;
     }
 
-    public String getName(){
-        return name;
-    }
-
     public void setWert(int wert){
         this.wert = wert;
-    }
-
-    public int getWert(){
-        return wert;
     }
 
     public void setAbkuerzung(String abkuerzung){
@@ -94,20 +90,23 @@ public abstract class Figur{
         return this.farbe;
     }
 
-    public void render(){
-        push();
+    public void render(PGraphics g, int mausX, int mausY){
+        this.mausX = mausX;
+        this.mausY = mausY;
+
+        g.pushStyle();
         if(this.farbe==1){
-            fill(169, 172, 176);
+            g.fill(169, 172, 176);
         }else{
-            fill(160,82,45);
+            g.fill(160,82,45);
         }
-        
-        textAlign(CENTER, CENTER);
-        textSize(50);
+
+        g.textAlign(CENTER, CENTER);
+        g.textSize(50);
         int x = 50 + (this.position.getX());
         int y = 50 + (this.position.getY());
-        text(this.abkuerzung, x, y);
-        pop();
+        g.text(this.abkuerzung, x, y);
+        g.popStyle();
     }
 
     public boolean checkFigurGeklickt(){
@@ -116,8 +115,8 @@ public abstract class Figur{
         int feldY = this.position.getY();
         int feldGroesse = this.position.getGroesse();
 
-        if((mouseX > feldX) && (mouseX < feldX+feldGroesse)){
-            if((mouseY > feldY) && (mouseY < feldY+feldGroesse)){
+        if((mausX > feldX) && (mausX < feldX+feldGroesse)){
+            if((mausY > feldY) && (mausY < feldY+feldGroesse)){
                 return true;
             }
         }
@@ -127,13 +126,12 @@ public abstract class Figur{
 
     @Override
     public String toString(){
-        return abkuerzung 
-            + " " 
-            +  String.valueOf(farbe) 
-            + ": Spalte:" 
-            + String.valueOf(getPosition().getSpalte()) 
-            + " Zeile:" 
-            + String.valueOf(getPosition().getZeile());
+        return abkuerzung
+                + " "
+                +  String.valueOf(farbe)
+                + ": Spalte:"
+                + String.valueOf(getPosition().getSpalte())
+                + " Zeile:"
+                + String.valueOf(getPosition().getZeile());
     }
-
 }
