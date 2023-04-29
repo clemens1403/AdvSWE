@@ -1,6 +1,6 @@
 package de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche;
 
-import de.dhbw.chessofduty.s0_plugins.logik.Schachspiel;
+import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielKontrollierer;
 import processing.core.PGraphics;
 
 import java.util.ArrayList;
@@ -13,11 +13,13 @@ public class Benutzeroberflaeche extends PApplet{
     private String status;
     private ArrayList<Knopf> startKnoepfe = new ArrayList<Knopf>();
     private ArrayList<Knopf> spielKnoepfe = new ArrayList<Knopf>();
-    private Schachspiel schachspiel;
+    //private SchachspielKontrollierer schachspielKontrollierer;
+    private SchachspielZeichner schachspielZeichner;
 
-    public Benutzeroberflaeche(Schachspiel schachspiel, PGraphics g){
+    public Benutzeroberflaeche(SchachspielZeichner schachspielZeichner, SchachspielKontrollierer schachspielKontrollierer, PGraphics g){
         this.g = g;
-        this.schachspiel = schachspiel;
+        //this.schachspielKontrollierer = schachspielKontrollierer;
+        this.schachspielZeichner = schachspielZeichner;
 
         status = "Start";
 
@@ -85,7 +87,7 @@ public class Benutzeroberflaeche extends PApplet{
         g.textSize(43);
         g.text("Chess Of Duty", 100, 100);
         g.popStyle();
-        this.schachspiel.zeichneSchachspiel(this.g, this.mausX, this.mausY);
+        this.schachspielZeichner.zeichneSchachspiel(this.g, this.mausX, this.mausY);
     }
 
     public String getStatus(){
@@ -104,8 +106,8 @@ public class Benutzeroberflaeche extends PApplet{
         return spielKnoepfe;
     }
 
-    public void setSchachspiel(Schachspiel schachspiel){
-        this.schachspiel = schachspiel;
+    public void setSchachspiel(SchachspielKontrollierer schachspielKontrollierer){
+        //this.schachspielKontrollierer = schachspielKontrollierer;
     }
 
 }
