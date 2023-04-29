@@ -4,7 +4,7 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 
 import java.util.ArrayList;
 
-public class TurmDienst extends FigurService{
+public class TurmDienst extends FigurDienst{
     private Turm turm;
     private int spalte;
     private int zeile;
