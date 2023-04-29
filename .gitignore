@@ -3,3 +3,4 @@
 *.json
 Project/ChessOfDuty/out/*
 Project/ChessOfDuty/.vscode/tasks.json
+.idea/workspace.xml

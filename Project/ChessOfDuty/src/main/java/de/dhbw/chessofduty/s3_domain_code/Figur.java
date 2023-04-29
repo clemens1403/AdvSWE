@@ -12,7 +12,6 @@ public abstract class Figur extends PApplet {
     private String abkuerzung;
     private int wert;
     private int farbe;
-    private Boolean imSpiel;
 
     protected Feld position;
 

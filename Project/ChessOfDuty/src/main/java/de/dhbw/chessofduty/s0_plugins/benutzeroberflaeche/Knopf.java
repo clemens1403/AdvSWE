@@ -1,4 +1,4 @@
-package de.dhbw.chessofduty.s0_plugins;
+package de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche;
 
 import processing.core.PApplet;
 import processing.core.PGraphics;

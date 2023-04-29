@@ -81,5 +81,9 @@ public final class Schachbrett extends PApplet {
     public Feld getFeld(int spalte, int zeile){
         return felder[spalte-1][zeile-1];
     }
+
+    public Feld[][] getFelder(){
+        return this.felder;
+    }
 }
 

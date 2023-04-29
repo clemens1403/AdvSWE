@@ -1,7 +1,7 @@
 package de.dhbw.chessofduty;
 
-import de.dhbw.chessofduty.s0_plugins.Benutzeroberflaeche;
-import de.dhbw.chessofduty.s0_plugins.Knopf;
+import de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche.Benutzeroberflaeche;
+import de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche.Knopf;
 import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
 import processing.core.PApplet;
 import processing.core.PGraphics;

@@ -1,4 +1,4 @@
-package de.dhbw.chessofduty.s0_plugins;
+package de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche;
 
 import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
 import processing.core.PGraphics;
