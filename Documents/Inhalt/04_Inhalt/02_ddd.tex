@@ -9,14 +9,20 @@ Domäne und im Sourcecode verwendet werden und Missverständnisse minimiert werd
 Der Auftraggeber des Programmentwurfs ist ein deutscher Kunde. 
 Obwohl in der Programmierung Englisch als die Standardsprache angenommen wird, wird aufgrund der Kundenlokalität die Projektsprache als \glqq Deutsch\grqq{} festgelegt. 
 Dadurch wird versucht die meisten Ausdrücke aus der Domäne ins Deutsche zu übernehmen. 
-Auch wenn dies für den ungeübten Programmierer, der das Programmieren nur in Englisch ausübt, eine zusätzliche Herausforderung darstellt und teilweise zu Namensfindungsschwierigkeiten oder längeren Funktionsnamen führen kann, wird an der Domänensprache festgehalten, um dem Kunden den Code so übersichtlich wie möglich übergeben zu können.
+
+Von der deutschen Bezeichnung ausgeschlossen sind in diesem Projekt jedoch allgemein anerkannte Java-Konventionen wie \glqq getter\grqq{} und \glqq{} setter\grqq{}. 
+IDEs wie Eclipse oder Intelij sind in der Lage diese speziellen Funktionsarten automatisch zu generieren und um diese Funktion zu nutzen, werden diese Funktionsbezeichnungen auch auf Englisch akzeptiert. 
+Weiterhin von der deutschen Bezeichnung ausgeschlossen sind Funktionsnamen, Objekte und Variablen, die durch die Verwendung von Processing vorgegeben sind. 
+Dazu gehören beispielsweise Funktionen  wie \glqq setup(), settings()\grqq{} oder \glqq draw()\grqq{}.
 
 \section{Domainenbausteine}
 
 Aus der Ubiquitous Language ergeben sich nun die folgenden taktischen Muster des Domain
 Driven Designs mit den entsprechenden Objekten.
 
-\subsection*{Value Objects}
+\newpage
+
+\subsection{Value Objects}
 
 Ein Value Object repräsentiert ein bestimmtes unveränderliches Objekt, das einen bestimmten Wert besitzt und keine eigene Identität aufweist. 
 Es definiert sich durch seine Eigenschaften und wird daher als austauschbar und vergleichbar angesehen.
@@ -38,7 +44,7 @@ Die Implementierung eines Schachzugs als eigene Klasse dient der Protokollierung
 Ein Schachzug wird als Value Objekt klassifiziert, da er keinen erkennbaren Lebenszyklus vorweisen kann. 
 Sobald ein Spieler in einem Spiel eine Figur von Position A zu Position B bewegt, wird eine Instanz der Klasse Schachzug erstellt und kann nicht nachträglich bearbeitet werden, da auch im Spiel ein Schachzug nicht zurückgenommen oder geändert werden kann. 
 
-\subsection*{Entities}
+\subsection{Entities}
 
 Eine Entity ist ein Objekt, das innerhalb der Domäne eine einzigartige Identität besitzt und sich im Laufe der Zeit verändern kann. 
 Entities werden durch ihre Identität und nicht durch ihre Attribute definiert und können einen Lebenszyklus vorweisen. 
@@ -75,7 +81,7 @@ Obwohl die Ausgangslage der Figuren immer gleich ist, unterscheidet sich die Par
 Um die Schachspiele eindeutig zu identifizieren, bietet sich die Verwendung eines Surrogatschlüssels an.
 In der verwendeten Programmiersprache Processing, einer Java-Erweiterung, eignet sich hierfür die Verwendung einer \texttt{UUID}.
 
-\subsection*{Aggregate}
+\subsection{Aggregate}
 
 Aggregate ermöglichen die Verwaltung von Entities und Value Objects als eine zusammengehörende Einheit.
 Ein Aggregat besteht dabei aus mindestens einer Entität und kann weitere Entitäten und Value Objects enthalten.
@@ -99,7 +105,7 @@ Ein Spielzug fasst jeweils zwei aufeinanderfolgende Schachzüge von Spieler \glq
 Die schriftliche Protokollierung einer Partie Schach erfolgt immer über die Spielzüge und gibt jeweils die einzelnen Schachzüge der unterschiedlichen Spieler an. 
 Auf diese Weise kann man auf die einzelnen Schachzüge nur über die Spielzüge zugreifen, was für eine Betrachtung als Aggregat spricht.  
 
-\subsection*{Repositories}
+\subsection{Repositories}
 
 Im Domain Driven Design werden Repositories genutzt, um Daten in einem Projekt zu persistieren und zu laden. 
 
@@ -110,7 +116,7 @@ In den Vorlesungsfolien wird beschrieben, dass meist zu jedem Aggregat auch ein 
 Für das Aggregat Schachbrett ist dies nicht der Fall. 
 Das Schachbrett muss in keinem Fall persistiert werden und darum wird kein Repository benötigt. 
 
-\subsection*{Domain Service}
+\subsection{Domain Service}
 
 Ein Domain Service ist ein Konzept, das genutzt wird, um Logik abzubilden, die nicht direkt mit einer Entität oder einem Aggregat verbunden ist.
 
