@@ -1,5 +1,6 @@
-package de.dhbw.chessofduty.s3_domain_code;
+package de.dhbw.chessofduty.s0_plugins.logik;
 
+import de.dhbw.chessofduty.s3_domain_code.*;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 

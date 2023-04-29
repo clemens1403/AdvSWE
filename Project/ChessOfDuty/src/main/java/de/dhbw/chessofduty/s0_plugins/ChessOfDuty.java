@@ -1,8 +1,8 @@
-package de.dhbw.chessofduty;
+package de.dhbw.chessofduty.s0_plugins;
 
 import de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche.Benutzeroberflaeche;
 import de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche.Knopf;
-import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
+import de.dhbw.chessofduty.s0_plugins.logik.Schachspiel;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -83,7 +83,7 @@ public class ChessOfDuty extends PApplet {
     }
 
     public static void main(String[] args) {
-        PApplet.main("de.dhbw.chessofduty.ChessOfDuty");
+        PApplet.main("de.dhbw.chessofduty.s0_plugins.ChessOfDuty");
     }
 }
 

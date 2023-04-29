@@ -7,7 +7,7 @@ import de.dhbw.chessofduty.s3_domain_code.Schachbrett;
 
 import java.util.ArrayList;
 
-public abstract class FigurService {
+public abstract class FigurDienst {
 
     protected ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett, Figur figur){
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
