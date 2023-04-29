@@ -1,6 +1,6 @@
-package de.dhbw.chessofduty.s3_domain_code;
+package de.dhbw.chessofduty.s3_domain_code.spielzug;
 
-import java.util.Arrays;
+import de.dhbw.chessofduty.s3_domain_code.Feld;
 
 public final class Schachzug {
 

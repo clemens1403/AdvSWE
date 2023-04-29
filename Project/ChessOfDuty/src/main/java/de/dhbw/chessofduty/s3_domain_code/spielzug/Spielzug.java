@@ -1,4 +1,4 @@
-package de.dhbw.chessofduty.s3_domain_code;
+package de.dhbw.chessofduty.s3_domain_code.spielzug;
 
 public class Spielzug {
 

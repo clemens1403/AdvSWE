@@ -107,5 +107,7 @@ public final class Feld extends PApplet {
     public int getGroesse(){
         return this.groesse;
     }
+
+    public int getFarbe(){ return this.farbe; }
 }
 

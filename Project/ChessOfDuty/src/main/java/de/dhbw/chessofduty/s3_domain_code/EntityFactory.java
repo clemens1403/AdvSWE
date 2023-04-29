@@ -1,5 +1,8 @@
 package de.dhbw.chessofduty.s3_domain_code;
 
+import de.dhbw.chessofduty.s3_domain_code.spielzug.Schachzug;
+import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
+
 public class EntityFactory {
 
     public Schachzug erstelleSchachzug(Figur figur, Feld neuePosition){
