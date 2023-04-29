@@ -8,7 +8,6 @@ import de.dhbw.chessofduty.s3_domain_code.Springer;
 import java.util.ArrayList;
 
 public class SpringerDienst extends FigurDienst{
-    private Springer springer;
     public void SpringerDienst(){
 
     }
@@ -17,21 +16,21 @@ public class SpringerDienst extends FigurDienst{
         return new Springer(farbe, startPosition);
     }
 
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
-        int spalte = this.springer.getPosition().getSpalte();
-        int zeile = this.springer.getPosition().getZeile();
+        int spalte = springer.getPosition().getSpalte();
+        int zeile = springer.getPosition().getZeile();
 
-        moeglicheZuege.addAll(zweiNachVorneEinsNachLinks(figuren, schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachVorneEinsNachRechts(figuren, schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachRechtsEinesNachOben(figuren, schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachRechtsEinesNachUnten(figuren, schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachUntenEinesNachRechts(figuren, schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachUntenEinesNachLinks(figuren,schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachLinksEinesNachUnten(figuren, schachbrett, spalte, zeile));
-        moeglicheZuege.addAll(zweiNachLinksEinensNachOben(figuren,schachbrett, spalte, zeile));
+        moeglicheZuege.addAll(zweiNachVorneEinsNachLinks(figuren, schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachVorneEinsNachRechts(figuren, schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachRechtsEinesNachOben(figuren, schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachRechtsEinesNachUnten(figuren, schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachUntenEinesNachRechts(figuren, schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachUntenEinesNachLinks(figuren,schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachLinksEinesNachUnten(figuren, schachbrett, spalte, zeile, springer));
+        moeglicheZuege.addAll(zweiNachLinksEinensNachOben(figuren,schachbrett, spalte, zeile, springer));
 
         for (Feld eintrag : moeglicheZuege) {
             System.out.println("(" + eintrag.getSpalte() + ", " + eintrag.getZeile() + ")");
@@ -40,7 +39,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachVorneEinsNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachVorneEinsNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -59,7 +58,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -72,7 +71,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachVorneEinsNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachVorneEinsNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -91,7 +90,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -104,7 +103,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachRechtsEinesNachOben(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachRechtsEinesNachOben(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -123,7 +122,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -136,7 +135,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachRechtsEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachRechtsEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -155,7 +154,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -167,7 +166,7 @@ public class SpringerDienst extends FigurDienst{
 
         return moeglicheZuege;}
 
-    private ArrayList<Feld> zweiNachUntenEinesNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachUntenEinesNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -186,7 +185,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -199,7 +198,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachUntenEinesNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachUntenEinesNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -218,7 +217,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -231,7 +230,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachLinksEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachLinksEinesNachUnten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -250,7 +249,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -263,7 +262,7 @@ public class SpringerDienst extends FigurDienst{
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> zweiNachLinksEinensNachOben(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile){
+    private ArrayList<Feld> zweiNachLinksEinensNachOben(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Springer springer){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         boolean kollisionGefunden = false;
@@ -282,7 +281,7 @@ public class SpringerDienst extends FigurDienst{
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(this.springer.getFarbe() == kollidierteFigur.getFarbe()){
+            if(springer.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
