@@ -1,5 +1,6 @@
 package de.dhbw.chessofduty.s2_application_code.spiellogik;
 
+import de.dhbw.chessofduty.s2_application_code.schachbrett.SchachbrettDienst;
 import de.dhbw.chessofduty.s3_domain_code.*;
 
 import java.io.File;
@@ -63,7 +64,7 @@ public class SchachspielKontrollierer {
 
     public void klickAuswerten() {
         if (this.ausgewaehltFigur != null) {
-            this.fuehreZugAus();
+            this.fuehreZugAus(new SchachbrettDienst());
         } else {
             this.waehleEineFigurAus();
         }
@@ -125,7 +126,7 @@ public class SchachspielKontrollierer {
         return valideZuege;
     }
 
-    public void fuehreZugAus() {
+    public void fuehreZugAus(SchachbrettDienst schachbrettDienst) {
 
         Feld ausgewaehltesFeld = selektiereAusgewaehltesFeld();
         boolean umsetzenMoeglich = this.moeglicheZuegeDerFigur.contains(ausgewaehltesFeld);
@@ -140,14 +141,14 @@ public class SchachspielKontrollierer {
                     int alteZeile = f.getPosition().getZeile();
                     int alteSpalte = f.getPosition().getSpalte();
 
-                    String zug = f.getAbkuerzung() + schachspiel.getSchachbrett().zahlZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
+                    String zug = f.getAbkuerzung() + schachbrettDienst.zahlZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
                     //Überprüfung, ob etwas geschlagen wurde, oder nicht
                     if (pruefeFigurGeschlagen(ausgewaehltesFeld)) {
                         zug += "x";
                     } else {
                         zug += "-";
                     }
-                    zug += schachspiel.getSchachbrett().zahlZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
+                    zug += schachbrettDienst.zahlZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
 
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);

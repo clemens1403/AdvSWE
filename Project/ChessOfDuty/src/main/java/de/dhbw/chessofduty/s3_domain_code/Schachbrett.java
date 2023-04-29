@@ -20,44 +20,6 @@ public final class Schachbrett extends PApplet {
             }
         }
     }
-
-    public void zeichneSchachbrett(PGraphics g, int mausX, int mausY){
-        for(int i = 1; i <= 8; i++){
-            for(int j = 1; j <= 8; j++){
-                Feld f = felder[i-1][j-1];
-                f.zeichne(g, mausX, mausY);
-            }
-        }
-
-        for (int i = 1; i <= 8; i++){
-            g.pushStyle();
-            g.fill(200);
-            g.textAlign(CENTER, CENTER);
-            g.textSize(20);
-            g.text(zahlZuBuchstabe(i-1), 250 + (i-1)*100, 1020);
-            g.text(i, 180, 950 - (i-1)*100);
-            g.popStyle();
-        }
-    }
-
-    public String zahlZuBuchstabe(int i){
-
-        if(i < 0){
-            return null;
-        }
-        String s = Integer.toString(i, 26);
-
-        char[] buchstaben = s.toCharArray();
-
-        StringBuilder ergebnis = new StringBuilder();
-        for(char b : buchstaben){
-            int x = Integer.parseInt(Character.valueOf(b).toString(), 26);
-            ergebnis.append((char) (x + 'A'));
-        }
-
-        return ergebnis.toString();
-    }
-
     @Override
     public boolean equals(Object objekt){
         if(objekt == this){

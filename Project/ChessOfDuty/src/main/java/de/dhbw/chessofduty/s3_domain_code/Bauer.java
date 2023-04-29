@@ -27,4 +27,5 @@ public class Bauer extends Figur{
     public Feld getStartposition(){
         return this.startPosition;
     }
+
 }
