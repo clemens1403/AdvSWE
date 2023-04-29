@@ -1,12 +1,8 @@
 package de.dhbw.chessofduty.s2_application_code.schachbrett;
 
-import de.dhbw.chessofduty.s3_domain_code.Feld;
 import de.dhbw.chessofduty.s3_domain_code.Schachbrett;
-import processing.core.PGraphics;
 
-import static processing.core.PConstants.CENTER;
-
-public class SchachbrettService {
+public class SchachbrettDienst {
 
     public Schachbrett createSchachbrett() {
         return new Schachbrett();

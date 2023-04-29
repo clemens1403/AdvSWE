@@ -1,6 +1,6 @@
 package de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche;
 
-import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
+import de.dhbw.chessofduty.s0_plugins.logik.Schachspiel;
 import processing.core.PGraphics;
 
 import java.util.ArrayList;
