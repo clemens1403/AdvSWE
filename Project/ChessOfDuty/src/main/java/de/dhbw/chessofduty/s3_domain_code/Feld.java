@@ -27,7 +27,7 @@ public final class Feld extends PApplet {
         this.y = 700 - ((zeile-1)*groesse) + 200;
     }
 
-    public void render(PGraphics g, int mausX, int mausY){
+    public void zeichne(PGraphics g, int mausX, int mausY){
         this.mausX = mausX;
         this.mausY = mausY;
 
@@ -38,7 +38,7 @@ public final class Feld extends PApplet {
         g.popMatrix();
     }
 
-    public Feld checkFeldGeklickt(){
+    public Feld pruefeFeldGeklickt(){
 
         if((mausX > this.getX()) && (mausX < this.getX()+this.getGroesse())){
             if((mausY > this.getY()) && (mausY < this.getY()+this.getGroesse())){
@@ -46,7 +46,7 @@ public final class Feld extends PApplet {
             }
         }
 
-        //Refactoring hier? Wir müssen was anderes als null wiedergeben
+        //Refactoring hier? Wir müssen was anderes als null wiedergeben z.B. Optional oder so
         return null;
     }
 

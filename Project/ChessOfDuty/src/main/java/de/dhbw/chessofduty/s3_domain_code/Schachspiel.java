@@ -5,7 +5,6 @@ import processing.core.PGraphics;
 
 import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
@@ -36,19 +35,14 @@ public class Schachspiel extends PApplet {
     private Figur ausgewaehltFigur = null;
     private ArrayList<Feld> moeglicheZuegeDerFigur = new ArrayList<>();
 
-    private Schachzug aktuellerSchachzug = null;
-
     public Schachspiel(PGraphics g){
         this.gameID = UUID.randomUUID();
         this.g = g;
 
-        //Schachbrett bestehend aus 8x8 Feldern wird instanziiert
         this.schachbrett = new Schachbrett();
         this.spielerAmZug = 1;
 
-        //Figuren des Schachspiels werden instanziiert
         this.initialisiereFiguren();
-
     }
 
     public void initialisiereFiguren(){
@@ -79,15 +73,15 @@ public class Schachspiel extends PApplet {
         figuren.add(new Turm(0, schachbrett.getFeld(8,8)));
     }
 
-    public void renderSchachspiel(PGraphics g, int mausX, int mausY){
+    public void zeichneSchachspiel(PGraphics g, int mausX, int mausY){
         this.g = g;
-        schachbrett.renderSchachbrett(this.g, mausX, mausY);
+        schachbrett.zeichneSchachbrett(this.g, mausX, mausY);
 
         this.renderZuege();
         this.renderGeschlageneFiguren();
 
         for(Figur f : this.figuren){
-            f.render(g, mausX, mausY);
+            f.zeichne(g, mausX, mausY);
 
             if(schachWeiss && f.getAbkuerzung() == "K" && f.getFarbe() == 1){
                 Feld feld = f.getPosition();
@@ -125,24 +119,24 @@ public class Schachspiel extends PApplet {
     public void renderGeschlageneFiguren(){
         g.pushStyle();
         g.fill(160,82,45);
-        String textS = "";
+        StringBuilder textS = new StringBuilder();
         for(Figur f : geschlageneFigurenSchwarz){
-            textS += f.getAbkuerzung();
+            textS.append(f.getAbkuerzung());
         }
         g.textAlign(LEFT, CENTER);
         g.textSize(20);
-        g.text(textS, 200, 1100);
+        g.text(textS.toString(), 200, 1100);
         g.popStyle();
 
         g.pushStyle();
         g.fill(169, 172, 176);
-        String textW = "";
+        StringBuilder textW = new StringBuilder();
         for(Figur f : geschlageneFigurenWeiss){
-            textW += f.getAbkuerzung();
+            textW.append(f.getAbkuerzung());
         }
         g.textAlign(RIGHT, CENTER);
         g.textSize(20);
-        g.text(textW, 1000, 1100);
+        g.text(textW.toString(), 1000, 1100);
         g.popStyle();
     }
 
@@ -158,19 +152,19 @@ public class Schachspiel extends PApplet {
         g.fill(200);
         g.textSize(15);
         g.textAlign(LEFT, TOP);
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for(String zug : this.zuege){
             int index = this.zuege.indexOf(zug);
             if(index % 2 == 0){
                 int spielzug = index/2 + 1;
-                text += Integer.toString(spielzug) + ":";
+                text.append(spielzug).append(":");
             }
-            text += zug + ";";
+            text.append(zug).append(";");
             if(index % 2 == 1){
-                text+="\n";
+                text.append("\n");
             }
         }
-        g.text(text, g.width-185, 300);
+        g.text(text.toString(), g.width-185, 300);
         g.popStyle();
     }
 
@@ -243,14 +237,14 @@ public class Schachspiel extends PApplet {
                     int alteZeile = f.getPosition().getZeile();
                     int alteSpalte = f.getPosition().getSpalte();
 
-                    String zug = f.getAbkuerzung() + schachbrett.integerZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
+                    String zug = f.getAbkuerzung() + schachbrett.zahlZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
                     //Überprüfung, ob etwas geschlagen wurde, oder nicht
                     if(pruefeFigurGeschlagen(ausgewaehltesFeld)){
                         zug += "x";
                     }else{
                         zug += "-";
                     }
-                    zug += schachbrett.integerZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
+                    zug += schachbrett.zahlZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
 
                     //Hier wird die Figur gesetzt
                     f.setPosition(ausgewaehltesFeld);
@@ -282,7 +276,6 @@ public class Schachspiel extends PApplet {
                         this.schachSchwarz = false;
                     }
 
-
                     //Spieler am Zug wechselt
                     this.spielerAmZug =  (this.spielerAmZug - 1) * (this.spielerAmZug - 1);
                     break;
@@ -298,7 +291,7 @@ public class Schachspiel extends PApplet {
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
                 Feld tmp = schachbrett.getFeld(i, j);
-                if(tmp.checkFeldGeklickt() != null){
+                if(tmp.pruefeFeldGeklickt() != null){
                     return tmp;
                 }
             }
@@ -448,21 +441,21 @@ public class Schachspiel extends PApplet {
             e.printStackTrace();
         }
         Path p = Path.of(fileNameString);
-        String text = "";
+        StringBuilder text = new StringBuilder();
         for(String zug : this.zuege){
             int index = this.zuege.indexOf(zug);
             if(index % 2 == 0){
                 int spielzug = index/2 + 1;
-                text += Integer.toString(spielzug) + ":";
+                text.append(spielzug).append(":");
             }
-            text += zug + ";";
+            text.append(zug).append(";");
             if(index % 2 == 1){
-                text+="\n";
+                text.append("\n");
             }
         }
         try {
 
-            Path filePath = Files.writeString(p, text);
+            Path filePath = Files.writeString(p, text.toString());
             String s = Files.readString(filePath);
             System.out.println(s);
         } catch (IOException e) {

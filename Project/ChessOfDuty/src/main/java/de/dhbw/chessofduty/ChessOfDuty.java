@@ -1,6 +1,6 @@
 package de.dhbw.chessofduty;
 
-import de.dhbw.chessofduty.s0_plugins.GUI;
+import de.dhbw.chessofduty.s0_plugins.Benutzeroberflaeche;
 import de.dhbw.chessofduty.s0_plugins.Knopf;
 import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
 import processing.core.PApplet;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 public class ChessOfDuty extends PApplet {
 
     Schachspiel schachspiel;
-    GUI gui;
+    Benutzeroberflaeche benutzeroberflaeche;
 
     PGraphics g;
 
@@ -22,7 +22,7 @@ public class ChessOfDuty extends PApplet {
         this.g = createGraphics(1200, 1050);
 
         schachspiel = new Schachspiel(this.g);
-        gui = new GUI(schachspiel, this.g);
+        benutzeroberflaeche = new Benutzeroberflaeche(schachspiel, this.g);
     }
 
 
@@ -30,7 +30,7 @@ public class ChessOfDuty extends PApplet {
     public void draw() {
         background(255);
         this.g.beginDraw();
-        gui.render(this.g, mouseX, mouseY);
+        benutzeroberflaeche.render(this.g, mouseX, mouseY);
         this.g.endDraw();
         this.image(g, 0, 0);
     }
@@ -38,15 +38,15 @@ public class ChessOfDuty extends PApplet {
     // Mausclick-Verarbeitung
 
     public void mousePressed(){
-      switch(gui.getStatus()){
+      switch(benutzeroberflaeche.getStatus()){
         case "Start":
-          ArrayList<Knopf> knoepfeStart = gui.getStartKnoepfe();
+          ArrayList<Knopf> knoepfeStart = benutzeroberflaeche.getStartKnoepfe();
           for(Knopf k : knoepfeStart){
-            if(k.checkMausPosition()){
+            if(k.pruefeMausPosition()){
               switch(k.getId()){
                 case "Spielen":
                   schachspiel = new Schachspiel(this.g);
-                  gui.setStatus("Spiel");
+                  benutzeroberflaeche.setStatus("Spiel");
                   break;
                 default:
                   break;
@@ -56,17 +56,17 @@ public class ChessOfDuty extends PApplet {
           break;
         case "Spiel":
           schachspiel.klickAuswerten();
-          gui.setSchachspiel(schachspiel);
-          ArrayList<Knopf> knoepfeSpiel = gui.getSpielKnoepfe();
+          benutzeroberflaeche.setSchachspiel(schachspiel);
+          ArrayList<Knopf> knoepfeSpiel = benutzeroberflaeche.getSpielKnoepfe();
           for(Knopf k : knoepfeSpiel){
-            if(k.checkMausPosition()){
+            if(k.pruefeMausPosition()){
               switch(k.getId()){
                 case "neustart":
                   schachspiel = new Schachspiel(this.g);
-                  gui.setSchachspiel(schachspiel);
+                  benutzeroberflaeche.setSchachspiel(schachspiel);
                   break;
                 case "Start":
-                  gui.setStatus("Start");
+                  benutzeroberflaeche.setStatus("Start");
                   break;
                 case "export":
                   schachspiel.exportZuege();

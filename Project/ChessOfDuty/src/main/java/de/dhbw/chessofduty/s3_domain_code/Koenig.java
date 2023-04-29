@@ -15,11 +15,6 @@ public class Koenig extends Figur{
         this.setAbkuerzung("K");
     }
 
-    public boolean istImSchach() {
-        return false;
-        // Implementierung der Überprüfung, ob der König im Schach ist
-    }
-
     @Override
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
 
@@ -28,17 +23,6 @@ public class Koenig extends Figur{
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
-        /*
-        Die Figur König kann folgende Bewegungen ausführen
-        - einen Schritt nach vorne
-        - einen Schritt nach vorne links
-        - einen Schritt nach vorne rechts
-        - einen Schritt nach hinten
-        - einen Schritt nach hinten links
-        - einen Schritt nach hinten rechts
-        - einen Schritt nach links
-        - einen Schritt nach rechts
-        */
         moeglicheZuege.addAll(moeglicherZugNachVorne(figuren, schachbrett, spalte, zeile));
         moeglicheZuege.addAll(moeglicheZuegeNachVorneLinks(figuren, schachbrett, spalte, zeile));
         moeglicheZuege.addAll(moeglicherZugNachVorneRechts(figuren, schachbrett, spalte, zeile));
@@ -48,13 +32,11 @@ public class Koenig extends Figur{
         moeglicheZuege.addAll(moeglicherZugNachRechts(figuren, schachbrett, spalte, zeile));
         moeglicheZuege.addAll(moeglicherZugNachLinks(figuren,schachbrett, spalte, zeile));
 
-
         for (Feld eintrag : moeglicheZuege) {
             System.out.println("(" + eintrag.getSpalte() + ", " + eintrag.getZeile() + ")");
         }
 
         return moeglicheZuege;
-
     }
 
     private ArrayList<Feld> moeglicherZugNachVorne(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile) {

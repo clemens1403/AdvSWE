@@ -90,7 +90,7 @@ public abstract class Figur extends PApplet {
         return this.farbe;
     }
 
-    public void render(PGraphics g, int mausX, int mausY){
+    public void zeichne(PGraphics g, int mausX, int mausY){
         this.mausX = mausX;
         this.mausY = mausY;
 

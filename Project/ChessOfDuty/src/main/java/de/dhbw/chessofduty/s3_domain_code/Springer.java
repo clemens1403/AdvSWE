@@ -20,18 +20,6 @@ public class Springer extends Figur{
         int spalte = this.getPosition().getSpalte();
         int zeile = this.getPosition().getZeile();
 
-        /*
-            Die Figur Springer kann folgenden Bewegungen ausführen
-                - zwei Schritte nach vorne und einen nach links
-                - zwei Schritte nach vorne und einen nach rechts
-                - zwei Schritte nach rechts und einen nach oben
-                - zwei Schritte nach rechts und einen nach unten
-                - zwei Schritte nach unten und einen nach rechts
-                - zwei Schritte nach unten und einen nach links
-                - zwei Schritte nach links und einen nach unten
-                - zwei Schritte nach links und einen nach oben
-        */
-
         moeglicheZuege.addAll(zweiNachVorneEinsNachLinks(figuren, schachbrett, spalte, zeile));
         moeglicheZuege.addAll(zweiNachVorneEinsNachRechts(figuren, schachbrett, spalte, zeile));
         moeglicheZuege.addAll(zweiNachRechtsEinesNachOben(figuren, schachbrett, spalte, zeile));

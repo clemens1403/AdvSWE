@@ -6,7 +6,7 @@ import processing.core.PGraphics;
 import java.util.Arrays;
 
 public final class Schachbrett extends PApplet {
-    private PGraphics g;
+
     private final Feld[][] felder;
 
     public Schachbrett(){
@@ -21,11 +21,11 @@ public final class Schachbrett extends PApplet {
         }
     }
 
-    public void renderSchachbrett(PGraphics g, int mausX, int mausY){
+    public void zeichneSchachbrett(PGraphics g, int mausX, int mausY){
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
                 Feld f = felder[i-1][j-1];
-                f.render(g, mausX, mausY);
+                f.zeichne(g, mausX, mausY);
             }
         }
 
@@ -34,13 +34,13 @@ public final class Schachbrett extends PApplet {
             g.fill(200);
             g.textAlign(CENTER, CENTER);
             g.textSize(20);
-            g.text(integerZuBuchstabe(i-1), 250 + (i-1)*100, 1020);
+            g.text(zahlZuBuchstabe(i-1), 250 + (i-1)*100, 1020);
             g.text(i, 180, 950 - (i-1)*100);
             g.popStyle();
         }
     }
 
-    public String integerZuBuchstabe(int i){
+    public String zahlZuBuchstabe(int i){
 
         if(i < 0){
             return null;
@@ -49,13 +49,13 @@ public final class Schachbrett extends PApplet {
 
         char[] buchstaben = s.toCharArray();
 
-        String ergebnis = "";
+        StringBuilder ergebnis = new StringBuilder();
         for(char b : buchstaben){
             int x = Integer.parseInt(Character.valueOf(b).toString(), 26);
-            ergebnis += String.valueOf((char)(x + 'A'));
+            ergebnis.append((char) (x + 'A'));
         }
 
-        return ergebnis;
+        return ergebnis.toString();
     }
 
     @Override
@@ -76,10 +76,6 @@ public final class Schachbrett extends PApplet {
     @Override
     public int hashCode(){
         return Arrays.deepHashCode(felder);
-    }
-
-    public Feld[][] getFelder(){
-        return felder;
     }
 
     public Feld getFeld(int spalte, int zeile){

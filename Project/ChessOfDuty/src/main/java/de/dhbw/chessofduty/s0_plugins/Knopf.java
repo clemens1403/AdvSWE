@@ -12,20 +12,20 @@ public class Knopf extends PApplet {
     private int breite;
     private int hoehe;
     private String text;
-    private int hintergrund;
-    private int hoverFarbe;
+    private int hintergrundFarbe;
+    private int schwebeFarbe;
     private int textFarbe;
     private int textGroesse;
 
-    public Knopf(String id, int x, int y, int breite, int hoehe, String text, int hintergrund, int hoverFarbe, int textFarbe, int textGroesse){
+    public Knopf(String id, int x, int y, int breite, int hoehe, String text, int hintergrundFarbe, int schwebeFarbe, int textFarbe, int textGroesse){
         this.id = id;
         this.x = x;
         this.y = y;
         this.breite = breite;
         this.hoehe = hoehe;
         this.text = text;
-        this.hintergrund = hintergrund;
-        this.hoverFarbe = hoverFarbe;
+        this.hintergrundFarbe = hintergrundFarbe;
+        this.schwebeFarbe = schwebeFarbe;
         this.textFarbe = textFarbe;
         this.textGroesse = textGroesse;
     }
@@ -36,10 +36,10 @@ public class Knopf extends PApplet {
         this.mausY = mausY;
 
         g.pushStyle();
-        if(checkMausPosition()){
-            g.fill(hoverFarbe);
+        if(pruefeMausPosition()){
+            g.fill(schwebeFarbe);
         }else{
-            g.fill(hintergrund);
+            g.fill(hintergrundFarbe);
         }
         g.rectMode(CENTER);
         g.rect(x,y,breite,hoehe);
@@ -50,7 +50,7 @@ public class Knopf extends PApplet {
         g.pushStyle();
     }
 
-    public boolean checkMausPosition(){
+    public boolean pruefeMausPosition(){
         if(mausX > x - (breite/2) && mausX < x + (breite/2)){
             if(mausY > y - (hoehe/2) && mausY < y + (hoehe/2)){
                 return true;

@@ -1,13 +1,12 @@
 package de.dhbw.chessofduty.s0_plugins;
 
 import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
-import processing.core.PFont;
 import processing.core.PGraphics;
 
 import java.util.ArrayList;
 import processing.core.PApplet;
 
-public class GUI extends PApplet{
+public class Benutzeroberflaeche extends PApplet{
 
     private PGraphics g;
     private int mausX, mausY;
@@ -16,7 +15,7 @@ public class GUI extends PApplet{
     private ArrayList<Knopf> spielKnoepfe = new ArrayList<Knopf>();
     private Schachspiel schachspiel;
 
-    public GUI(Schachspiel schachspiel, PGraphics g){
+    public Benutzeroberflaeche(Schachspiel schachspiel, PGraphics g){
         this.g = g;
         this.schachspiel = schachspiel;
 
@@ -41,22 +40,22 @@ public class GUI extends PApplet{
 
         switch(status){
             case "Start":
-                renderStartAnsicht();
+                zeicheStartAnsicht();
                 break;
             case "Spiel":
-                renderSpiel();
+                zeichneSpiel();
                 break;
             case "Zug":
-                renderSpiel();
+                zeichneSpiel();
                 break;
             default:
-                renderStartAnsicht();
+                zeicheStartAnsicht();
                 break;
         }
 
     }
 
-    public void renderStartAnsicht(){
+    public void zeicheStartAnsicht(){
         g.background(51);
 
         //Titel
@@ -72,7 +71,7 @@ public class GUI extends PApplet{
         }
     }
 
-    public void renderSpiel(){
+    public void zeichneSpiel(){
         g.background(51);
 
         for(Knopf k : spielKnoepfe){
@@ -86,7 +85,7 @@ public class GUI extends PApplet{
         g.textSize(43);
         g.text("Chess Of Duty", 100, 100);
         g.popStyle();
-        this.schachspiel.renderSchachspiel(this.g, this.mausX, this.mausY);
+        this.schachspiel.zeichneSchachspiel(this.g, this.mausX, this.mausY);
     }
 
     public String getStatus(){

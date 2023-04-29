@@ -22,16 +22,6 @@ public class Dame extends Figur{
         this.spalte = this.getPosition().getSpalte();
         this.zeile = this.getPosition().getZeile();
 
-        /*
-            Die Figur Dame kann folgende Bewegungen ausführen
-                - diagonale Bewegungen nach vorne links
-                - diagonale Bewegungen nach vorne rechts
-                - diagonale Bewegungen nach hinten links
-                - diagonale Bewegungen nach hinten rechts
-                - gerade Bewegungen in der Zeile
-                - gerade Bewegungen in der Spalte
-        */
-
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN_RECHTS, Bewegungsmatrizen.OBEN_RECHTS, figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN_LINKS, Bewegungsmatrizen.OBEN_LINKS, figuren, schachbrett));
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN_RECHTS, Bewegungsmatrizen.UNTEN_RECHTS, figuren, schachbrett));
