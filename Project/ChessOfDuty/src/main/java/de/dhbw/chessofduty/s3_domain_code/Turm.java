@@ -3,8 +3,6 @@ package de.dhbw.chessofduty.s3_domain_code;
 import java.util.ArrayList;
 
 public class Turm extends Figur{
-    int spalte = -1;
-    int zeile = -1;
 
     public Turm(int farbe, Feld startPosition){
 

@@ -15,99 +15,16 @@ public class Bauer extends Figur{
         this.startPosition = startPosition;
     }
 
-    @Override
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        print("\n Berechne moegliche Zuege \n");
+    public void setDoppelschrittMoeglich(boolean doppelschrittMoeglich) {
+        this.doppelschrittMoeglich = doppelschrittMoeglich;
+    }
 
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-        Feld aktuellePosition = this.getPosition();
-        if(aktuellePosition != this.startPosition){
-            this.doppelschrittMoeglich = false;
-        }
-        int aktuelleZeile = aktuellePosition.getZeile();
-        print("aktuelleZeile: " + aktuelleZeile + "\n");
-        int aktuelleSpalte = aktuellePosition.getSpalte();
+    public boolean getDoppelschrittMoeglich(){
+        return this.doppelschrittMoeglich;
+    }
 
 
-        boolean einzelschritt = true;
-        boolean doppelschritt = this.doppelschrittMoeglich;
-
-        if(this.getFarbe() == 1){
-            for(Figur f : figuren){
-                Feld positionFigur = f.getPosition();
-                int zeileFigur = positionFigur.getZeile();
-                int spalteFigur = positionFigur.getSpalte();
-                if(aktuelleSpalte == spalteFigur){
-                    if(aktuelleZeile == zeileFigur - 1){
-                        print("Kein Zug möglich wegen Kollision mit \n");
-                        print(f.getAbkuerzung() + " Spalte: " + spalteFigur + " Zeile: " + zeileFigur);
-                        einzelschritt = false;
-                        doppelschritt = false;
-                    }else if(doppelschritt){
-                        if(aktuelleZeile == zeileFigur - 2){
-                            doppelschritt = false;
-                        }
-                    }
-                }
-
-                if(aktuelleSpalte - 1 == spalteFigur || aktuelleSpalte + 1 == spalteFigur){
-                    if(aktuelleZeile == zeileFigur - 1){
-                        if(this.getFarbe() != f.getFarbe()){
-                            print("\nSchlagen möglich");
-                            moeglicheZuege.add(positionFigur);
-                        }
-                    }
-                }
-            }
-
-            if(einzelschritt){
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1));
-            }
-            if(doppelschritt){
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 2));
-            }
-
-        } else {
-            for(Figur f : figuren){
-                Feld positionFigur = f.getPosition();
-                int zeileFigur = positionFigur.getZeile();
-                int spalteFigur = positionFigur.getSpalte();
-                if(aktuelleSpalte == spalteFigur){
-                    if(aktuelleZeile == zeileFigur + 1){
-                        print("Kein Zug möglich wegen Kollision mit \n");
-                        print(f.getAbkuerzung() + " Spalte: " + spalteFigur + " Zeile: " + zeileFigur);
-                        einzelschritt = false;
-                        doppelschritt = false;
-                    }else if(doppelschritt){
-                        if(aktuelleZeile == zeileFigur + 2){
-                            doppelschritt = false;
-                        }
-                    }
-                }
-
-                if(aktuelleSpalte - 1 == spalteFigur || aktuelleSpalte + 1 == spalteFigur){
-                    if(aktuelleZeile == zeileFigur + 1){
-                        if(this.getFarbe() != f.getFarbe()){
-                            print("\nSchlagen möglich");
-                            moeglicheZuege.add(positionFigur);
-                        }
-                    }
-                }
-            }
-
-            if(einzelschritt){
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 1));
-            }
-            if(doppelschritt){
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 2));
-            }
-        }
-
-        for (Feld eintrag : moeglicheZuege) {
-            System.out.println("(" + eintrag.getSpalte() + ", " + eintrag.getZeile() + ")");
-        }
-
-        return moeglicheZuege;
+    public Feld getStartposition(){
+        return this.startPosition;
     }
 }

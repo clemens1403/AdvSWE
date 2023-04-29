@@ -5,29 +5,31 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 import java.util.ArrayList;
 
 public class TurmDienst extends FigurDienst{
-    private Turm turm;
-    private int spalte;
-    private int zeile;
+    public void TurmService(){
 
-    public void TurmService(int farbe, Feld startPosition){
-        this.turm = new Turm(farbe, startPosition);
     }
 
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
+    public Turm erzeugeTurm(int farbe, Feld startPosition){
+        return new Turm(farbe, startPosition);
+    }
+
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Turm turm){
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
-        this.spalte = this.turm.getPosition().getSpalte();
-        this.zeile = this.turm.getPosition().getZeile();
 
-        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN, Bewegungsmatrizen.OBEN, figuren, schachbrett));
-        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN, Bewegungsmatrizen.UNTEN, figuren, schachbrett));
-        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.LINKS, Bewegungsmatrizen.LINKS, figuren, schachbrett));
-        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.RECHTS, Bewegungsmatrizen.RECHTS, figuren, schachbrett));
+
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN, Bewegungsmatrizen.OBEN, figuren, schachbrett, turm));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN, Bewegungsmatrizen.UNTEN, figuren, schachbrett, turm));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.LINKS, Bewegungsmatrizen.LINKS, figuren, schachbrett, turm));
+        moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.RECHTS, Bewegungsmatrizen.RECHTS, figuren, schachbrett, turm));
 
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicheZuegeRichtung(Bewegungsrichtung richtung, Bewegungsmatrizen matrix, ArrayList<Figur> figuren, Schachbrett schachbrett){
+    private ArrayList<Feld> moeglicheZuegeRichtung(Bewegungsrichtung richtung, Bewegungsmatrizen matrix, ArrayList<Figur> figuren, Schachbrett schachbrett, Turm turm){
+        int spalte = turm.getPosition().getSpalte();
+        int zeile = turm.getPosition().getZeile();
+
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         int matrizenWert = matrix.erhalteMatrizenWert(spalte, zeile);
 
@@ -38,6 +40,6 @@ public class TurmDienst extends FigurDienst{
         int naechsteSpalte = spalte + richtung.spaltenVerschiebung();
         int naechsteZeile = zeile + richtung.zeilenVerschiebung();
 
-        return ermittleMoeglicheZuege(richtung, matrizenWert, naechsteSpalte, naechsteZeile, figuren, schachbrett, this.turm);
+        return ermittleMoeglicheZuege(richtung, matrizenWert, naechsteSpalte, naechsteZeile, figuren, schachbrett, turm);
     }
 }
