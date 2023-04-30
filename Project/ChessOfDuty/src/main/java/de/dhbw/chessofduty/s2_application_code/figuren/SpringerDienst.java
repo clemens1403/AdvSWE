@@ -8,9 +8,6 @@ import de.dhbw.chessofduty.s3_domain_code.Springer;
 import java.util.ArrayList;
 
 public class SpringerDienst extends FigurDienst{
-    public void SpringerDienst(){
-
-    }
 
     public Springer erzeugeSpringer(int farbe, Feld startPosition){
         return new Springer(farbe, startPosition);

@@ -5,9 +5,7 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 import java.util.ArrayList;
 
 public class LaeuferDienst extends FigurDienst{
-    public void SpringerDienst(){
 
-    }
 
     public Laeufer erzeugeLaeufer(int farbe, Feld startPosition){
         return new Laeufer(farbe, startPosition);

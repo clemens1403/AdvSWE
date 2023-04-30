@@ -5,9 +5,6 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 import java.util.ArrayList;
 
 public class TurmDienst extends FigurDienst{
-    public void TurmService(){
-
-    }
 
     public Turm erzeugeTurm(int farbe, Feld startPosition){
         return new Turm(farbe, startPosition);
@@ -15,8 +12,6 @@ public class TurmDienst extends FigurDienst{
 
     public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Turm turm){
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-
 
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.OBEN, Bewegungsmatrizen.OBEN, figuren, schachbrett, turm));
         moeglicheZuege.addAll(moeglicheZuegeRichtung(Bewegungsrichtung.UNTEN, Bewegungsmatrizen.UNTEN, figuren, schachbrett, turm));

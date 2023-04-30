@@ -5,9 +5,6 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 import java.util.ArrayList;
 
 public class KoenigDienst {
-    public void KoenigDienst(){
-
-    }
 
     public Koenig erzeugeKoenig(int farbe, Feld startPosition){
         return new Koenig(farbe, startPosition);

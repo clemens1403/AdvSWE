@@ -116,7 +116,7 @@ public class SchachspielKontrollierer {
                         case "Koenig":
                             this.moeglicheZuegeDerFigur = koenigDienst.getMoeglicheZuege(schachspiel.getFiguren(), schachspiel.getSchachbrett(), (Koenig) figur);
                             break;
-                        case "Lauefer":
+                        case "Laeufer":
                             this.moeglicheZuegeDerFigur = laeuferDienst.getMoeglicheZuege(schachspiel.getFiguren(), schachspiel.getSchachbrett(), (Laeufer) figur);
                             break;
                         case "Springer":

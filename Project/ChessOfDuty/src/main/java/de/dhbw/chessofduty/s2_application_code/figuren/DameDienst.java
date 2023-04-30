@@ -6,11 +6,6 @@ import java.util.ArrayList;
 
 public class DameDienst extends FigurDienst {
 
-
-    public void DameDienst(){
-
-    }
-
     public Dame erzeugeDame(int farbe, Feld startPosition){
         return new Dame(farbe, startPosition);
     }
