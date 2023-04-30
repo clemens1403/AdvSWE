@@ -3,7 +3,11 @@ package de.dhbw.chessofduty.s2_application_code.spiellogik;
 import de.dhbw.chessofduty.s2_application_code.figuren.*;
 import de.dhbw.chessofduty.s2_application_code.schachbrett.FeldDienst;
 import de.dhbw.chessofduty.s2_application_code.schachbrett.SchachbrettDienst;
+import de.dhbw.chessofduty.s2_application_code.spielzug.SchachzugDienst;
+import de.dhbw.chessofduty.s2_application_code.spielzug.SpielzugDienst;
 import de.dhbw.chessofduty.s3_domain_code.*;
+import de.dhbw.chessofduty.s3_domain_code.spielzug.Schachzug;
+import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
 
 import java.io.File;
 import java.io.IOException;
@@ -31,9 +35,12 @@ public class SchachspielKontrollierer {
     private TurmDienst turmDienst;
     private FeldDienst feldDienst;
     private SchachbrettDienst schachbrettDienst;
+    private SchachzugDienst schachzugDienst;
+    private SpielzugDienst spielzugDienst;
 
+    private Spielzug spielzug;
 
-    public SchachspielKontrollierer(SchachspielDienst schachspielDienst, FigurDienst figurDienst, BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst, FeldDienst feldDienst, SchachbrettDienst schachbrettDienst) {
+    public SchachspielKontrollierer(SchachspielDienst schachspielDienst, FigurDienst figurDienst, BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst, FeldDienst feldDienst, SchachbrettDienst schachbrettDienst, SchachzugDienst schachzugDienst, SpielzugDienst spielzugDienst) {
         this.schachspiel = schachspielDienst.erstelleSchachspiel();
         this.figurDienst = figurDienst;
         this.bauerDienst = bauerDienst;
@@ -45,9 +52,12 @@ public class SchachspielKontrollierer {
 
         this.feldDienst = feldDienst;
         this.schachbrettDienst = schachbrettDienst;
+        this.schachzugDienst = schachzugDienst;
+        this.spielzugDienst = spielzugDienst;
 
         this.spielerAmZug = 1;
         this.initialisiereFiguren(bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst);
+        this.spielzug = spielzugDienst.erstelleSpielzug(schachspiel.getSpielzuege());
     }
 
     public void initialisiereFiguren(BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst) {
@@ -87,7 +97,6 @@ public class SchachspielKontrollierer {
 
     public void klickAuswerten(int mausX, int mausY) {
         if (this.ausgewaehlteFigur != null) {
-            System.out.println("Die ausgewählte Figur ist (klickAuswerten): " + this.ausgewaehlteFigur);
             this.fuehreZugAus(mausX, mausY);
         } else {
             this.waehleEineFigurAus(mausX, mausY);
@@ -95,17 +104,10 @@ public class SchachspielKontrollierer {
     }
 
     public void waehleEineFigurAus(int mausX, int mausY) {
-        System.out.println("Bitte wähle eine Figur aus");
-        for(Figur f : schachspiel.getFiguren()){
-            System.out.println(f + " " + f.getClass().getSimpleName());
-        }
-
         for (Figur figur : schachspiel.getFiguren()) {
-            System.out.println("Maus-Posiiton: " + mausX + " | " + mausY);
             if (figurDienst.checkFigurGeklickt(figur, mausX, mausY)) {
                 if (figur.getFarbe() == this.spielerAmZug) {
                     this.ausgewaehlteFigur = figur;
-                    System.out.println("Die ausgewählte Figur ist: " + figur + " (waehleFigurAus)");
                     switch (figur.getClass().getSimpleName()) {
                         case "Bauer":
                             this.moeglicheZuegeDerFigur = bauerDienst.getMoeglicheZuege(schachspiel.getFiguren(), schachspiel.getSchachbrett(), (Bauer) figur);
@@ -127,8 +129,6 @@ public class SchachspielKontrollierer {
                             break;
                     }
                     this.moeglicheZuegeDerFigur = this.getValideZuege(this.moeglicheZuegeDerFigur);
-                    System.out.println(this.moeglicheZuegeDerFigur);
-
                 }
 
                 break;
@@ -137,14 +137,10 @@ public class SchachspielKontrollierer {
     }
 
     public Figur getAusgewaelteFigur() {
-        System.out.println("Ich gebe ausgewählte Figur aus: " + this.ausgewaehlteFigur);
         return this.ausgewaehlteFigur;
     }
 
     public ArrayList<Feld> getMoeglicheZuegeDerFigur() {
-        for(Feld f : this.moeglicheZuegeDerFigur){
-            System.out.println("Die Ausgewählte Figur kann folgende Züge: " + f);
-        }
         return this.moeglicheZuegeDerFigur;
     }
 
@@ -161,14 +157,12 @@ public class SchachspielKontrollierer {
             for (Figur fg : schachspiel.getFiguren()) {
                 if (fg.getPosition() == zug && fg.getFarbe() != this.spielerAmZug) {
                     geschlageneFigur = fg;
-                    //System.out.println("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
                     kopieFiguren.remove(fg);
                     geschlagen = true;
                 }
             }
             if (!checkSchach(kopieFiguren, (this.spielerAmZug - 1) * (this.spielerAmZug - 1))) {
                 kopieFigur.setPosition(startPosition);
-                //System.out.println("\nmove valid");
                 valideZuege.add(zug);
             }
             if (geschlagen) {
@@ -180,48 +174,37 @@ public class SchachspielKontrollierer {
     }
 
     public void fuehreZugAus(int mausX, int mausY) {
-
-        System.out.println("Die ausgewählte Figur ist (fuehreZugAus): " + this.ausgewaehlteFigur);
-
         Feld ausgewaehltesFeld = selektiereAusgewaehltesFeld(mausX, mausY);
-        System.out.println("fuehreZugAus: " + ausgewaehltesFeld);
         boolean umsetzenMoeglich = this.moeglicheZuegeDerFigur.contains(ausgewaehltesFeld);
-        System.out.println("Boolean umsetzenMoeglich (fuehreZugAus): " + umsetzenMoeglich);
 
         if (umsetzenMoeglich) {
-            ArrayList<String> zuege = schachspiel.getZuege();
+            //ArrayList<String> zuege = schachspiel.getZuege();
             for (Figur figur : schachspiel.getFiguren()) {
                 if (figur == this.ausgewaehlteFigur) {
-                    System.out.println("umsetzenMoeglich in fuehreZugAus");
-                    int neueZeile = ausgewaehltesFeld.getZeile();
-                    int neueSpalte = ausgewaehltesFeld.getSpalte();
+                    //int neueZeile = ausgewaehltesFeld.getZeile();
+                    //int neueSpalte = ausgewaehltesFeld.getSpalte();
 
-                    int alteZeile = figur.getPosition().getZeile();
-                    int alteSpalte = figur.getPosition().getSpalte();
+                    //int alteZeile = figur.getPosition().getZeile();
+                    //int alteSpalte = figur.getPosition().getSpalte();
 
-                    String zug = figur.getAbkuerzung() + schachbrettDienst.zahlZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
-                    //Überprüfung, ob etwas geschlagen wurde, oder nicht
-                    if (pruefeFigurGeschlagen(ausgewaehltesFeld)) {
+                    dokumentiereSchachzug(figur, ausgewaehltesFeld);
+                    //String zug = figur.getAbkuerzung() + schachbrettDienst.zahlZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
+
+                    /*if (pruefeFigurGeschlagen(ausgewaehltesFeld)) {
                         zug += "x";
                     } else {
                         zug += "-";
                     }
-                    zug += schachbrettDienst.zahlZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);
+                    zug += schachbrettDienst.zahlZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);*/
 
                     //Hier wird die Figur gesetzt
-                    System.out.println("Figur, die umgerückt werden soll: " + figur);
                     figur.setPosition(ausgewaehltesFeld);
-                    System.out.println("Figur, die umgerückt wurde: " + figur);
-
-                    for(Figur f : schachspiel.getFiguren()){
-                        System.out.println(f);
-                    }
 
                     if (checkSchach(schachspiel.getFiguren(), this.spielerAmZug)) {
-                        zug += "+";
-                        if (checkMatt()) {
-                            zug += "+";
-                        }
+                        //zug += "+";
+                        /*if (checkMatt()) {
+                            //zug += "+";
+                        }*/
                         if (this.spielerAmZug == 1) {
                             schachspiel.setSchachSchwarz(true);
                         } else {
@@ -235,8 +218,8 @@ public class SchachspielKontrollierer {
                         }
                     }
 
-                    zuege.add(zug);
-                    schachspiel.setZuege(zuege);
+                    //zuege.add(zug);
+                    //schachspiel.setZuege(zuege);
 
                     //Wenn der Gegner im vorherigen Zug schach gegeben haben sollte, wird falls es sich nicht um Matt handelt, mit dem nächsten Zug das Schach aufgehoben
                     if (this.spielerAmZug == 1) {
@@ -253,8 +236,38 @@ public class SchachspielKontrollierer {
         }
 
         this.moeglicheZuegeDerFigur = new ArrayList<Feld>();
-        System.out.println("Der Zug wurde ausgeführt und ausgewaehlteFigur auf null");
         this.ausgewaehlteFigur = null;
+    }
+
+    private void dokumentiereSchachzug(Figur figur, Feld ausgewaehltesFeld) {
+
+        String schachzugAbkuerzung = figur.getAbkuerzung() + schachbrettDienst.zahlZuBuchstabe(figur.getPosition().getSpalte()) + figur.getPosition().getZeile();
+        if (pruefeFigurGeschlagen(ausgewaehltesFeld)) {
+            schachzugAbkuerzung += "x";
+        } else {
+            schachzugAbkuerzung += "-";
+        }
+        schachzugAbkuerzung += schachbrettDienst.zahlZuBuchstabe(ausgewaehltesFeld.getSpalte()) + ausgewaehltesFeld.getZeile();
+        if (checkSchach(schachspiel.getFiguren(), this.spielerAmZug)) {
+            schachzugAbkuerzung += "+";
+            if (checkMatt()) {
+                schachzugAbkuerzung += "+";
+            }
+        }
+
+        if(figur.getFarbe() == 1){
+            Schachzug schachzugWeiss = schachzugDienst.erstelleSchachzug(figur, schachzugAbkuerzung, ausgewaehltesFeld);
+            this.spielzug = spielzugDienst.setzteSchachzugWeiss(spielzug, schachzugWeiss);
+            schachspiel.addSpielzug(spielzug);
+            return;
+        }
+
+        Schachzug schachzugSchwarz = schachzugDienst.erstelleSchachzug(figur, schachzugAbkuerzung,ausgewaehltesFeld);
+        this.spielzug = spielzugDienst.setzteSchachzugSchwarz(spielzug, schachzugSchwarz);
+
+        schachspiel.ueberarbeiteSpielzug(spielzug);
+
+        this.spielzug = spielzugDienst.erstelleSpielzug(schachspiel.getSpielzuege());
     }
 
     private Feld selektiereAusgewaehltesFeld(int mausX, int mausY) {
@@ -262,13 +275,8 @@ public class SchachspielKontrollierer {
             for (int j = 1; j <= 8; j++) {
                 Feld tmp = schachspiel.getSchachbrett().getFeld(i, j);
                 if(feldDienst.pruefeFeldGeklickt(mausX, mausY, tmp) != null){
-                    System.out.println("SelektiereAusgewaehltesFeld: Hier hast du folgendes Feld ausgewählt: " + tmp);
                     return tmp;
                 }
-                /*if (tmp.pruefeFeldGeklickt() != null) {
-                    System.out.println("SelektiereAusgewaehltesFeld: Hier hast du folgendes Feld ausgewählt: " + tmp);
-                    return tmp;
-                }*/
             }
         }
 
@@ -290,7 +298,6 @@ public class SchachspielKontrollierer {
         //Figur zu Array der geschlagenen Figuren hinzufügen
         //Array nach Farbe aufgeteilt
         //Wenn Figur weiß dann zu geschlageneFigurenWeiss hinzufügen sonst zu geschlageneFigurenSchwarz
-        //System.out.println("Schlage Figur");
         if (f.getFarbe() == 1) {
             ArrayList<Figur> geschlageneFigurenWeiss = schachspiel.getGeschlageneFigurenWeiss();
             geschlageneFigurenWeiss.add(f);
@@ -320,8 +327,6 @@ public class SchachspielKontrollierer {
         for (Figur figur : figuren) {
             if (figur.getFarbe() == spieler) {
                 ArrayList<Feld> mglZuege = new ArrayList<>();
-                //ArrayList<Feld> mglZuege = figur.getMoeglicheZuege(figuren, schachspiel.getSchachbrett());
-
                 switch (figur.getClass().getSimpleName()) {
                     case "Bauer":
                         mglZuege = this.moeglicheZuegeDerFigur = bauerDienst.getMoeglicheZuege(schachspiel.getFiguren(), schachspiel.getSchachbrett(), (Bauer) figur);
@@ -343,10 +348,7 @@ public class SchachspielKontrollierer {
                         break;
                 }
 
-                //System.out.println("Königposition: \n");
-                //System.out.println(koenigPosition);
                 if (mglZuege.contains(koenigPosition)) {
-                    System.out.println("Schach!");
                     return true;
                 }
             }
@@ -361,7 +363,6 @@ public class SchachspielKontrollierer {
             Feld startPosition = figur.getPosition();
             if (figur.getFarbe() != this.spielerAmZug) {
                 ArrayList<Feld> mglZuege = new ArrayList<>();
-                //ArrayList<Feld> mglZuege = f.getMoeglicheZuege(schachspiel.getFiguren(), schachspiel.getSchachbrett());
                 switch (figur.getClass().getSimpleName()) {
                     case "Bauer":
                         mglZuege = this.moeglicheZuegeDerFigur = bauerDienst.getMoeglicheZuege(schachspiel.getFiguren(), schachspiel.getSchachbrett(), (Bauer) figur);
@@ -386,25 +387,18 @@ public class SchachspielKontrollierer {
                 for (Feld zug : mglZuege) {
                     boolean geschlagen = false;
                     Figur geschlageneFigur = null;
-                    //f.setPosition(zug);
                     int index = kopieFiguren.indexOf(figur);
                     Figur kopieFigur = kopieFiguren.get(index);
                     kopieFiguren.get(index).setPosition(zug);
                     for (Figur fg : schachspiel.getFiguren()) {
                         if (fg.getPosition() == zug && fg.getFarbe() == this.spielerAmZug) {
                             geschlageneFigur = fg;
-                            //System.out.println("Geschlagene Figur: " + fg.getAbkuerzung() + "\n");
                             kopieFiguren.remove(fg);
                             geschlagen = true;
                         }
                     }
                     if (!checkSchach(kopieFiguren, this.spielerAmZug)) {
-
-                        //System.out.println(kopieFigur.getAbkuerzung());
-                        //System.out.println(kopieFigur.getPosition().getSpalte());
-                        //System.out.println(kopieFigur.getPosition().getZeile());
                         kopieFigur.setPosition(startPosition);
-                        System.out.println("\nno Mate");
                         return false;
                     }
                     if (geschlagen) {
@@ -414,11 +408,10 @@ public class SchachspielKontrollierer {
             }
             figur.setPosition(startPosition);
         }
-        //System.out.println("Schachmatt");
         return true;
     }
 
-    public void exportZuege() {
+    /*public void exportZuege() {
         String pathString = null;
 
         try {
@@ -487,11 +480,10 @@ public class SchachspielKontrollierer {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public Schachbrett getSchachbrett() {
         return schachspiel.getSchachbrett();
     }
-
 }
 

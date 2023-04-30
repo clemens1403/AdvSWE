@@ -1,10 +1,12 @@
 package de.dhbw.chessofduty.s3_domain_code;
 
+import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
+
 import java.util.ArrayList;
 import java.util.UUID;
 
 public class Schachspiel {
-    private UUID spielID;
+    private static UUID spielID;
 
     private final Schachbrett schachbrett;
 
@@ -12,16 +14,12 @@ public class Schachspiel {
     private ArrayList<Figur> geschlageneFigurenWeiss = new ArrayList<Figur>();
 
     private ArrayList<Figur> geschlageneFigurenSchwarz = new ArrayList<Figur>();
-    private ArrayList<String> zuege = new ArrayList<String>();
 
-    private int spielerAmZug;
+    private ArrayList<Spielzug> spielzuege = new ArrayList<>();
 
     private boolean schachWeiss = false;
 
     private boolean schachSchwarz = false;
-    private boolean mattWeiss = false;
-
-    private boolean mattSchwarz = false;
 
     public Schachspiel(Schachbrett schachbrett) {
         this.spielID = UUID.randomUUID();
@@ -34,18 +32,6 @@ public class Schachspiel {
 
     public void setFiguren(ArrayList<Figur> figuren) {
         this.figuren = figuren;
-    }
-
-    public void addFigur(Figur figur) {
-        this.figuren.add(figur);
-    }
-
-    public UUID getSpielID() {
-        return spielID;
-    }
-
-    public void setSpielID(UUID spielID) {
-        this.spielID = spielID;
     }
 
     public Schachbrett getSchachbrett() {
@@ -68,22 +54,6 @@ public class Schachspiel {
         this.geschlageneFigurenSchwarz = geschlageneFigurenSchwarz;
     }
 
-    public ArrayList<String> getZuege() {
-        return zuege;
-    }
-
-    public void setZuege(ArrayList<String> zuege) {
-        this.zuege = zuege;
-    }
-
-    public int getSpielerAmZug() {
-        return spielerAmZug;
-    }
-
-    public void setSpielerAmZug(int spielerAmZug) {
-        this.spielerAmZug = spielerAmZug;
-    }
-
     public boolean isSchachWeiss() {
         return schachWeiss;
     }
@@ -100,19 +70,16 @@ public class Schachspiel {
         this.schachSchwarz = schachSchwarz;
     }
 
-    public boolean isMattWeiss() {
-        return mattWeiss;
+    public ArrayList<Spielzug> getSpielzuege() {
+        return spielzuege;
     }
 
-    public void setMattWeiss(boolean mattWeiss) {
-        this.mattWeiss = mattWeiss;
+    public void addSpielzug(Spielzug spielzug) {
+        this.spielzuege.add(spielzug);
     }
 
-    public boolean isMattSchwarz() {
-        return mattSchwarz;
+    public void ueberarbeiteSpielzug(Spielzug spielzug){
+        this.spielzuege.set(spielzug.getZugNummer()-1, spielzug);
     }
 
-    public void setMattSchwarz(boolean mattSchwarz) {
-        this.mattSchwarz = mattSchwarz;
-    }
 }

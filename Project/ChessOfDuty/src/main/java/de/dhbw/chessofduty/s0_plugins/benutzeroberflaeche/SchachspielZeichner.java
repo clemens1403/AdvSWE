@@ -1,10 +1,10 @@
 package de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche;
 
-import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielDienst;
 import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielKontrollierer;
 import de.dhbw.chessofduty.s3_domain_code.Feld;
 import de.dhbw.chessofduty.s3_domain_code.Figur;
 import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
+import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -33,8 +33,8 @@ public class SchachspielZeichner extends PApplet {
 
         schachbrettZeichner.zeichneSchachbrett(g, mausX, mausY);
 
-        this.renderZuege();
-        this.renderGeschlageneFiguren();
+        this.zeichneZuege();
+        this.zeichneGeschlageneFiguren();
 
         for (Figur figur : schachspiel.getFiguren()) {
             figurZeichner.zeichneFigur(figur, g);
@@ -74,7 +74,7 @@ public class SchachspielZeichner extends PApplet {
 
     }
 
-    public void renderGeschlageneFiguren() {
+    public void zeichneGeschlageneFiguren() {
         g.pushStyle();
         g.fill(160, 82, 45);
         StringBuilder textS = new StringBuilder();
@@ -98,7 +98,7 @@ public class SchachspielZeichner extends PApplet {
         g.popStyle();
     }
 
-    public void renderZuege() {
+    public void zeichneZuege() {
         g.pushStyle();
         g.fill(0);
         g.textSize(40);
@@ -111,17 +111,32 @@ public class SchachspielZeichner extends PApplet {
         g.textSize(15);
         g.textAlign(LEFT, TOP);
         StringBuilder text = new StringBuilder();
-        for (String zug : schachspiel.getZuege()) {
-            int index = schachspiel.getZuege().indexOf(zug);
-            if (index % 2 == 0) {
-                int spielzug = index / 2 + 1;
-                text.append(spielzug).append(":");
+        //for (String zug : schachspiel.getZuege()) {
+        System.out.println("In diesem Spiel wurden bereits: " + schachspiel.getSpielzuege().size() + " Zuege gespielt");
+
+        for(Spielzug spielzug : schachspiel.getSpielzuege()){
+            System.out.println("Ich laufe in der Schleife");
+            System.out.println(spielzug.getSpielzugText());
+            text.append(spielzug.getSpielzugText()).append("\n");
+        }
+        System.out.println("SchachspielZeichner für Zuege");
+        System.out.println(text);
+
+        /*for(Spielzug spielzug : schachspiel.getSpielzuege()){
+            //int index = schachspiel.getZuege().indexOf(zug);
+            System.out.println(spielzug.getSpielzugText());
+            int index = spielzug.getZugnummer();
+            //if (index % 2 == 0) {
+            if (index % 4 == 0){
+                int spielzug_int = index / 2 + 1;
+                text.append(spielzug_int).append(":");
             }
-            text.append(zug).append(";");
+            //text.append(spielzug).append(";");
+            text.append(spielzug.getSpielzugText());
             if (index % 2 == 1) {
                 text.append("\n");
             }
-        }
+        }*/
         g.text(text.toString(), g.width - 185, 300);
         g.popStyle();
     }

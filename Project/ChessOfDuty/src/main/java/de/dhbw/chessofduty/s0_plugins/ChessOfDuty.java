@@ -6,7 +6,8 @@ import de.dhbw.chessofduty.s2_application_code.schachbrett.FeldDienst;
 import de.dhbw.chessofduty.s2_application_code.schachbrett.SchachbrettDienst;
 import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielDienst;
 import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielKontrollierer;
-import de.dhbw.chessofduty.s3_domain_code.Schachbrett;
+import de.dhbw.chessofduty.s2_application_code.spielzug.SchachzugDienst;
+import de.dhbw.chessofduty.s2_application_code.spielzug.SpielzugDienst;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -20,11 +21,13 @@ public class ChessOfDuty extends PApplet {
     KoenigDienst koenigDienst;
     LaeuferDienst laeuferDienst;
     SpringerDienst springerDienst;
-    TurmDienst tunmDienst;
+    TurmDienst turmDienst;
 
     FeldDienst feldDienst;
     SchachbrettDienst schachbrettDienst;
     SchachspielDienst schachspielDienst;
+    SchachzugDienst schachzugDienst;
+    SpielzugDienst spielzugDienst;
 
     FeldZeichner feldZeichner;
     SchachbrettZeichner schachbrettZeichner;
@@ -49,19 +52,22 @@ public class ChessOfDuty extends PApplet {
         this.koenigDienst = new KoenigDienst();
         this.laeuferDienst = new LaeuferDienst();
         this.springerDienst = new SpringerDienst();
-        this.tunmDienst = new TurmDienst();
+        this.turmDienst = new TurmDienst();
 
         this.figurDienst = new FigurDienst();
         this.feldDienst = new FeldDienst();
+        this.schachzugDienst = new SchachzugDienst();
+        this.spielzugDienst = new SpielzugDienst();
+
 
         schachbrettDienst = new SchachbrettDienst();
         schachspielDienst = new SchachspielDienst(schachbrettDienst);
-        schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, tunmDienst, feldDienst, schachbrettDienst);
+        schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
 
         schachbrettZeichner = new SchachbrettZeichner(schachbrettDienst, feldZeichner);
         schachspielZeichner = new SchachspielZeichner(g, schachspielKontrollierer, schachbrettZeichner, figurZeichner);
 
-        benutzeroberflaeche = new Benutzeroberflaeche(schachspielZeichner, schachspielKontrollierer,this.g);
+        benutzeroberflaeche = new Benutzeroberflaeche(schachspielZeichner,this.g);
     }
 
     public void draw() {
@@ -82,7 +88,7 @@ public class ChessOfDuty extends PApplet {
             if(k.pruefeMausPosition()){
               switch(k.getId()){
                 case "Spielen":
-                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, tunmDienst, feldDienst, schachbrettDienst);
+                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
                   benutzeroberflaeche.setStatus("Spiel");
                   break;
                 default:
@@ -99,14 +105,14 @@ public class ChessOfDuty extends PApplet {
             if(k.pruefeMausPosition()){
               switch(k.getId()){
                 case "neustart":
-                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, tunmDienst, feldDienst, schachbrettDienst);
+                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
                   benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
                   break;
                 case "Start":
                   benutzeroberflaeche.setStatus("Start");
                   break;
                 case "export":
-                  schachspielKontrollierer.exportZuege();
+                  //schachspielKontrollierer.exportZuege();
                   break;
                 default:
                   break;

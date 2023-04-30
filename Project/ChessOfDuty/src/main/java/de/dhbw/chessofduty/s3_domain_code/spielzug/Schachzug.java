@@ -17,6 +17,11 @@ public final class Schachzug {
     }
 
     @Override
+    public String toString(){
+        return this.abkuerzung;
+    }
+
+    @Override
     public boolean equals(Object objekt){
         if (objekt == this){
             return true;
