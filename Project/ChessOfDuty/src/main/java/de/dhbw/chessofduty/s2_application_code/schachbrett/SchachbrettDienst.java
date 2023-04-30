@@ -4,6 +4,8 @@ import de.dhbw.chessofduty.s3_domain_code.Schachbrett;
 
 public class SchachbrettDienst {
 
+    public SchachbrettDienst(){}
+
     public Schachbrett createSchachbrett() {
         return new Schachbrett();
     }

@@ -13,12 +13,12 @@ public class Benutzeroberflaeche extends PApplet{
     private String status;
     private ArrayList<Knopf> startKnoepfe = new ArrayList<Knopf>();
     private ArrayList<Knopf> spielKnoepfe = new ArrayList<Knopf>();
-    //private SchachspielKontrollierer schachspielKontrollierer;
+    private SchachspielKontrollierer schachspielKontrollierer;
     private SchachspielZeichner schachspielZeichner;
 
     public Benutzeroberflaeche(SchachspielZeichner schachspielZeichner, SchachspielKontrollierer schachspielKontrollierer, PGraphics g){
         this.g = g;
-        //this.schachspielKontrollierer = schachspielKontrollierer;
+        this.schachspielKontrollierer = schachspielKontrollierer;
         this.schachspielZeichner = schachspielZeichner;
 
         status = "Start";
@@ -40,19 +40,10 @@ public class Benutzeroberflaeche extends PApplet{
         this.mausX = mausX;
         this.mausY = mausY;
 
-        switch(status){
-            case "Start":
-                zeicheStartAnsicht();
-                break;
-            case "Spiel":
-                zeichneSpiel();
-                break;
-            case "Zug":
-                zeichneSpiel();
-                break;
-            default:
-                zeicheStartAnsicht();
-                break;
+        if ("Spiel".equals(status)) {
+            zeichneSpiel();
+        } else {
+            zeicheStartAnsicht();
         }
 
     }
@@ -107,7 +98,8 @@ public class Benutzeroberflaeche extends PApplet{
     }
 
     public void setSchachspiel(SchachspielKontrollierer schachspielKontrollierer){
-        //this.schachspielKontrollierer = schachspielKontrollierer;
+        this.schachspielKontrollierer = schachspielKontrollierer;
+        this.schachspielZeichner.setSchachspielKontrollierer(schachspielKontrollierer);
     }
 
 }

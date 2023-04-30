@@ -36,6 +36,10 @@ public class Schachspiel {
         this.figuren = figuren;
     }
 
+    public void addFigur(Figur figur) {
+        this.figuren.add(figur);
+    }
+
     public UUID getSpielID() {
         return spielID;
     }

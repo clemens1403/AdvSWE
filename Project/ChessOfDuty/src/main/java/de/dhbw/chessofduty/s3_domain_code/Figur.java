@@ -21,45 +21,6 @@ public abstract class Figur extends PApplet {
         this.position = startPosition;
     }
 
-    protected ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett){
-        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
-
-        for(int i = 1; i <= beweglicheFelder; i++){
-            Figur kollidierteFigur = findeKollision(figuren, spalte, zeile);
-
-            if(kollidierteFigur != null){
-                if(this.getFarbe() != kollidierteFigur.getFarbe()){
-                    moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
-                    break;
-                } else break;
-            } else {
-                moeglicheZuege.add(schachbrett.getFeld(spalte, zeile));
-            }
-
-            spalte += bewegungsRichtung.spaltenVerschiebung();
-            zeile += bewegungsRichtung.zeilenVerschiebung();
-        }
-
-        return moeglicheZuege;
-    }
-
-    protected Figur findeKollision(ArrayList<Figur> figuren, int spalte, int zeile){
-        Figur kollidierteFigur = null;
-
-        for(Figur f : figuren){
-            if(f.getPosition().getSpalte() == spalte && f.getPosition().getZeile() == zeile){
-                kollidierteFigur = f;
-                break;
-            }
-        }
-
-        return kollidierteFigur;
-    }
-
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett){
-        return new ArrayList<Feld>();
-    }
-
     public Feld getPosition(){
         return this.position;
     }
@@ -90,40 +51,6 @@ public abstract class Figur extends PApplet {
     }
     public void setFarbe(int farbe){
         this.farbe = farbe;
-    }
-
-    public void zeichne(PGraphics g, int mausX, int mausY){
-        this.mausX = mausX;
-        this.mausY = mausY;
-
-        g.pushStyle();
-        if(this.farbe==1){
-            g.fill(169, 172, 176);
-        }else{
-            g.fill(160,82,45);
-        }
-
-        g.textAlign(CENTER, CENTER);
-        g.textSize(50);
-        int x = 50 + (this.position.getX());
-        int y = 50 + (this.position.getY());
-        g.text(this.abkuerzung, x, y);
-        g.popStyle();
-    }
-
-    public boolean checkFigurGeklickt(){
-
-        int feldX = this.position.getX();
-        int feldY = this.position.getY();
-        int feldGroesse = this.position.getGroesse();
-
-        if((mausX > feldX) && (mausX < feldX+feldGroesse)){
-            if((mausY > feldY) && (mausY < feldY+feldGroesse)){
-                return true;
-            }
-        }
-
-        return false;
     }
 
     @Override

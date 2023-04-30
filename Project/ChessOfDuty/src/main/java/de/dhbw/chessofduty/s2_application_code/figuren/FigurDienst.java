@@ -1,13 +1,10 @@
 package de.dhbw.chessofduty.s2_application_code.figuren;
 
-import de.dhbw.chessofduty.s3_domain_code.Bewegungsrichtung;
-import de.dhbw.chessofduty.s3_domain_code.Feld;
-import de.dhbw.chessofduty.s3_domain_code.Figur;
-import de.dhbw.chessofduty.s3_domain_code.Schachbrett;
+import de.dhbw.chessofduty.s3_domain_code.*;
 
 import java.util.ArrayList;
 
-public abstract class FigurDienst {
+public class FigurDienst {
 
     protected ArrayList<Feld> ermittleMoeglicheZuege(Bewegungsrichtung bewegungsRichtung, int beweglicheFelder, int spalte, int zeile, ArrayList<Figur> figuren, Schachbrett schachbrett, Figur figur){
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
@@ -42,6 +39,21 @@ public abstract class FigurDienst {
         }
 
         return kollidierteFigur;
+    }
+
+    public boolean checkFigurGeklickt(Figur figur, int mausX, int mausY){
+
+        int feldX = figur.getPosition().getX();
+        int feldY = figur.getPosition().getY();
+        int feldGroesse = figur.getPosition().getGroesse();
+
+        if((mausX > feldX) && (mausX < feldX+feldGroesse)){
+            if((mausY > feldY) && (mausY < feldY+feldGroesse)){
+                return true;
+            }
+        }
+
+        return false;
     }
 
 

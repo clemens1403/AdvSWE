@@ -41,19 +41,28 @@ public class ChessOfDuty extends PApplet {
     public void setup() {
         this.g = createGraphics(1200, 1050);
 
+        FigurZeichner figurZeichner = new FigurZeichner();
+        feldZeichner = new FeldZeichner();
 
+        this.bauerDienst = new BauerDienst();
+        this.dameDienst = new DameDienst();
+        this.koenigDienst = new KoenigDienst();
+        this.laeuferDienst = new LaeuferDienst();
+        this.springerDienst = new SpringerDienst();
+        this.tunmDienst = new TurmDienst();
+
+        this.figurDienst = new FigurDienst();
+        this.feldDienst = new FeldDienst();
 
         schachbrettDienst = new SchachbrettDienst();
         schachspielDienst = new SchachspielDienst(schachbrettDienst);
-        schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst);
+        schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, tunmDienst, feldDienst, schachbrettDienst);
 
-        schachbrettZeichner = new SchachbrettZeichner(schachbrettDienst);
-        schachspielZeichner = new SchachspielZeichner(g, schachspielKontrollierer, schachbrettZeichner);
+        schachbrettZeichner = new SchachbrettZeichner(schachbrettDienst, feldZeichner);
+        schachspielZeichner = new SchachspielZeichner(g, schachspielKontrollierer, schachbrettZeichner, figurZeichner);
 
         benutzeroberflaeche = new Benutzeroberflaeche(schachspielZeichner, schachspielKontrollierer,this.g);
     }
-
-
 
     public void draw() {
         background(255);
@@ -73,7 +82,7 @@ public class ChessOfDuty extends PApplet {
             if(k.pruefeMausPosition()){
               switch(k.getId()){
                 case "Spielen":
-                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst);
+                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, tunmDienst, feldDienst, schachbrettDienst);
                   benutzeroberflaeche.setStatus("Spiel");
                   break;
                 default:
@@ -83,14 +92,14 @@ public class ChessOfDuty extends PApplet {
           }
           break;
         case "Spiel":
-          schachspielKontrollierer.klickAuswerten();
+          schachspielKontrollierer.klickAuswerten(mouseX, mouseY);
           benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
           ArrayList<Knopf> knoepfeSpiel = benutzeroberflaeche.getSpielKnoepfe();
           for(Knopf k : knoepfeSpiel){
             if(k.pruefeMausPosition()){
               switch(k.getId()){
                 case "neustart":
-                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst);
+                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, tunmDienst, feldDienst, schachbrettDienst);
                   benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
                   break;
                 case "Start":

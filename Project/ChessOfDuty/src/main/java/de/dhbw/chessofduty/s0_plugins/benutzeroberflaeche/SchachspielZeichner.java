@@ -14,15 +14,17 @@ public class SchachspielZeichner extends PApplet {
     private SchachspielKontrollierer schachspielKontrollierer;
     //private SchachbrettDienst schachbrettDienst;
     private SchachbrettZeichner schachbrettZeichner;
+    private FigurZeichner figurZeichner;
 
     private Schachspiel schachspiel;
 
 
     PGraphics g;
 
-    public SchachspielZeichner(PGraphics g, SchachspielKontrollierer schachspielKontrollierer, SchachbrettZeichner schachbrettZeichner) {
+    public SchachspielZeichner(PGraphics g, SchachspielKontrollierer schachspielKontrollierer, SchachbrettZeichner schachbrettZeichner, FigurZeichner figurZeichner) {
         this.schachspielKontrollierer = schachspielKontrollierer;
         this.schachbrettZeichner = schachbrettZeichner;
+        this.figurZeichner = figurZeichner;
         this.schachspiel = schachspielKontrollierer.getSchachspiel();
         this.g = g;
     }
@@ -34,17 +36,17 @@ public class SchachspielZeichner extends PApplet {
         this.renderZuege();
         this.renderGeschlageneFiguren();
 
-        for (Figur f : schachspiel.getFiguren()) {
-            f.zeichne(g, mausX, mausY);
+        for (Figur figur : schachspiel.getFiguren()) {
+            figurZeichner.zeichneFigur(figur, g);
 
-            if (schachspiel.isSchachWeiss() && f.getAbkuerzung() == "K" && f.getFarbe() == 1) {
-                Feld feld = f.getPosition();
+            if (schachspiel.isSchachWeiss() && figur.getAbkuerzung() == "K" && figur.getFarbe() == 1) {
+                Feld feld = figur.getPosition();
                 g.pushMatrix();
                 g.fill(200, 100, 100, 200);
                 g.rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
                 g.popMatrix();
-            } else if (schachspiel.isSchachSchwarz() && f.getAbkuerzung() == "K" && f.getFarbe() == 0) {
-                Feld feld = f.getPosition();
+            } else if (schachspiel.isSchachSchwarz() && figur.getAbkuerzung() == "K" && figur.getFarbe() == 0) {
+                Feld feld = figur.getPosition();
                 g.pushMatrix();
                 g.fill(200, 100, 100, 200);
                 g.rect(feld.getX(), feld.getY(), feld.getGroesse(), feld.getGroesse());
@@ -122,5 +124,10 @@ public class SchachspielZeichner extends PApplet {
         }
         g.text(text.toString(), g.width - 185, 300);
         g.popStyle();
+    }
+
+    public void setSchachspielKontrollierer(SchachspielKontrollierer schachspielKontrollierer){
+        this.schachspielKontrollierer = schachspielKontrollierer;
+        this.schachspiel = schachspielKontrollierer.getSchachspiel();
     }
 }

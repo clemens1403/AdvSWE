@@ -10,9 +10,11 @@ import static processing.core.PConstants.CENTER;
 public class SchachbrettZeichner {
 
     SchachbrettDienst schachbrettDienst;
+    FeldZeichner feldZeichner;
 
-    public SchachbrettZeichner(SchachbrettDienst schachbrettDienst) {
+    public SchachbrettZeichner(SchachbrettDienst schachbrettDienst, FeldZeichner feldZeichner) {
         this.schachbrettDienst = schachbrettDienst;
+        this.feldZeichner = feldZeichner;
     }
 
     public void zeichneSchachbrett(PGraphics g, int mausX, int mausY){
@@ -20,7 +22,7 @@ public class SchachbrettZeichner {
         for(int i = 1; i <= 8; i++){
             for(int j = 1; j <= 8; j++){
                 Feld f = schachbrett.getFelder()[i-1][j-1];
-                f.zeichne(g, mausX, mausY);
+                feldZeichner.zeichne(g, f);
             }
         }
 

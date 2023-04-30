@@ -4,7 +4,7 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 
 import java.util.ArrayList;
 
-public class DameDienst extends FigurDienst{
+public class DameDienst extends FigurDienst {
 
 
     public void DameDienst(){
