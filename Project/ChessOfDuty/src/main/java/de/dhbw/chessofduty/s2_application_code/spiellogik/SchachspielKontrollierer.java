@@ -40,8 +40,8 @@ public class SchachspielKontrollierer {
 
     private Spielzug spielzug;
 
-    public SchachspielKontrollierer(SchachspielDienst schachspielDienst, FigurDienst figurDienst, BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst, FeldDienst feldDienst, SchachbrettDienst schachbrettDienst, SchachzugDienst schachzugDienst, SpielzugDienst spielzugDienst) {
-        this.schachspiel = schachspielDienst.erstelleSchachspiel();
+    public SchachspielKontrollierer(Schachspiel schachspiel, FigurDienst figurDienst, BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst, FeldDienst feldDienst, SchachbrettDienst schachbrettDienst, SchachzugDienst schachzugDienst, SpielzugDienst spielzugDienst) {
+        this.schachspiel = schachspiel;
         this.figurDienst = figurDienst;
         this.bauerDienst = bauerDienst;
         this.dameDienst = dameDienst;

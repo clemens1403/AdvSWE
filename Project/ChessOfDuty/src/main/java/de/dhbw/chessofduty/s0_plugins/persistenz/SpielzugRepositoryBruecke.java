@@ -1,5 +1,7 @@
 package de.dhbw.chessofduty.s0_plugins.persistenz;
 
+import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielDienst;
+import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
 import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
 import de.dhbw.chessofduty.s3_domain_code.spielzug.SpielzugRepository;
 
@@ -12,8 +14,8 @@ import java.nio.file.Paths;
 
 public class SpielzugRepositoryBruecke implements SpielzugRepository {
     @Override
-    public void dokumentiere(Spielzug spielzug) {
-        /*String pathString = null;
+    public void dokumentiere(Schachspiel schachspiel) {
+        String pathString = null;
 
         try {
             Process p = Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
@@ -62,8 +64,8 @@ public class SpielzugRepositoryBruecke implements SpielzugRepository {
         }
         Path p = Path.of(fileNameString);
         StringBuilder text = new StringBuilder();
-        for (String zug : schachspiel.getZuege()) {
-            int index = schachspiel.getZuege().indexOf(zug);
+        /*for (Spielzug spielzug : schachspiel.getSpielzuege()) {
+            int index = schachspiel.getSpielzuege().indexOf(spielzug);
             if (index % 2 == 0) {
                 int spielzug = index / 2 + 1;
                 text.append(spielzug).append(":");
@@ -72,7 +74,11 @@ public class SpielzugRepositoryBruecke implements SpielzugRepository {
             if (index % 2 == 1) {
                 text.append("\n");
             }
+        }*/
+        for(Spielzug spielzug : schachspiel.getSpielzuege()){
+            text.append(spielzug.getSpielzugText()).append("\n");
         }
+
         try {
 
             Path filePath = Files.writeString(p, text.toString());
@@ -80,6 +86,6 @@ public class SpielzugRepositoryBruecke implements SpielzugRepository {
             System.out.println(s);
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
     }
 }

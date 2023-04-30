@@ -1,9 +1,9 @@
 package de.dhbw.chessofduty.s3_domain_code.spielzug;
 
-import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
+import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
 
 public interface SpielzugRepository {
 
-    void dokumentiere(Spielzug spielzug);
+    void dokumentiere(Schachspiel schachspiel);
 
 }

@@ -1,6 +1,7 @@
 package de.dhbw.chessofduty.s0_plugins;
 
 import de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche.*;
+import de.dhbw.chessofduty.s0_plugins.persistenz.SpielzugRepositoryBruecke;
 import de.dhbw.chessofduty.s2_application_code.figuren.*;
 import de.dhbw.chessofduty.s2_application_code.schachbrett.FeldDienst;
 import de.dhbw.chessofduty.s2_application_code.schachbrett.SchachbrettDienst;
@@ -8,6 +9,7 @@ import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielDienst;
 import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielKontrollierer;
 import de.dhbw.chessofduty.s2_application_code.spielzug.SchachzugDienst;
 import de.dhbw.chessofduty.s2_application_code.spielzug.SpielzugDienst;
+import de.dhbw.chessofduty.s3_domain_code.Schachspiel;
 import processing.core.PApplet;
 import processing.core.PGraphics;
 
@@ -35,12 +37,16 @@ public class ChessOfDuty extends PApplet {
 
     SchachspielKontrollierer schachspielKontrollierer;
     Benutzeroberflaeche benutzeroberflaeche;
+    SpielzugRepositoryBruecke spielzugRepositoryBruecke;
+
+    Schachspiel schachspiel;
 
     PGraphics g;
 
-    public void settings(){
+    public void settings() {
         size(1200, 1050);
     }
+
     public void setup() {
         this.g = createGraphics(1200, 1050);
 
@@ -59,15 +65,19 @@ public class ChessOfDuty extends PApplet {
         this.schachzugDienst = new SchachzugDienst();
         this.spielzugDienst = new SpielzugDienst();
 
+        this.spielzugRepositoryBruecke = new SpielzugRepositoryBruecke();
 
         schachbrettDienst = new SchachbrettDienst();
         schachspielDienst = new SchachspielDienst(schachbrettDienst);
-        schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
+
+        this.schachspiel = schachspielDienst.erstelleSchachspiel();
+
+        schachspielKontrollierer = new SchachspielKontrollierer(schachspiel, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
 
         schachbrettZeichner = new SchachbrettZeichner(schachbrettDienst, feldZeichner);
         schachspielZeichner = new SchachspielZeichner(g, schachspielKontrollierer, schachbrettZeichner, figurZeichner);
 
-        benutzeroberflaeche = new Benutzeroberflaeche(schachspielZeichner,this.g);
+        benutzeroberflaeche = new Benutzeroberflaeche(schachspielZeichner, this.g);
     }
 
     public void draw() {
@@ -80,49 +90,51 @@ public class ChessOfDuty extends PApplet {
 
     // Mausclick-Verarbeitung
 
-    public void mousePressed(){
-      switch(benutzeroberflaeche.getStatus()){
-        case "Start":
-          ArrayList<Knopf> knoepfeStart = benutzeroberflaeche.getStartKnoepfe();
-          for(Knopf k : knoepfeStart){
-            if(k.pruefeMausPosition()){
-              switch(k.getId()){
-                case "Spielen":
-                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
-                  benutzeroberflaeche.setStatus("Spiel");
-                  break;
-                default:
-                  break;
-              }
-            }
-          }
-          break;
-        case "Spiel":
-          schachspielKontrollierer.klickAuswerten(mouseX, mouseY);
-          benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
-          ArrayList<Knopf> knoepfeSpiel = benutzeroberflaeche.getSpielKnoepfe();
-          for(Knopf k : knoepfeSpiel){
-            if(k.pruefeMausPosition()){
-              switch(k.getId()){
-                case "neustart":
-                  schachspielKontrollierer = new SchachspielKontrollierer(schachspielDienst, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
-                  benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
-                  break;
-                case "Start":
-                  benutzeroberflaeche.setStatus("Start");
-                  break;
-                case "export":
-                  //schachspielKontrollierer.exportZuege();
-                  break;
-                default:
-                  break;
-              }
-            }
-          }
-          break;
-        default:
-          break;
-      }
+    public void mousePressed() {
+        switch (benutzeroberflaeche.getStatus()) {
+            case "Start":
+                ArrayList<Knopf> knoepfeStart = benutzeroberflaeche.getStartKnoepfe();
+                for (Knopf k : knoepfeStart) {
+                    if (k.pruefeMausPosition()) {
+                        switch (k.getId()) {
+                            case "Spielen":
+                                this.schachspiel = schachspielDienst.erstelleSchachspiel();
+                                schachspielKontrollierer = new SchachspielKontrollierer(schachspiel, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
+                                benutzeroberflaeche.setStatus("Spiel");
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                break;
+            case "Spiel":
+                schachspielKontrollierer.klickAuswerten(mouseX, mouseY);
+                benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
+                ArrayList<Knopf> knoepfeSpiel = benutzeroberflaeche.getSpielKnoepfe();
+                for (Knopf k : knoepfeSpiel) {
+                    if (k.pruefeMausPosition()) {
+                        switch (k.getId()) {
+                            case "neustart":
+                                this.schachspiel = schachspielDienst.erstelleSchachspiel();
+                                schachspielKontrollierer = new SchachspielKontrollierer(schachspiel, figurDienst, bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst, feldDienst, schachbrettDienst, schachzugDienst, spielzugDienst);
+                                benutzeroberflaeche.setSchachspiel(schachspielKontrollierer);
+                                break;
+                            case "Start":
+                                benutzeroberflaeche.setStatus("Start");
+                                break;
+                            case "export":
+                                spielzugRepositoryBruecke.dokumentiere(schachspiel);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                break;
+            default:
+                break;
+        }
     }
 
     public static void main(String[] args) {

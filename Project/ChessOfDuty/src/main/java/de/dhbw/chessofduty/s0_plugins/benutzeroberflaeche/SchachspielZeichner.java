@@ -111,32 +111,11 @@ public class SchachspielZeichner extends PApplet {
         g.textSize(15);
         g.textAlign(LEFT, TOP);
         StringBuilder text = new StringBuilder();
-        //for (String zug : schachspiel.getZuege()) {
-        System.out.println("In diesem Spiel wurden bereits: " + schachspiel.getSpielzuege().size() + " Zuege gespielt");
 
         for(Spielzug spielzug : schachspiel.getSpielzuege()){
-            System.out.println("Ich laufe in der Schleife");
-            System.out.println(spielzug.getSpielzugText());
             text.append(spielzug.getSpielzugText()).append("\n");
         }
-        System.out.println("SchachspielZeichner für Zuege");
-        System.out.println(text);
 
-        /*for(Spielzug spielzug : schachspiel.getSpielzuege()){
-            //int index = schachspiel.getZuege().indexOf(zug);
-            System.out.println(spielzug.getSpielzugText());
-            int index = spielzug.getZugnummer();
-            //if (index % 2 == 0) {
-            if (index % 4 == 0){
-                int spielzug_int = index / 2 + 1;
-                text.append(spielzug_int).append(":");
-            }
-            //text.append(spielzug).append(";");
-            text.append(spielzug.getSpielzugText());
-            if (index % 2 == 1) {
-                text.append("\n");
-            }
-        }*/
         g.text(text.toString(), g.width - 185, 300);
         g.popStyle();
     }

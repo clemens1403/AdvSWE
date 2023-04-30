@@ -11,8 +11,8 @@ public class Schachspiel {
     private final Schachbrett schachbrett;
 
     private ArrayList<Figur> figuren = new ArrayList<Figur>();
-    private ArrayList<Figur> geschlageneFigurenWeiss = new ArrayList<Figur>();
 
+    private ArrayList<Figur> geschlageneFigurenWeiss = new ArrayList<Figur>();
     private ArrayList<Figur> geschlageneFigurenSchwarz = new ArrayList<Figur>();
 
     private ArrayList<Spielzug> spielzuege = new ArrayList<>();
@@ -82,4 +82,7 @@ public class Schachspiel {
         this.spielzuege.set(spielzug.getZugNummer()-1, spielzug);
     }
 
+    public static UUID getSpielID() {
+        return spielID;
+    }
 }
