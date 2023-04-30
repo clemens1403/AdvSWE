@@ -16,14 +16,14 @@ public class KoenigDienstTest {
 
     private KoenigDienst koenigDienst;
     private Schachbrett schachbrettMock;
-    private Turm turmMock;
+    private Koenig koenigMock;
 
     @BeforeEach
     public void setUp() {
         koenigDienst = new KoenigDienst();
         schachbrettMock = new Schachbrett();
-        turmMock = mock(Turm.class);
-        when(turmMock.getPosition()).thenReturn(new Feld(1, 1)); // Beispielposition
+        koenigMock = mock(Koenig.class);
+        when(koenigMock.getPosition()).thenReturn(new Feld(1, 1)); // Beispielposition
     }
 
     @Test
@@ -42,11 +42,11 @@ public class KoenigDienstTest {
         when(schachbrettMock.getFeld(1, 2)).thenReturn(new Feld(1, 2));
         when(schachbrettMock.getFeld(2, 2)).thenReturn(new Feld(2, 2));
 
-        when(turmMock.getFarbe()).thenReturn(1); // weißer Turm
+        when(koenigMock.getFarbe()).thenReturn(1); // weißer Turm
 
         ArrayList<Feld> expectedZuege = new ArrayList<>(Arrays.asList(new Feld(1, 2), new Feld(2, 2)));
 
-        assertEquals(expectedZuege, koenigDienst.getMoeglicheZuege(figuren, schachbrettMock, turmMock));
+        assertEquals(expectedZuege, koenigDienst.getMoeglicheZuege(figuren, schachbrettMock, koenigMock));
     }
 
 }

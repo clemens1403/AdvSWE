@@ -33,6 +33,7 @@ public class BauerDienstTest {
         Feld mockFeld = mock(Feld.class);
         when(mockBauer.getPosition()).thenReturn(mockFeld);
 
+
         BauerDienst bd = new BauerDienst();
         Bauer result = bd.erzeugeBauer(1, mockFeld);
 

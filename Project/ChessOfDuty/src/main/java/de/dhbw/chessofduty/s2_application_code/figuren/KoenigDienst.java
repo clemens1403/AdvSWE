@@ -13,21 +13,21 @@ public class KoenigDienst {
         return new Koenig(farbe, startPosition);
     }
 
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Turm turm){
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Koenig koenig){
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
-        int spalte = turm.getPosition().getSpalte();
-        int zeile = turm.getPosition().getZeile();
+        int spalte = koenig.getPosition().getSpalte();
+        int zeile = koenig.getPosition().getZeile();
 
-        moeglicheZuege.addAll(moeglicherZugNachVorne(figuren, schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicheZuegeNachVorneLinks(figuren, schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicherZugNachVorneRechts(figuren, schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicherZugNachHinten(figuren, schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicherZugNachHintenLinks(figuren, schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicherZugNachHintenRechts(figuren,schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicherZugNachRechts(figuren, schachbrett, spalte, zeile, turm));
-        moeglicheZuege.addAll(moeglicherZugNachLinks(figuren,schachbrett, spalte, zeile, turm));
+        moeglicheZuege.addAll(moeglicherZugNachVorne(figuren, schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicheZuegeNachVorneLinks(figuren, schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicherZugNachVorneRechts(figuren, schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicherZugNachHinten(figuren, schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicherZugNachHintenLinks(figuren, schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicherZugNachHintenRechts(figuren,schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicherZugNachRechts(figuren, schachbrett, spalte, zeile, koenig));
+        moeglicheZuege.addAll(moeglicherZugNachLinks(figuren,schachbrett, spalte, zeile, koenig));
 
         for (Feld eintrag : moeglicheZuege) {
             System.out.println("(" + eintrag.getSpalte() + ", " + eintrag.getZeile() + ")");
@@ -36,7 +36,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachVorne(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm) {
+    private ArrayList<Feld> moeglicherZugNachVorne(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig) {
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -55,7 +55,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -68,7 +68,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm){
+    private ArrayList<Feld> moeglicheZuegeNachVorneLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig){
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -87,7 +87,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -100,7 +100,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm){
+    private ArrayList<Feld> moeglicherZugNachVorneRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig){
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -119,7 +119,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -132,7 +132,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachHinten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm){
+    private ArrayList<Feld> moeglicherZugNachHinten(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig){
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -151,7 +151,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -164,7 +164,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm){
+    private ArrayList<Feld> moeglicherZugNachHintenLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig){
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -183,7 +183,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -196,7 +196,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm) {
+    private ArrayList<Feld> moeglicherZugNachHintenRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig) {
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -215,7 +215,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -228,7 +228,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm){
+    private ArrayList<Feld> moeglicherZugNachRechts(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig){
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -247,7 +247,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");
@@ -260,7 +260,7 @@ public class KoenigDienst {
         return moeglicheZuege;
     }
 
-    private ArrayList<Feld> moeglicherZugNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Turm turm){
+    private ArrayList<Feld> moeglicherZugNachLinks(ArrayList<Figur> figuren, Schachbrett schachbrett, int spalte, int zeile, Koenig koenig){
 
         boolean kollisionGefunden = false;
         Figur kollidierteFigur = null;
@@ -279,7 +279,7 @@ public class KoenigDienst {
         if(kollisionGefunden){
             System.out.println("Auf diesem Feld wurde eine Kollision festgestellt");
 
-            if(turm.getFarbe() == kollidierteFigur.getFarbe()){
+            if(koenig.getFarbe() == kollidierteFigur.getFarbe()){
                 System.out.println("Die erkannte Kollision ist mit einer Figur der gleichen Farbe");
             } else{
                 System.out.println("Die erkannte Kollision ist mit einer Figur der anderen Farbe");

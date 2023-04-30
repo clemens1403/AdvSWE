@@ -28,6 +28,7 @@ public class DameDienstTest {
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        schachbrett = new Schachbrett();
         dameDienst = new DameDienst();
     }
 
