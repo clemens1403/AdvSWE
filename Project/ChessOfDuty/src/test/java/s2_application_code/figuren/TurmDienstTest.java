@@ -15,49 +15,69 @@ import static org.mockito.Mockito.*;
 class TurmDienstTest {
 
     private TurmDienst turmDienst;
-
-    @Mock
     private Schachbrett schachbrett;
-
     @Mock
     private Turm turm;
+
+    @Mock
+    private Bauer bauer;
+
+    @Mock
+    private Laeufer laeufer;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
         turmDienst = new TurmDienst();
+        schachbrett = new Schachbrett();
     }
 
     @Test
     void erzeugeTurm() {
-        int farbe = 0;
-        Feld startPosition = mock(Feld.class);
-        Turm result = turmDienst.erzeugeTurm(farbe, startPosition);
+        int farbe = 1;
+        Feld startPosition = new Feld(4,1);
+        Turm ergebnis = turmDienst.erzeugeTurm(farbe, startPosition);
 
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.getFarbe(), farbe);
-        Assertions.assertEquals(result.getPosition(), startPosition);
+        Assertions.assertNotNull(ergebnis);
+        Assertions.assertEquals(ergebnis.getFarbe(), farbe);
+        Assertions.assertEquals(ergebnis.getPosition(), startPosition);
     }
 
     @Test
     void getMoeglicheZuege() {
         ArrayList<Figur> figuren = new ArrayList<>();
-        figuren.add(mock(Figur.class));
-        ArrayList<Feld> expected = new ArrayList<>();
-        expected.add(mock(Feld.class));
-        expected.add(mock(Feld.class));
-        expected.add(mock(Feld.class));
-        expected.add(mock(Feld.class));
+        figuren.add(bauer);
+        figuren.add(laeufer);
+        figuren.add(turm);
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+
+        // Mock Figuren
+        when(bauer.getPosition()).thenReturn(new Feld(1,1));
+        when(bauer.getFarbe()).thenReturn(0);
+
+        when(laeufer.getPosition()).thenReturn(new Feld(7,1));
+        when(laeufer.getFarbe()).thenReturn(1);
+
+        when(turm.getPosition()).thenReturn(new Feld(4,1));
+        when(turm.getFarbe()).thenReturn(0);
+
+        //erwartete Felder hinzufügen
+        moeglicheZuege.add(new Feld(4,2));
+        moeglicheZuege.add(new Feld(4,3));
+        moeglicheZuege.add(new Feld(4,4));
+        moeglicheZuege.add(new Feld(4,5));
+        moeglicheZuege.add(new Feld(4,6));
+        moeglicheZuege.add(new Feld(4,7));
+        moeglicheZuege.add(new Feld(4,8));
+        moeglicheZuege.add(new Feld(3,1));
+        moeglicheZuege.add(new Feld(2,1));
+        moeglicheZuege.add(new Feld(5,1));
+        moeglicheZuege.add(new Feld(6,1));
+        moeglicheZuege.add(new Feld(7,1));
 
 
-        when(turm.getPosition()).thenReturn(mock(Feld.class));
-        when(turm.getPosition().getSpalte()).thenReturn(3);
-        when(turm.getPosition().getZeile()).thenReturn(3);
+        ArrayList<Feld> ergebnis = turmDienst.getMoeglicheZuege(figuren, schachbrett, turm);
 
-        ArrayList<Feld> result = turmDienst.getMoeglicheZuege(figuren, schachbrett, turm);
-
-        Assertions.assertNotNull(result);
-        Assertions.assertEquals(result.size(), 16);
-        Assertions.assertEquals(result, expected);
+        Assertions.assertEquals(ergebnis, moeglicheZuege);
     }
 }

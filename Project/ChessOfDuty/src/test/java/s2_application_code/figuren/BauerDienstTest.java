@@ -3,6 +3,7 @@ package s2_application_code.figuren;
 import de.dhbw.chessofduty.s2_application_code.figuren.BauerDienst;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -17,63 +18,76 @@ import java.util.ArrayList;
 public class BauerDienstTest {
 
     @Mock
-    private Bauer mockBauer;
+    private Turm turm;
 
     @Mock
-    private Schachbrett mockSchachbrett;
+    private Bauer bauer;
+    @Mock
+    private Bauer bauer2;
+
+    @Mock
+    private Laeufer laeufer;
+
+    private BauerDienst bauerDienst;
+
+    private Schachbrett schachbrett;
 
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        mockSchachbrett = new Schachbrett();
+        bauerDienst = new BauerDienst();
+        schachbrett = new Schachbrett();
     }
 
     @Test
     public void testErzeugeBauer() {
-        Feld mockFeld = mock(Feld.class);
-        when(mockBauer.getPosition()).thenReturn(mockFeld);
+        int farbe = 1;
+        Feld startPosition = new Feld(4,1);
+        Bauer ergebnis = bauerDienst.erzeugeBauer(farbe, startPosition);
 
-
-        BauerDienst bd = new BauerDienst();
-        Bauer result = bd.erzeugeBauer(1, mockFeld);
-
-        assertSame(result, mockBauer);
-        verify(mockBauer).setFarbe(1);
-        verify(mockBauer).setPosition(mockFeld);
+        Assertions.assertNotNull(ergebnis);
+        Assertions.assertEquals(ergebnis.getFarbe(), farbe);
+        Assertions.assertEquals(ergebnis.getPosition(), startPosition);
     }
 
     @Test
     public void testGetMoeglicheZuege() {
-        // mock input data
         ArrayList<Figur> figuren = new ArrayList<>();
-        Bauer bauer = mock(Bauer.class);
         figuren.add(bauer);
+        figuren.add(bauer2);
+        figuren.add(laeufer);
+        figuren.add(turm);
+        ArrayList<Feld> moeglicheZuegeBauer = new ArrayList<>();
+        ArrayList<Feld> moeglicheZuegeBauer2 = new ArrayList<>();
 
-        Feld aktuellePosition = mock(Feld.class);
-        when(bauer.getPosition()).thenReturn(aktuellePosition);
-        when(aktuellePosition.getZeile()).thenReturn(1);
-        when(aktuellePosition.getSpalte()).thenReturn(1);
-
-        when(bauer.getFarbe()).thenReturn(1);
-        when(bauer.getStartposition()).thenReturn(mock(Feld.class));
+        // Mock Figuren
+        when(bauer.getPosition()).thenReturn(new Feld(1,8));
+        when(bauer.getFarbe()).thenReturn(0);
         when(bauer.getDoppelschrittMoeglich()).thenReturn(true);
 
-        when(mockSchachbrett.getFeld(1, 2)).thenReturn(mock(Feld.class));
-        when(mockSchachbrett.getFeld(1, 3)).thenReturn(mock(Feld.class));
+        when(bauer2.getPosition()).thenReturn(new Feld(1,1));
+        when(bauer2.getFarbe()).thenReturn(1);
+        when(bauer2.getDoppelschrittMoeglich()).thenReturn(true);
 
-        // mock expected result
-        ArrayList<Feld> expected = new ArrayList<>();
-        expected.add(mockSchachbrett.getFeld(1, 2));
-        expected.add(mockSchachbrett.getFeld(1, 3));
+        when(laeufer.getPosition()).thenReturn(new Feld(1,3));
+        when(laeufer.getFarbe()).thenReturn(1);
 
-        // run the method under test
-        BauerDienst bd = new BauerDienst();
-        ArrayList<Feld> result = bd.getMoeglicheZuege(figuren, mockSchachbrett, bauer);
+        when(turm.getPosition()).thenReturn(new Feld(2,2));
+        when(turm.getFarbe()).thenReturn(0);
 
-        // assert the result
-        assertEquals(expected, result);
-        verify(bauer).setDoppelschrittMoeglich(false);
-        verify(mockSchachbrett, times(2)).getFeld(1, anyInt());
+        //erwartete Felder hinzufügen
+        moeglicheZuegeBauer.add(new Feld(1,7));
+        moeglicheZuegeBauer.add(new Feld(1,6));
+
+        moeglicheZuegeBauer2.add(new Feld(2,2));
+        moeglicheZuegeBauer2.add(new Feld(1,2));
+
+        
+        ArrayList<Feld> ergebnisBauer = bauerDienst.getMoeglicheZuege(figuren, schachbrett, bauer);
+        ArrayList<Feld> ergebnisBauer2 = bauerDienst.getMoeglicheZuege(figuren, schachbrett, bauer2);
+
+        Assertions.assertEquals(ergebnisBauer, moeglicheZuegeBauer);
+        Assertions.assertEquals(ergebnisBauer2, moeglicheZuegeBauer2);
     }
 
 }

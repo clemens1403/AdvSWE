@@ -1,5 +1,6 @@
 package s2_application_code.figuren;
 
+import de.dhbw.chessofduty.s3_domain_code.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
@@ -12,25 +13,30 @@ import static org.mockito.Mockito.*;
 import java.util.ArrayList;
 
 import de.dhbw.chessofduty.s2_application_code.figuren.LaeuferDienst;
-import de.dhbw.chessofduty.s3_domain_code.Feld;
-import de.dhbw.chessofduty.s3_domain_code.Figur;
-import de.dhbw.chessofduty.s3_domain_code.Laeufer;
-import de.dhbw.chessofduty.s3_domain_code.Schachbrett;
 
 public class LaeuferDienstTest {
 
-    @Mock
+
     private Schachbrett schachbrettMock;
+
+    @Mock
+    private Turm turm;
+
+    @Mock
+    private Bauer bauer;
+    @Mock
+    private Laeufer laeufer;
 
     @BeforeEach
     public void setup() {
         MockitoAnnotations.initMocks(this);
+        schachbrettMock = new Schachbrett();
     }
 
     @Test
     public void testErzeugeLaeufer() {
         LaeuferDienst laeuferDienst = new LaeuferDienst();
-        Feld startPosition = mock(Feld.class);
+        Feld startPosition = new Feld(1,1);
 
         Laeufer laeufer = laeuferDienst.erzeugeLaeufer(0, startPosition);
 
@@ -42,22 +48,31 @@ public class LaeuferDienstTest {
     @Test
     public void testGetMoeglicheZuege() {
         LaeuferDienst laeuferDienst = new LaeuferDienst();
-        Feld startPosition = mock(Feld.class);
-        Laeufer laeufer = new Laeufer(0, startPosition);
-        Figur figur1 = mock(Figur.class);
-        Figur figur2 = mock(Figur.class);
         ArrayList<Figur> figuren = new ArrayList<>();
-        figuren.add(figur1);
-        figuren.add(figur2);
-        when(figur1.getFarbe()).thenReturn(1);
-        when(figur2.getFarbe()).thenReturn(0);
-        when(startPosition.getSpalte()).thenReturn(2);
-        when(startPosition.getZeile()).thenReturn(3);
+        figuren.add(bauer);
+        figuren.add(turm);
+        figuren.add(laeufer);
 
-        ArrayList<Feld> moeglicheZuege = laeuferDienst.getMoeglicheZuege(figuren, schachbrettMock, laeufer);
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+
+        moeglicheZuege.add(new Feld(3,3));
+        moeglicheZuege.add(new Feld(4,4));
+        moeglicheZuege.add(new Feld(1,3));
+        moeglicheZuege.add(new Feld(3,1));
+
+        when(bauer.getPosition()).thenReturn(new Feld(1,1));
+        when(bauer.getFarbe()).thenReturn(1);
+
+        when(laeufer.getPosition()).thenReturn(new Feld(2,2));
+        when(laeufer.getFarbe()).thenReturn(1);
+
+        when(turm.getPosition()).thenReturn(new Feld(4,4));
+        when(turm.getFarbe()).thenReturn(0);
+
+        ArrayList<Feld> ergebnis = laeuferDienst.getMoeglicheZuege(figuren, schachbrettMock, laeufer);
 
         assertNotNull(moeglicheZuege);
-        assertEquals(12, moeglicheZuege.size());
+        assertEquals( moeglicheZuege, ergebnis);
     }
 
 }

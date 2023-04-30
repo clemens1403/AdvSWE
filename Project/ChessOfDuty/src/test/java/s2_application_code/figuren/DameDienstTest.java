@@ -14,14 +14,16 @@ import static org.mockito.Mockito.when;
 
 public class DameDienstTest {
 
-    @Mock
+
     private Schachbrett schachbrett;
 
     @Mock
     private Dame dame;
 
     @Mock
-    private Figur figur;
+    private Bauer bauer;
+    @Mock
+    private Laeufer laeufer;
 
     private DameDienst dameDienst;
 
@@ -43,16 +45,33 @@ public class DameDienstTest {
 
     @Test
     public void testGetMoeglicheZuege() {
-        ArrayList<Feld> expected = new ArrayList<>();
-        Feld feld = new Feld(1, 1);
-        expected.add(feld);
-        when(dame.getPosition()).thenReturn(feld);
-        when(figur.getPosition()).thenReturn(feld);
-        when(figur.getFarbe()).thenReturn(0);
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>();
+        ArrayList<Figur> figuren = new ArrayList<>();
+        figuren.add(dame);
+        figuren.add(bauer);
+        figuren.add(laeufer);
 
-        ArrayList<Feld> actual = dameDienst.getMoeglicheZuege(new ArrayList<Figur>(){{add(dame);}}, schachbrett, dame);
+        moeglicheZuege.add(new Feld(2,2));
+        moeglicheZuege.add(new Feld(3,3));
+        moeglicheZuege.add(new Feld(4,4));
+        moeglicheZuege.add(new Feld(5,5));
+        moeglicheZuege.add(new Feld(6,6));
+        moeglicheZuege.add(new Feld(7,7));
+        moeglicheZuege.add(new Feld(8,8));
+        moeglicheZuege.add(new Feld(1,2));
+        moeglicheZuege.add(new Feld(1,3));
 
-        assertEquals(expected.size(), actual.size());
-        assertEquals(expected.get(0), actual.get(0));
+
+        when(dame.getPosition()).thenReturn(new Feld(1,1));
+        when(dame.getFarbe()).thenReturn(0);
+
+        when(bauer.getPosition()).thenReturn(new Feld(1,3));
+        when(bauer.getFarbe()).thenReturn(1);
+        when(laeufer.getPosition()).thenReturn(new Feld(2,1));
+        when(laeufer.getFarbe()).thenReturn(0);
+
+        ArrayList<Feld> ergebnis = dameDienst.getMoeglicheZuege(figuren, schachbrett, dame);
+
+        assertEquals(moeglicheZuege, ergebnis);
     }
 }

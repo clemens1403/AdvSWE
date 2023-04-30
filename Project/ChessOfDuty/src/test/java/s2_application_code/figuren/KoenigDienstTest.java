@@ -39,14 +39,11 @@ public class KoenigDienstTest {
         Dame figur2 = new Dame(0, new Feld(1, 2));
         ArrayList<Figur> figuren = new ArrayList<>(Arrays.asList(figur1, figur2));
 
-        when(schachbrettMock.getFeld(1, 2)).thenReturn(new Feld(1, 2));
-        when(schachbrettMock.getFeld(2, 2)).thenReturn(new Feld(2, 2));
+        when(koenigMock.getFarbe()).thenReturn(1);
 
-        when(koenigMock.getFarbe()).thenReturn(1); // weißer Turm
+        ArrayList<Feld> moeglicheZuege = new ArrayList<>(Arrays.asList(new Feld(1, 2), new Feld(2, 1)));
 
-        ArrayList<Feld> expectedZuege = new ArrayList<>(Arrays.asList(new Feld(1, 2), new Feld(2, 2)));
-
-        assertEquals(expectedZuege, koenigDienst.getMoeglicheZuege(figuren, schachbrettMock, koenigMock));
+        assertEquals(moeglicheZuege, koenigDienst.getMoeglicheZuege(figuren, schachbrettMock, koenigMock));
     }
 
 }
