@@ -95,9 +95,5 @@ public class Benutzeroberflaeche extends PApplet{
         return spielKnoepfe;
     }
 
-    public void setSchachspiel(SchachspielKontrollierer schachspielKontrollierer){
-        //-this.schachspielKontrollierer = schachspielKontrollierer;
-        this.schachspielZeichner.setSchachspielKontrollierer(schachspielKontrollierer);
-    }
 
 }

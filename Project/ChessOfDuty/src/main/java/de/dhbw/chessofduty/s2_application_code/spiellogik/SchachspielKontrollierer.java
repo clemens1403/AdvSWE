@@ -9,15 +9,10 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 import de.dhbw.chessofduty.s3_domain_code.spielzug.Schachzug;
 import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.List;
 
-public class SchachspielKontrollierer {
+public class SchachspielKontrollierer implements SchachspielSubject {
 
     private Schachspiel schachspiel;
 
@@ -26,6 +21,7 @@ public class SchachspielKontrollierer {
     private Figur ausgewaehlteFigur = null;
 
     private ArrayList<Feld> moeglicheZuegeDerFigur = new ArrayList<>();
+
     private FigurDienst figurDienst;
     private BauerDienst bauerDienst;
     private DameDienst dameDienst;
@@ -37,8 +33,9 @@ public class SchachspielKontrollierer {
     private SchachbrettDienst schachbrettDienst;
     private SchachzugDienst schachzugDienst;
     private SpielzugDienst spielzugDienst;
-
     private Spielzug spielzug;
+
+    private List<SchachspielBeobachter> schachspielBeobachtern = new ArrayList<>();
 
     public SchachspielKontrollierer(Schachspiel schachspiel, FigurDienst figurDienst, BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst, FeldDienst feldDienst, SchachbrettDienst schachbrettDienst, SchachzugDienst schachzugDienst, SpielzugDienst spielzugDienst) {
         this.schachspiel = schachspiel;
@@ -67,26 +64,26 @@ public class SchachspielKontrollierer {
             figuren.add(bauerDienst.erzeugeBauer(0, schachspiel.getSchachbrett().getFeld(i, 7)));
         }
 
-        figuren.add(koenigDienst.erzeugeKoenig(1, schachspiel.getSchachbrett().getFeld(5,1)));
-        figuren.add(koenigDienst.erzeugeKoenig(0, schachspiel.getSchachbrett().getFeld(5,8)));
+        figuren.add(koenigDienst.erzeugeKoenig(1, schachspiel.getSchachbrett().getFeld(5, 1)));
+        figuren.add(koenigDienst.erzeugeKoenig(0, schachspiel.getSchachbrett().getFeld(5, 8)));
 
-        figuren.add(dameDienst.erzeugeDame(1, schachspiel.getSchachbrett().getFeld(4,1)));
-        figuren.add(dameDienst.erzeugeDame(0, schachspiel.getSchachbrett().getFeld(4,8)));
+        figuren.add(dameDienst.erzeugeDame(1, schachspiel.getSchachbrett().getFeld(4, 1)));
+        figuren.add(dameDienst.erzeugeDame(0, schachspiel.getSchachbrett().getFeld(4, 8)));
 
-        figuren.add(laeuferDienst.erzeugeLaeufer(1, schachspiel.getSchachbrett().getFeld(3,1)));
-        figuren.add(laeuferDienst.erzeugeLaeufer(0, schachspiel.getSchachbrett().getFeld(3,8)));
-        figuren.add(laeuferDienst.erzeugeLaeufer(1, schachspiel.getSchachbrett().getFeld(6,1)));
-        figuren.add(laeuferDienst.erzeugeLaeufer(0, schachspiel.getSchachbrett().getFeld(6,8)));
+        figuren.add(laeuferDienst.erzeugeLaeufer(1, schachspiel.getSchachbrett().getFeld(3, 1)));
+        figuren.add(laeuferDienst.erzeugeLaeufer(0, schachspiel.getSchachbrett().getFeld(3, 8)));
+        figuren.add(laeuferDienst.erzeugeLaeufer(1, schachspiel.getSchachbrett().getFeld(6, 1)));
+        figuren.add(laeuferDienst.erzeugeLaeufer(0, schachspiel.getSchachbrett().getFeld(6, 8)));
 
-        figuren.add(springerDienst.erzeugeSpringer(1, schachspiel.getSchachbrett().getFeld(2,1)));
-        figuren.add(springerDienst.erzeugeSpringer(0, schachspiel.getSchachbrett().getFeld(2,8)));
-        figuren.add(springerDienst.erzeugeSpringer(1, schachspiel.getSchachbrett().getFeld(7,1)));
-        figuren.add(springerDienst.erzeugeSpringer(0, schachspiel.getSchachbrett().getFeld(7,8)));
+        figuren.add(springerDienst.erzeugeSpringer(1, schachspiel.getSchachbrett().getFeld(2, 1)));
+        figuren.add(springerDienst.erzeugeSpringer(0, schachspiel.getSchachbrett().getFeld(2, 8)));
+        figuren.add(springerDienst.erzeugeSpringer(1, schachspiel.getSchachbrett().getFeld(7, 1)));
+        figuren.add(springerDienst.erzeugeSpringer(0, schachspiel.getSchachbrett().getFeld(7, 8)));
 
-        figuren.add(turmDienst.erzeugeTurm(1, schachspiel.getSchachbrett().getFeld(1,1)));
-        figuren.add(turmDienst.erzeugeTurm(0, schachspiel.getSchachbrett().getFeld(1,8)));
-        figuren.add(turmDienst.erzeugeTurm(1, schachspiel.getSchachbrett().getFeld(8,1)));
-        figuren.add(turmDienst.erzeugeTurm(0, schachspiel.getSchachbrett().getFeld(8,8)));
+        figuren.add(turmDienst.erzeugeTurm(1, schachspiel.getSchachbrett().getFeld(1, 1)));
+        figuren.add(turmDienst.erzeugeTurm(0, schachspiel.getSchachbrett().getFeld(1, 8)));
+        figuren.add(turmDienst.erzeugeTurm(1, schachspiel.getSchachbrett().getFeld(8, 1)));
+        figuren.add(turmDienst.erzeugeTurm(0, schachspiel.getSchachbrett().getFeld(8, 8)));
 
         schachspiel.setFiguren(figuren);
     }
@@ -101,6 +98,7 @@ public class SchachspielKontrollierer {
         } else {
             this.waehleEineFigurAus(mausX, mausY);
         }
+        benachrichtigeBeobachter();
     }
 
     public void waehleEineFigurAus(int mausX, int mausY) {
@@ -181,30 +179,10 @@ public class SchachspielKontrollierer {
             //ArrayList<String> zuege = schachspiel.getZuege();
             for (Figur figur : schachspiel.getFiguren()) {
                 if (figur == this.ausgewaehlteFigur) {
-                    //int neueZeile = ausgewaehltesFeld.getZeile();
-                    //int neueSpalte = ausgewaehltesFeld.getSpalte();
-
-                    //int alteZeile = figur.getPosition().getZeile();
-                    //int alteSpalte = figur.getPosition().getSpalte();
-
                     dokumentiereSchachzug(figur, ausgewaehltesFeld);
-                    //String zug = figur.getAbkuerzung() + schachbrettDienst.zahlZuBuchstabe(alteSpalte) + Integer.toString(alteZeile);
-
-                    /*if (pruefeFigurGeschlagen(ausgewaehltesFeld)) {
-                        zug += "x";
-                    } else {
-                        zug += "-";
-                    }
-                    zug += schachbrettDienst.zahlZuBuchstabe(neueSpalte) + Integer.toString(neueZeile);*/
-
-                    //Hier wird die Figur gesetzt
                     figur.setPosition(ausgewaehltesFeld);
 
                     if (checkSchach(schachspiel.getFiguren(), this.spielerAmZug)) {
-                        //zug += "+";
-                        /*if (checkMatt()) {
-                            //zug += "+";
-                        }*/
                         if (this.spielerAmZug == 1) {
                             schachspiel.setSchachSchwarz(true);
                         } else {
@@ -218,10 +196,6 @@ public class SchachspielKontrollierer {
                         }
                     }
 
-                    //zuege.add(zug);
-                    //schachspiel.setZuege(zuege);
-
-                    //Wenn der Gegner im vorherigen Zug schach gegeben haben sollte, wird falls es sich nicht um Matt handelt, mit dem nächsten Zug das Schach aufgehoben
                     if (this.spielerAmZug == 1) {
                         schachspiel.setSchachWeiss(false);
                     } else {
@@ -255,14 +229,14 @@ public class SchachspielKontrollierer {
             }
         }
 
-        if(figur.getFarbe() == 1){
+        if (figur.getFarbe() == 1) {
             Schachzug schachzugWeiss = schachzugDienst.erstelleSchachzug(figur, schachzugAbkuerzung, ausgewaehltesFeld);
             this.spielzug = spielzugDienst.setzteSchachzugWeiss(spielzug, schachzugWeiss);
             schachspiel.addSpielzug(spielzug);
             return;
         }
 
-        Schachzug schachzugSchwarz = schachzugDienst.erstelleSchachzug(figur, schachzugAbkuerzung,ausgewaehltesFeld);
+        Schachzug schachzugSchwarz = schachzugDienst.erstelleSchachzug(figur, schachzugAbkuerzung, ausgewaehltesFeld);
         this.spielzug = spielzugDienst.setzteSchachzugSchwarz(spielzug, schachzugSchwarz);
 
         schachspiel.ueberarbeiteSpielzug(spielzug);
@@ -274,7 +248,7 @@ public class SchachspielKontrollierer {
         for (int i = 1; i <= 8; i++) {
             for (int j = 1; j <= 8; j++) {
                 Feld tmp = schachspiel.getSchachbrett().getFeld(i, j);
-                if(feldDienst.pruefeFeldGeklickt(mausX, mausY, tmp) != null){
+                if (feldDienst.pruefeFeldGeklickt(mausX, mausY, tmp) != null) {
                     return tmp;
                 }
             }
@@ -411,79 +385,33 @@ public class SchachspielKontrollierer {
         return true;
     }
 
-    /*public void exportZuege() {
-        String pathString = null;
-
-        try {
-            Process p = Runtime.getRuntime().exec("reg query \"HKCU\\Software\\Microsoft\\Windows\\CurrentVersion\\Explorer\\Shell Folders\" /v personal");
-            p.waitFor();
-
-            InputStream in = p.getInputStream();
-            byte[] b = new byte[in.available()];
-            in.read(b);
-            in.close();
-
-            pathString = new String(b);
-            pathString = pathString.split("\\s\\s+")[4];
-
-        } catch (Throwable t) {
-            t.printStackTrace();
-        }
-
-        pathString += "\\SchachLogs\\";
-
-        try {
-
-            Path path = Paths.get(pathString);
-
-            //java.nio.file.Files;
-            Files.createDirectories(path);
-
-            System.out.println("Directory is created!");
-
-        } catch (IOException e) {
-
-            System.err.println("Failed to create directory!" + e.getMessage());
-
-        }
-        String fileNameString = pathString + schachspiel.getSpielID() + ".txt";
-        System.out.println(fileNameString);
-        try {
-            File logFile = new File(fileNameString);
-            if (logFile.createNewFile()) {
-                System.out.println("File created: " + logFile.getName());
-            } else {
-                System.out.println("File already exists.");
-            }
-        } catch (IOException e) {
-            System.out.println("An error occurred.");
-            e.printStackTrace();
-        }
-        Path p = Path.of(fileNameString);
-        StringBuilder text = new StringBuilder();
-        for (String zug : schachspiel.getZuege()) {
-            int index = schachspiel.getZuege().indexOf(zug);
-            if (index % 2 == 0) {
-                int spielzug = index / 2 + 1;
-                text.append(spielzug).append(":");
-            }
-            text.append(zug).append(";");
-            if (index % 2 == 1) {
-                text.append("\n");
-            }
-        }
-        try {
-
-            Path filePath = Files.writeString(p, text.toString());
-            String s = Files.readString(filePath);
-            System.out.println(s);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
     public Schachbrett getSchachbrett() {
         return schachspiel.getSchachbrett();
+    }
+
+    public void erstelleNeuesSpiel(Schachspiel schachspiel) {
+        this.schachspiel = schachspiel;
+        this.spielerAmZug = 1;
+        this.initialisiereFiguren(bauerDienst, dameDienst, koenigDienst, laeuferDienst, springerDienst, turmDienst);
+        this.spielzug = spielzugDienst.erstelleSpielzug(schachspiel.getSpielzuege());
+        benachrichtigeBeobachter();
+    }
+
+    @Override
+    public void registriereBeobachter(SchachspielBeobachter schachspielBeobachter) {
+        schachspielBeobachtern.add(schachspielBeobachter);
+    }
+
+    @Override
+    public void unregistriereBeobachter(SchachspielBeobachter schachspielBeobachter) {
+        schachspielBeobachtern.remove(schachspielBeobachter);
+    }
+
+    @Override
+    public void benachrichtigeBeobachter() {
+        for (SchachspielBeobachter schachspielBeobachter : schachspielBeobachtern) {
+            schachspielBeobachter.aktualisiereSchachspiel(this);
+        }
     }
 }
 

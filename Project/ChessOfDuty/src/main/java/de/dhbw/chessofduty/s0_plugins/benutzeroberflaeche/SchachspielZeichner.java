@@ -1,5 +1,6 @@
 package de.dhbw.chessofduty.s0_plugins.benutzeroberflaeche;
 
+import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielBeobachter;
 import de.dhbw.chessofduty.s2_application_code.spiellogik.SchachspielKontrollierer;
 import de.dhbw.chessofduty.s3_domain_code.Feld;
 import de.dhbw.chessofduty.s3_domain_code.Figur;
@@ -9,10 +10,9 @@ import processing.core.PApplet;
 import processing.core.PGraphics;
 
 
-public class SchachspielZeichner extends PApplet {
+public class SchachspielZeichner extends PApplet implements SchachspielBeobachter {
 
     private SchachspielKontrollierer schachspielKontrollierer;
-    //private SchachbrettDienst schachbrettDienst;
     private SchachbrettZeichner schachbrettZeichner;
     private FigurZeichner figurZeichner;
 
@@ -26,6 +26,7 @@ public class SchachspielZeichner extends PApplet {
         this.schachbrettZeichner = schachbrettZeichner;
         this.figurZeichner = figurZeichner;
         this.schachspiel = schachspielKontrollierer.getSchachspiel();
+        this.schachspielKontrollierer.registriereBeobachter(this);
         this.g = g;
     }
 
@@ -64,6 +65,11 @@ public class SchachspielZeichner extends PApplet {
             g.popMatrix();
         }
 
+        this.zeichneMoeglicheZuege();
+
+    }
+
+    private void zeichneMoeglicheZuege() {
         for (Feld f : schachspielKontrollierer.getMoeglicheZuegeDerFigur()) {
             g.pushStyle();
             g.stroke(200, 100, 100);
@@ -71,7 +77,6 @@ public class SchachspielZeichner extends PApplet {
             g.point(f.getX() + f.getGroesse() / 2, f.getY() + f.getGroesse() / 2);
             g.popStyle();
         }
-
     }
 
     public void zeichneGeschlageneFiguren() {
@@ -120,7 +125,8 @@ public class SchachspielZeichner extends PApplet {
         g.popStyle();
     }
 
-    public void setSchachspielKontrollierer(SchachspielKontrollierer schachspielKontrollierer){
+    @Override
+    public void aktualisiereSchachspiel(SchachspielKontrollierer schachspielKontrollierer) {
         this.schachspielKontrollierer = schachspielKontrollierer;
         this.schachspiel = schachspielKontrollierer.getSchachspiel();
     }
