@@ -1,46 +1,109 @@
 \chapter{Clean Architecture}
+\label{txt:ca}
 
-Das Projekt soll die Clean Architecture umsetzen, indem jede Schicht als eigenes Modul implementiert wird. 
-Dadurch wird sichergestellt, dass nur von den äußeren Schichten auf die inneren zugegriffen werden kann und nicht umgekehrt. 
+Das Projekt implementiert Clean Architecture durch die Verwendung von Modulen für jede Schicht. 
+Dadurch wird sichergestellt, dass nur die äußeren Schichten auf die inneren Schichten zugreifen können und nicht umgekehrt. 
+Die Verwendung von Schichten ermöglicht eine klare Trennung zwischen der Anwendung und der Infrastruktur, was die Wiederverwendbarkeit, Testbarkeit und Weiterentwicklung der einzelnen Komponenten erleichtert. 
+Zudem ist es einfacher, einzelne Infrastrukturkomponenten auszutauschen, insbesondere je weiter sie von der Kernfunktionalität entfernt sind.
 
-Das Projekt wird sich an der Schichtenarchitektur orientieren, wobei jedes Modul eine eigene Schicht repräsentiert. 
-Der Einsatz von einzelnen Schichten ermöglicht eine fachliche Unabhängigkeit der Anwendung von der sonstigen Infrastruktur. 
-Dadurch können die einzelnen Komponenten leichter wiederverwendet, getestet und weiterentwickelt werden. 
-Zudem ist es einfacher, einzelne Komponenten der Infrastruktur auszutauschen. 
-Dabei gilt: je weiter außenliegend, desto leichter austauschbar.
+Für die Implementierung eines sauberen Schichtenmodells in einem Java-Projekt werden in der Regel separate Projekte für jede Schicht erstellt und dann in einer Entwicklungsumgebung wie IntelliJ mithilfe von Maven zusammengeführt. 
+Maven kann auch verwendet werden, um Processing als festgelegten Technologiebestandteil des Projektes in IntelliJ zu integrieren. 
+Allerdings stellte sich heraus, dass der Import der Processing-Dependency unzuverlässig und fehleranfällig ist. 
+Um die Umsetzung der Schichtenarchitektur nicht durch ständige Maven-Installationsfehler zu behindern, wurde entschieden, die einzelnen Schichten als Packages innerhalb eines Projekts einzubinden.
 
+Ursprünglich war das Projekt nicht in Schichten strukturiert, sondern der Code befand sich in einem einzigen Ordner, entwickelt nach dem Prinzip \glqq quick and dirty\grqq. 
+Die Überarbeitung des unstrukturierten Codes und die Umstellung auf die Schichtenarchitektur erwiesen sich als komplex und zeitaufwändig.
+
+\newpage
+
+\section{Schicht 4 - Abstraction Code}
+
+Diese Schicht bildet den Kern der Applikation und wird in der Regel durch die verwendete Programmiersprache repräsentiert. 
+Zum Beispiel werden in Java Klassen wie \texttt{String}, \texttt{Boolean} oder \texttt{Integer} verwendet, aber auch übergeordnete abstrakte Konzepte wie Algorithmen oder eigene Datentypen. 
+Im vorliegenden Projekt konnte kein abstrakter Code identifiziert werden.
+Alle mathematischen Konzepte, einschließlich der Darstellung von Bewegungsmustern einzelner Figuren, wurden als Domain Service in der dritten Schicht umgesetzt.
+
+\section{Schicht 3 - Domain Code}
+
+Der Domain-Code implementiert alle Bausteine der Domain, die die Quelldomäne beschreiben oder damit direkt verbunden sind und bereits im Kapitel \ref{txt:ddd} ausgearbeitet wurden. 
+Diese Schicht enthält Value Objects wie \texttt{Feld}, \texttt{Schachbrett} und \texttt{Schachzug}, die Entities \texttt{Bauer}, \texttt{Läufer}, \texttt{Springer}, \texttt{Turm}, \texttt{Dame}, \texttt{König} und \texttt{Schachspiel}, sowie das eine Repository \texttt{SpielzugRepository} und die beschriebenen Domain-Services \texttt{Bewegungsmatrizen} und \texttt{Bewegungsrichtung}.
+
+\section{Schicht 2 - Application Code}
+
+Der Application Code implementiert die gesamte Anwendungslogik des Schachspiels, die mithilfe der Domain-Bausteine die Spielfunktionen umsetzt. 
+Die Anwendungsfälle des Projekts sind über Services realisiert, wobei für jede Entity und jedes Value Object ein eigener Service vorhanden ist, der die Arbeit mit diesen Elementen ermöglicht. 
+Aufgrund der Verwendung der "Ubiquitous Language" in deutscher Sprache werden die Services in diesem Projekt entsprechend als "Dienst" bezeichnet.
+
+Die in dieser Schicht implementierten Anwendungsfälle umfassen:
+
+\begin{itemize}
+    \item \textbf{Neues Schachspiel beginnen:} Um ein Spiel zu starten, wird der vorherige Spielstand, falls vorhanden, gelöscht und ein neues Spiel mit der Grundkonfiguration der Figuren initialisiert.
+    \item \textbf{Schachfigur bewegen:} Jede Figur kann sich basierend auf ihrer Art (Bauer, Dame usw.) auf dem Schachbrett bewegen. 
+    Abhängig von ihrer aktuellen Position werden alle möglichen Felder ermittelt, die die Figur erreichen kann. 
+    Dabei werden auch die Positionen der anderen Figuren auf dem Brett berücksichtigt.
+    \item \textbf{Schachfigur schlagen:} Beim Schlagen einer anderen Figur wird eine Figur bewegt, wobei dieser Anwendungsfall auf dem vorherigen aufbaut. 
+    Da das Schlagen einer Figur Auswirkungen auf die im Spiel befindlichen Figuren hat, wird dies als eigener Fall betrachtet.
+    \item \textbf{Schach/Schachmatt geben:} Wenn eine Figur eines Spielers ein Feld abdeckt, auf dem sich der König des anderen Spielers befindet, wird Schach geboten. 
+    Ein Spieler kann den Gegenspieler durch einfaches Bewegen oder Schlagen einer anderen Figur in Schach setzen. 
+    Es ist die Pflicht des Spielers, mit seinem nächsten Zug dem Schach zu entkommen. 
+    Kann er dies nicht, liegt ein "Schachmatt" vor, und der Spieler, der Schach bietet, gewinnt. 
+    Da das Vorhandensein von Schach oder Schachmatt den Spielverlauf entscheidend beeinflusst, handelt es sich hier um einen eigenen Anwendungsfall.
+    \item \textbf{Schachzug anzeigen:} Um einen Überblick über den Spielverlauf zu erhalten, werden alle während eines Spiels ausgeführten Züge dokumentiert und übersichtlich angezeigt.
+    \item \textbf{Schachspiel exportieren:} Um die Historie eines bestimmten Schachspiels zu sichern, bietet die Anwendung die Möglichkeit, den Spielverlauf in eine Datei zu exportieren. Dabei wird auf die angezeigten Züge zurückgegriffen.
+\end{itemize}
+
+Neben den Services, die die Logik der einzelnen Domain-Bausteine umsetzen, gibt es im Application Code noch die besondere Klasse \texttt{Schachspielkontrollierer}. 
+Diese Klasse enthält die gesamte Spiellogik, die den Ablauf des Schachspiels steuert.
+
+\newpage
+
+\section{Schicht 1 - Adapters}
+
+In einem Schichtenaufbau, der Clean Architecture berücksichtigt, dienen die Adapter dazu, die Informationen und Daten aus der Domänen- und Anwendungsschicht in ein Format umzuwandeln, mit dem die visuelle Darstellung der Anwendung arbeiten kann. 
+Dies beinhaltet zum Beispiel die Konvertierung verschiedener Formate. 
+Da die Entities und Value Objects in der Domänenschicht bereits alle \texttt{toString}-Methoden implementieren, aus denen die erforderlichen Informationen für die visuelle Darstellung abgeleitet werden können, ist in diesem Projekt keine separate Umsetzung der Adapter-Schicht erforderlich. 
+Gemäß Clean Architecture müssten diese Datenbereitstellungen für die Nutzerinteraktion in die Adapter-Schicht ausgelagert werden. 
+In der Praxis wären die entsprechenden Methoden jedoch in der Domänenschicht und den Adaptern sehr ähnlich, sodass ein Mapping für dieses Projekt nur zusätzliche Redundanz erzeugen würde.
+
+\section{Schicht 0 - Plugins}
+
+Die äußerste Schicht der Clean Architecture enthält alle extern eingebundenen Klassen, wie Frameworks und Programmschnittstellen nach außen, beispielsweise zur Persistierung von Programmdaten. 
+Die Persistenz der Schachspiele ist nur in eine Richtung ausgelegt. 
+In der Klasse \texttt{SpielzugRepositoryBruecke} wurde die Funktion implementiert, den Verlauf eines Schachspiels in eine einfache Textdatei zu schreiben. 
+Die \texttt{RepositoryBruecke} ist eine Implementierung des \texttt{SpielzugRepository}-Interfaces, das in der Domänenschicht liegt.
+
+Zusätzlich zur Datenpersistenz stellt die Plugin-Schicht auch die grafische Benutzeroberfläche bereit. 
+Offiziell ist Processing eine eigenständige Programmiersprache, die in Java eingebettet werden kann. 
+Da Processing jedoch mit Maven in das Projekt geladen werden muss, kann man es auch als \glqq Bibliothek zum Zeichnen grafischer Komponenten\grqq{} bezeichnen. 
+Die Anwendung von Processing wird ebenfalls in die Plugin-Schicht ausgelagert.
+
+Die Hauptklasse der Benutzeroberfläche ist die Klasse \texttt{Benutzeroberflaeche}.
+Diese Klasse zeigt entweder einen Startbildschirm an oder lädt die Spielansicht.
+In der Spielansicht werden die verschiedenen Domänenbausteine mithilfe verschiedener Zeichner-Klassen in der GUI dargestellt, die von der \texttt{SchachspielZeichner-Klasse} koordiniert werden. 
+Hierzu gehören die Klassen \texttt{FeldZeichner}, \texttt{SchachbrettZeichner} und \texttt{FigurZeichner}.
+
+\section{Dependency Inversion}
+
+\begin{figure}[h!]
+    Commit:  \scriptsize https://github.com/clemens1403/AdvSWE/commit/ff87fffb24abc4050ca30019bf6800d0b60b7229
+\end{figure}
+
+Vor der Einführung der Schichtenarchitektur bestand das Programm aus einer einzelnen Ordnerebene. 
+Die Funktionen der verschiedenen Domainbausteine waren nicht in separate Schichten (Bausteine, Applikationslogik, Darstellung) aufgeteilt, sondern wurden in einer einzigen Klasse implementiert.
+
+Processing bietet eingebaute Funktionen, die die Erstellung von Grafiken sehr einfach machen. 
+Zum Beispiel gibt es die globalen Variablen \texttt{mouseX} und \texttt{mouseY}, die von Processing automatisch bereitgestellt werden. 
+Dadurch kann die Mausposition auf der aktuellen Zeichenfläche jederzeit abgerufen werden. 
+Diese Positionserfassung ist erforderlich, um Klicks auf bestimmten Elementen in der GUI zu erkennen. 
+Durch die Einbindung von Processing in Java mit IntelliJ und Maven war es jedoch so, dass die von der Klasse \texttt{Benutzeroberflaeche} erzeugte Zeichenfläche nur im Kontext dieser Klasse bearbeitet werden konnte. 
+Daher war es nicht möglich, aus anderen Klassen auf die Mausparameter zuzugreifen. 
+Um dennoch Mausklicks, z.B. bei der Auswahl eines Feldes, auswerten zu können, mussten die Mauswerte als Funktionsparameter von der \texttt{Benutzeroberflaeche} an die Klassen der Domainbausteine übergeben werden.
+
+Nachdem die Programmstruktur in Schichten aufgeteilt wurde, wurden die Repräsentation der Domainbausteine, die zugehörige Logik und die Darstellung mittels Processing voneinander entkoppelt. 
+Durch die Auslagerung der Ermittlung der Zeichenparameter in die Plugin-Schicht wurde sichergestellt, dass die Prinzipien der Clean Architecture eingehalten wurden. 
+Funktionen auf der Anwendungsebene, die ebenfalls die Mausparameter zur Positionsbestimmung benötigen, halten die Dependency Rule ein, indem Aufrufe nur aus der Plugin-Schicht und nicht aus der Domain-Schicht erfolgen.
 
 \section{main-Methode}
 
-Die einzelnen Schichten der Clean Architecture betrachtend, haben wir die main-Methode für das digitale Schachspiel \glqq Chess of Duty\grqq{} bewusst außerhalb der Schichten angeordnet. 
-
-
-
-
-\section*{Schicht 4 - Abstraction Code}
-
-Diese Schicht stellt den Kern der Applikation dar, wobei dies häufig durch die verwendete Programmiersprache realisiert wird, wie in Java beispielsweise durch Klassen wie String.
-Im betrachteten Projekt konnte jedoch kein Abstraction Code identifiziert werden, die einigen mathematischen Konzepte eindeutig in den Domänen Code (Bewegungsregeln der Figuren) oder in den Adapter Code (Positionsberechnung für GUI-Elemente) einzuordnen sind. 
-
-\section*{Schicht 3 - Domain Code}
-%Rangliste fehlt hier noch eingeordnet
-
-Der Domänencode beinhaltet alle bereits im Bereich \glqq Domain Driven Design\grqq{} besprochenen Entitäten, Value Objects, Aggregate und Repositories. 
-
-Dazu gehören im Speziellen die folgenden Klassen:
-
-\textbf{Value Objects:} Feld, Schachbrett, Schachzug
-
-\textbf{Entitäten:} Bauer, Läufer, Springer, Turm, Dame, König, Spieler, Spielzug, Schachspiel
-
-\textbf{Repositories:} SpielzugRepository, SpielerRepository
-
-\textbf{Domain Services:} Bewegungsmatrizen, Bewegungsrichtung
-
-\section*{Schicht 2 - Application Code}
-
-\section*{Schicht 1 - Adapters}
-
-\section*{Schicht 0 - Plugins}
-
-GUI
+Die \texttt{main}-Methode einer Anwendung ist der Startpunkt für alle Aktionen, die ein Programm ausführen kann. 
+Gemäß der Schichtenarchitektur befindet sich die \texttt{main}-Methode \texttt{ChessOfDuty} in der äußersten Schicht.
