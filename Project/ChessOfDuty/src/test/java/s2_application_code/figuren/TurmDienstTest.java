@@ -33,7 +33,7 @@ class TurmDienstTest {
     }
 
     @Test
-    void erzeugeTurm() {
+    void erzeugeTurmTest() {
         int farbe = 1;
         Feld startPosition = new Feld(4,1);
         Turm ergebnis = turmDienst.erzeugeTurm(farbe, startPosition);
@@ -44,7 +44,7 @@ class TurmDienstTest {
     }
 
     @Test
-    void getMoeglicheZuege() {
+    void getMoeglicheZuegeTest() {
         ArrayList<Figur> figuren = new ArrayList<>();
         figuren.add(bauer);
         figuren.add(laeufer);

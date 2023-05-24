@@ -40,7 +40,7 @@ public class BauerDienstTest {
     }
 
     @Test
-    public void testErzeugeBauer() {
+    public void erzeugeBauerTest() {
         int farbe = 1;
         Feld startPosition = new Feld(4,1);
         Bauer ergebnis = bauerDienst.erzeugeBauer(farbe, startPosition);
@@ -51,7 +51,7 @@ public class BauerDienstTest {
     }
 
     @Test
-    public void testGetMoeglicheZuege() {
+    public void getMoeglicheZuegeTest() {
         ArrayList<Figur> figuren = new ArrayList<>();
         figuren.add(bauer);
         figuren.add(bauer2);

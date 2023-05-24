@@ -36,7 +36,7 @@ class SpringerDienstTest {
     }
 
     @Test
-    void testErzeugeSpringer() {
+    void erzeugeSpringerTest() {
         int farbe = 1;
         Feld startPosition = new Feld(1, 1);
 
@@ -47,7 +47,7 @@ class SpringerDienstTest {
     }
 
     @Test
-    public void testGetMoeglicheZuege() {
+    public void testGetMoeglicheZuegeTest() {
         Springer springer = new Springer(1, new Feld(2,1));
         ArrayList<Figur> figuren = new ArrayList<>();
         figuren.add(bauer);

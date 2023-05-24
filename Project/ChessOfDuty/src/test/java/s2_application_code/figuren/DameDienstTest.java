@@ -35,7 +35,7 @@ public class DameDienstTest {
     }
 
     @Test
-    public void testErzeugeDame() {
+    public void erzeugeDameTest() {
         Feld startPosition = new Feld(3, 3);
         Dame expected = new Dame(1, startPosition);
         Dame actual = dameDienst.erzeugeDame(1, startPosition);
@@ -44,7 +44,7 @@ public class DameDienstTest {
     }
 
     @Test
-    public void testGetMoeglicheZuege() {
+    public void getMoeglicheZuegeTest() {
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
         ArrayList<Figur> figuren = new ArrayList<>();
         figuren.add(dame);

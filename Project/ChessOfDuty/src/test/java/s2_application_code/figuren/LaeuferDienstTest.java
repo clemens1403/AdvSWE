@@ -34,7 +34,7 @@ public class LaeuferDienstTest {
     }
 
     @Test
-    public void testErzeugeLaeufer() {
+    public void erzeugeLaeuferTest() {
         LaeuferDienst laeuferDienst = new LaeuferDienst();
         Feld startPosition = new Feld(1,1);
 
@@ -46,7 +46,7 @@ public class LaeuferDienstTest {
     }
 
     @Test
-    public void testGetMoeglicheZuege() {
+    public void getMoeglicheZuegeTest() {
         LaeuferDienst laeuferDienst = new LaeuferDienst();
         ArrayList<Figur> figuren = new ArrayList<>();
         figuren.add(bauer);
