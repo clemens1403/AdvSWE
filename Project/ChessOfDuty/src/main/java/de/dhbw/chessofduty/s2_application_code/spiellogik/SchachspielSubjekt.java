@@ -1,6 +1,6 @@
 package de.dhbw.chessofduty.s2_application_code.spiellogik;
 
-public interface SchachspielSubject {
+public interface SchachspielSubjekt {
 
     void registriereBeobachter(SchachspielBeobachter schachspielBeobachter);
 
