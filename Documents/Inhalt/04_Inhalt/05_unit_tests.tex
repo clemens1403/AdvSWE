@@ -2,6 +2,15 @@
 Dieses Kapitel befasst sich mit den Unit-Tests des Programmes. Dazu werden zuerst die ATRIP-Regeln erläutert und deren Anwendung beschrieben. Im Anschluss wird die Code Coverage erläutert. Zum Schluss wird noch auf die Verwendung von Mock-Objekten in den Unit-Tests eingegangen.
 
 \section{ATRIP-Regeln}
+Die ATRIP-Regeln sind Regeln, welche gute Unit-Tests einhalten sollten.
+Die Regeln setzen sich wiefolgt zusammen:
+\begin{itemize}
+	\item Automatic - Eigenständig
+	\item Thorough - Gründlich (genug)
+	\item Repeatable - Wiederholbar
+	\item Independent - Unabhängig voneinander
+	\item Professional - Mit Sorgfalt hergestellt
+\end{itemize}
 
 \subsection{Automatic}
 Die Regel \glqq{}Automatic\grqq{} besagt, dass die Tests ohne manuelle Eingriffe selbstständigablaufen müssen. Weiterhin müssen die Tests auch ihre Ergebnisse selbst überprüfen. Als Ergebnisse sind dabei nur \glqq{}bestanden\grqq{} oder \glqq{}nicht bestanden\grqq{} zulässig. Durch die Anwendung dieser Regel ist es möglich Unit Tests zu automatisieren.
