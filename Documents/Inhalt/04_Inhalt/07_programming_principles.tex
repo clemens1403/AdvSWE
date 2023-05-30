@@ -1,1 +1,61 @@
 \chapter{Programming Principles}
+
+\section{SOLID}
+Die SOLID-Regeln wurden Anfang der Nullerjahre von Michael Feathers und Robert C. Martin gesammelt und formuliert. Die Regeln haben die Ziele Software wartbar, Systeme erweiterbar und Codebasen langlebiger zu machen.
+
+\subsection{Single responsibility principle}
+Das Single responsibility principle ist das Prinzip der einzigen Zuständigkeit. Somit sollte eine Klasse nur einen einzigen Grund haben sich zu ändern. Die Zuständigkeiten einer Klasse können mithilfe von Change dimensions dargestellt werden. Dabei spannt jede Zuständigkeit eine zusätzliche Achse auf. Entlang dieser Achsen werden Änderungen am Code dargestellt. Im Idealfall sind die Achsen daher orthogonal, da sich die Änderungen dadurch nicht gegenseitig beeinflussen. 
+
+Dieses Prinzip wird im gesamten Quellcode angewendet. Die Klassen auf Domain-Ebene haben jeweils nur den Zweck das Entsprechende Objekt aus der Domain abzubilden. In der Application-Schicht hat jede Klasse Bezug zu einer Klasse aus der Domain-Ebene und nur die Aufgabe die entsprechenden Objekte zu Verwalten. Die einzige Ausnahme dabei ist der SchachspielKontrollierer, welcher die Koordination der anderen Klassen in der Application-Ebene übernimmt, um die Figuren auf dem Spielfeld miteinander interagieren zu lassen.
+
+\subsection{Open/Closed principle}
+Das Open/Closed principle besagt, dass Software-Entitäten offen für Erweiterungen sein sollen, aber gleichzeit geschlossen bezüglich Veränderungen sein sollen. Erweiterungen können zum Beispiel durch Unterklassen erschaffen werden, da nur die Unterklasse ihr Verhalten ändert, aber nicht die bereits existierende Klasse. Eine Veränderung stellt in diesem Kontext eine Modifikation des Codes durch geänderte Anforderungen dar. Zusammengefasst sollte bestehender Code also nicht mehr geändert werden müssen.
+
+Als Beispiel für das Open/Closed principle im Code können die Figuren verwendet werden. Die Figuren sind so implementiert, dass beliebig neue Figuren hinzugefügt werden können oder Figuren ersetzt werden können.
+\subsection{Liskov substitution principle}
+Das LSP besagt, dass Objekte durch Instanzen ihrer Subtypen ersetzbar sein sollten, ohne die Korrektheit des Programms zu ändern. Somit gibt es strikte Regeln für Vererbungshierarchien. Subtypen dürfen dabei die Funktion der Oberklasse nicht einschränken sondern nur erweitern.
+
+Als Beispiel für LSP können erneut die Figuren genommen werden. Zwischen der Figur-Klasse und den einzelnen Unterklassen tritt eine Kovarianz auf.
+
+
+\subsection{Interface segregation principle}
+Mithilfe von ISP sollen Schnittstellen mindestens in Nutzergruppen aufgeteilt werden. Dies wird umgesetzt indem anstelle eines großen Interfaces mehrere kleine Interfaces erstellt werden. Dies führt zu einer hohen Kohäsion und unterstützt auch das SRP. 
+
+ISP wurde im Quellcode nicht angewendet, da keine Interfaces für das Spiel implementiert wurden. Die einzige sinnvolle Stelle für die verwendung eines Interfaces wäre bei den Diensten für die Figuren, da diese alle eine Methode getMoeglicheZuege implementieren. Allerdings würde dieses Interface nur eine einzelne Methode umfassen, weshalb die Anwendung von ISP hier nicht sinnvoll ist.
+
+\subsection{Dependency inversion principle}
+Das DIP besagt, dass Klassen höherer Ebenen nicht von Klassen niederer Ebe abhängig sein sollen, sondern beide im Idealfall von einem Interface abhängig sind. Dies verhindert, dass Änderungen aus einem niedrigerem Modul zu Änderungen in höheren Modulen führen. Umgesetzt wird das indem das hohe Modul eine Schnittstelle definiert, welche vom niedrigem Modul implementiert wird. Die Referenz auf die Konkrete Instanz wird dem höheren Modul dann per Dependency Injection übergeben. 
+
+DIP wurde im Quellcode nicht angewendet. Die einzige Möglichkeit DIP anzuwenden besteht erneut bei den Figur-Diensten, welche für dieses Beispiel die niedrigeren Module darstellen. Das höhere Modul wäre der SchachspielKontrollierer. Der SchachspielKontrollierer könnte die verschiedenen Figur-Dienste als Interface definieren und die Figur-Dienste würden dann ein Interface mit der Methode getMoeglicheZuege definieren. Die Abhängigkeiten würden wie bisher per Dependency Injection übergeben werden. Jedoch wurde sich dazu entschieden dies nicht umzusetzen, da die Verständlichkeit des Codes dadurch sinkt (unserem empfinden nach). Durch die klare Typisierung der verschiedenen Figur-Dienste ist der Code strukturierter und man kann zusätzlich zum Name der Variable auch Anhand des Typs erkennen, welche Aufgabe der entsprechende Dienst hat.
+
+\section{GRASP}
+GRASP steht für General Responsibility Assignment Software Patterns/Principles und stellt Standardlösungen für Typische Fragestellungen bei der Softwareentwicklung dar. Insgesamt stellt GRASP neun Prinzipien/Werkzeuge bereit:
+\begin{itemize}
+    \item Low Coupling
+    \item High Cohesion
+    \item Indirection
+    \item Polymorphism
+    \item Pure Fabrication
+    \item Controller
+    \item Information Expert
+    \item Creator
+\end{itemize}
+
+In den folgenden Abschnitten wird kurz das Konzept der Kopplung und das Konzept der Kohäsion erläutert und die Anwendung im Quellcode beschrieben.
+
+\subsection{Kopplung}
+Als Kopplung wird das Maß für die Abhängigkeit einer Klasse von ihrer Umgebung bezeichnet. Durch geringe Kopplung werden viele Vorteile ermöglicht. So lässt sich Code mit geringer Kopplung leicht anpassen und gut Testen. Weiterhin ist der Code leichter verständlich und kann besser wiederverwendet werden.
+
+Der Quellcode ist eher ein negativ-Beispiel für geringe Kopplung. Dies kann daran erkannt werden, dass zum größten Teil statische Methodenaufrufe ausgeführt werden, keine Interfaces verwendet werden bis auf den Beobachter, und auch keine Events auf einem Eventbus versendet werden. Als größtes Negativ-Beispiel im Quellcode kann man den Schachspielkontrollierer nehmen, welcher an eine Vielzahl von anderen Klassen und Methoden gekoppelt ist.
+
+\subsection{Kohäsion}
+Bei Kohäsion handelt es sich um das Maß für den inneren Zusammenhalt einer Klasse. Dabei ist Kohäsion ein semantisches Maß - also abhängig von der menschlichen Einschätzung.
+
+Die Kohäsion des Quellcodes ist relativ hoch. In den Klassen der Figur-Dienste rufen sich die Methoden zum größten Teil untereinander auf. Die Klassen der Figuren-Dienste können allgemein als positives Beispiel für eine hohe Kohäsion genommen werden.
+
+
+\section{DRY}
+
+DRY steht für Don't Repeat Yourself und besagt, dass man alles einmal machen soll und nur einmal machen soll. Das Motto von Dry ist kann wiefolgt definiert werden: \glqq{} Jeder Wissensaspekt darf nur eine einzige, nicht zweideutige verbindliche Repräsentation in einem System besitzen\grqq{}. Mechanische Duplikation ist dabei jedoch erlaubt, solange die Originalquelle klar definiert ist. Somit ändert eine Modifikation alle verknüpften Elemente in gleicher Weise, aber ändert keine nicht verknüpften Elemente.
+
+Im Quellcode ist dieses Prinzip zum Beispiel in der Klasse SpringerDienst zu erkennen. Die Klasse definiert wiederverwendbare und universell anwendbare Methoden ohne sich zu wiederholen.

@@ -40,7 +40,7 @@
 	prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rhookswarrow}},
 	postbreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\rcurvearrowse\space}},
 	tabsize=4,                                 % Setze die Breite eines Tabs
-	basicstyle=\ttfamily\small,                % Grundsätzlicher Schriftstyle
+	basicstyle=\ttfamily\tiny,                % Grundsätzlicher Schriftstyle
 	columns=fixed,                             % Besseres Schriftbild
 	numbers=left,                              % Nummerierung der Zeilen
 	%frame=single,                             % Umrandung des Codes
@@ -58,10 +58,10 @@
 \renewcommand{\ttdefault}{pcr}               % Schriftart, welche auch fett beinhaltet
 \lstdefinestyle{EigenerJavaStyle}{
 	language=Java,                             % Syntax Highlighting für Java
-	%frame=single,                             % Umrandung des Codes
-	keywordstyle=\bfseries\color{JavaLila},    % Keywords in eigener Farbe und fett
-	commentstyle=\itshape\color{JavaGruen},    % Kommentare in eigener Farbe und italic
-	stringstyle=\color{JavaBlau}               % Strings in eigener Farbe
+	frame=single,                             % Umrandung des Codes
+	keywordstyle=\tiny\bfseries\color{JavaLila},    % Keywords in eigener Farbe und fett
+	commentstyle=\tiny\itshape\color{JavaGruen},    % Kommentare in eigener Farbe und italic
+	stringstyle=\tiny\color{JavaBlau}               % Strings in eigener Farbe
 }
 
 % ---- Eigener ABAP-Style für den Quellcode

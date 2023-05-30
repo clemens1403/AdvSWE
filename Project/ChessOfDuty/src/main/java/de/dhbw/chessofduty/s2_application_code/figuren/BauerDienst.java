@@ -4,16 +4,16 @@ import de.dhbw.chessofduty.s3_domain_code.*;
 
 import java.util.ArrayList;
 
-public class BauerDienst extends FigurDienst{
+public class BauerDienst extends FigurDienst {
 
-    public void BauerDienst(){
+    public void BauerDienst() {
     }
 
-    public Bauer erzeugeBauer(int farbe, Feld startPosition){
+    public Bauer erzeugeBauer(int farbe, Feld startPosition) {
         return new Bauer(farbe, startPosition);
     }
 
-    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Bauer bauer){
+    public ArrayList<Feld> getMoeglicheZuege(ArrayList<Figur> figuren, Schachbrett schachbrett, Bauer bauer) {
 
         ArrayList<Feld> moeglicheZuege = new ArrayList<>();
 
@@ -24,74 +24,31 @@ public class BauerDienst extends FigurDienst{
         }
         int aktuelleZeile = aktuellePosition.getZeile();
         int aktuelleSpalte = aktuellePosition.getSpalte();
+        int richtung = bauer.getFarbe()==0?-1:1;
 
-
-        boolean einzelschritt = true;
+        boolean einzelschritt;
         boolean doppelschritt = bauer.getDoppelschrittMoeglich();
 
-        if (bauer.getFarbe() == 1) {
-            for (Figur f : figuren) {
-                Feld positionFigur = f.getPosition();
-                int zeileFigur = positionFigur.getZeile();
-                int spalteFigur = positionFigur.getSpalte();
-                if (aktuelleSpalte == spalteFigur) {
-                    if (aktuelleZeile == zeileFigur - 1) {
-                        einzelschritt = false;
-                        doppelschritt = false;
-                    } else if (doppelschritt) {
-                        if (aktuelleZeile == zeileFigur - 2) {
-                            doppelschritt = false;
-                        }
-                    }
-                }
-
-                if (aktuelleSpalte - 1 == spalteFigur || aktuelleSpalte + 1 == spalteFigur) {
-                    if (aktuelleZeile == zeileFigur - 1) {
-                        if (bauer.getFarbe() != f.getFarbe()) {
-                            moeglicheZuege.add(positionFigur);
-                        }
-                    }
-                }
+        if (berechneSchrittMoeglich(bauer, figuren, 1)) {
+            einzelschritt = true;
+            if (berechneSchrittMoeglich(bauer, figuren, 2) && doppelschritt) {
+                doppelschritt = true;
+            } else {
+                doppelschritt = false;
             }
-
-            if (einzelschritt) {
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1));
-            }
-            if (doppelschritt) {
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 2));
-            }
-
         } else {
-            for (Figur f : figuren) {
-                Feld positionFigur = f.getPosition();
-                int zeileFigur = positionFigur.getZeile();
-                int spalteFigur = positionFigur.getSpalte();
-                if (aktuelleSpalte == spalteFigur) {
-                    if (aktuelleZeile == zeileFigur + 1) {
-                        einzelschritt = false;
-                        doppelschritt = false;
-                    } else if (doppelschritt) {
-                        if (aktuelleZeile == zeileFigur + 2) {
-                            doppelschritt = false;
-                        }
-                    }
-                }
+            einzelschritt = false;
+        }
 
-                if (aktuelleSpalte - 1 == spalteFigur || aktuelleSpalte + 1 == spalteFigur) {
-                    if (aktuelleZeile == zeileFigur + 1) {
-                        if (bauer.getFarbe() != f.getFarbe()) {
-                            moeglicheZuege.add(positionFigur);
-                        }
-                    }
-                }
-            }
+        for (Figur f : figuren) {
+            if (istFigurSchlagbar(bauer, f, richtung)) moeglicheZuege.add(f.getPosition());
+        }
 
-            if (einzelschritt) {
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 1));
-            }
-            if (doppelschritt) {
-                moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile - 2));
-            }
+        if (einzelschritt) {
+            moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1 * richtung));
+        }
+        if (doppelschritt) {
+            moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 2 * richtung));
         }
 
         for (Feld eintrag : moeglicheZuege) {
@@ -100,4 +57,39 @@ public class BauerDienst extends FigurDienst{
 
         return moeglicheZuege;
     }
+
+    private Boolean istFigurSchlagbar(Bauer bauer, Figur figur, int richtung) {
+        int bauerSpalte = bauer.getPosition().getSpalte();
+        int bauerZeile = bauer.getPosition().getZeile();
+
+        int figurSpalte = figur.getPosition().getSpalte();
+        int figurZeile = figur.getPosition().getZeile();
+
+        if (bauerSpalte - 1 == figurSpalte || bauerSpalte + 1 == figurSpalte) {
+            if (bauerZeile == figurZeile - 1 * richtung) {
+                if (bauer.getFarbe() != figur.getFarbe()) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public Boolean berechneSchrittMoeglich(Bauer bauer, ArrayList<Figur> figuren, int schrittWeite) {
+        int bauerSpalte = bauer.getPosition().getSpalte();
+        int bauerZeile = bauer.getPosition().getZeile();
+        int schritt = bauer.getFarbe()==1? schrittWeite *-1 : schrittWeite;
+        for (Figur f : figuren) {
+            Feld positionFigur = f.getPosition();
+            int zeileFigur = positionFigur.getZeile();
+            int spalteFigur = positionFigur.getSpalte();
+            if (bauerSpalte == spalteFigur) {
+                if (bauerZeile == zeileFigur + schritt) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
 }

@@ -1,1 +1,83 @@
 \chapter{Refactoring}
+Dieses Kapitel befasst sich mit dem Refactoring der Anwendung. Dazu werden zuerst Code Smells identifiziert und erläutert, warum diese so schlecht sind. Danach wird darauf eingegangen wie diese Code Smells durch Refactoring behoben werden können und wie die Probleme des Code Smells dadurch aufgehoben werden.
+
+\section{Code Smells}
+Bie Code Smells handelt es sich um eine verbesserungswürdige Quellcodestelle. Um festzustellen, ob eine Quellcodestelle verbesserungswürdig ist, gibt es keine festen Messwerte. Stattdessen werden solche Stellen hauptsächlich durch Erfahrung, aber auch teilweise durch Algorithmen oder Heuristiken lokalisiert. Code Smells können in verschiedene Kategorien gegliedert werden: Duplicated Code, Long Method, Large Class, Shotgun Surgery, Switch Statement und Code Comments. In den folgende Abschnitten werden Duplicated Code, Long Method und Switch Statement genauer an einem Beispiel aus dem Quellcode der ChessOfDuty-Anwendung erläutert.
+
+\subsection{Code Duplication}
+Eine Code Duplication beschreibt eine Stelle im Quellcode, an welcher doppelter Code vorhanden ist. Dies ist sehr problematisch, da im Falle einer Änderung alle Stellen des duplizierten Codes geändert werden müssen. Somit entsteht ein vielfacher Pflegeaufwand. Ein extremer Fall von Code Duplication ist in Quellcode \ref{code:codeduplication} zu sehen.  
+\lstinputlisting[
+	label={code:codeduplication},
+	caption={Beispiel für Code Duplication},
+	captionpos=b,
+	style=EigenerJavaStyle
+]{Quellcode/codeduplication.java}
+
+Der Quellcode \ref{code:codeduplication} entstammt aus der SpringerDients-Klasse. Der Quellcode zeigt die Methode getMoeglicheZuege, welche die Züge berechnet, welche der entsprechende Springer machen kann. Bei der initialen implementierung wurde für jede grundsätzliche Schrittmöglichkeit eine eigene Methode implementiert, welche ausgibt bestimmt ob dieser Schritt möglich ist. Diese Methoden sind nahezu identisch. Zwei dieser Methoden sind mit zweiNachVorneEinsNachLinks und zweiNachVorneEinsNachRechts ebenfalls in Quellcode \ref{code:codeduplication} zu sehen. Wenn man zum Beispiel das Bewegungsmuster des Springers ändern wöllte müsste man in jeder dieser 8 Methoden etwas ändern. 
+
+
+\subsection{Long Method}
+Eine Long Method ist eine lange Methode. Lange Methoden sind schlecht, weil sie unübersichtlich sind und somit die Verständlichkeit des Quellcodes sinkt. Dadurch wird die Wartbarkeit des Codes schlechter und die Entwicklungsgeschwindigkeit sinkt. Ein Beispiel für eine Long Method ist in der Klasse BauerDienst mit der Methode getMoeglicheZuege zu finden (siehe Quellcode \ref{code:longmethod}). Die Methode erstreckt sich über unglaubliche 87 Zeilen, wodurch es sehr schwierig ist nachzuvollziehen, was genau in der Methode passiert.
+
+\lstinputlisting[
+	label={code:longmethod},
+	caption={Beispiel für Long Method},
+	captionpos=b,
+	style=EigenerJavaStyle
+]{Quellcode/longmethod.java}
+
+\subsection{Switch-Statement}
+Switch-Statements haben verschiedene Probleme.
+Das erste Problem ist, dass meist gleiche Switch-Statements an mehreren Stellen verwendet werden. Weiterhin können Switch-Statements nicht aufgeteilt werden, sondern nur wachsen, wodurch eine hohe Komplexität entsteht. Zuletzt ist auch die Syntax sehr Fehleranfällig durch die Verwendung von Breaks oder Fall-Throughs. Ein Beispiel für die hohe Komplexität von Switch-Statements ist in Quellcode \ref{code:switchstatement} aus der Klasse ChessOfDuty zu sehen. Dargestellt ist die Methode mousePressed. In dieser Methode wird 
+
+\lstinputlisting[
+	label={code:switchstatement},
+	caption={Beispiel für Switch-Statement},
+	captionpos=b,
+	style=EigenerJavaStyle
+]{Quellcode/switchstatement.java}
+
+\section{Refactoring der Code Smells}
+In den folgenden Abschnitten wird erläutert, wie die Code Smells aus dem vorherigen Abschnitt behoben werden können. Dabei wird zum einen die Code Duplication aus Quellcode \ref{code:codeduplication} und zum anderen die Long Method aus Quellcode \ref{code:longmethod}
+
+
+\subsection{Code Duplication}
+Um eine Code Duplication zu beheben kann die Extract Method-Technik angewendet werden. Dabei werden zusammenhängende Quellcodefragmente in eigene Methoden ausgelagert Dadurch wird der Code Feingranularer und es bilden sich Abstraktionsstufen aus. Bei extrahierten Methoden sollte nach Möglichkeit auf Eingabe- und Ausgabe-Parameter verzichtet werden.
+
+Im Quellcode \ref{code:codeduplication} ist es jedoch nicht sinnvoll eine Methode zu extrahieren, da die Methoden, in welchen die Code Duplication vorliegt, nahezu identisch sind. Daher werden die Methoden zu einer Methode, die alle 8 Methoden ersetzt, zusammengefasst. Dazu wird die Bewegung als zusätzliches Parameter übergeben und anstatt der fest definierten Integerwerte verwendet (siehe Quellcode \ref{code:fixduplication}). 
+
+\lstinputlisting[
+	label={code:fixduplication},
+	caption={Code Duplication behoben},
+	captionpos=b,
+	style=EigenerJavaStyle
+]{Quellcode/fixduplication.java}
+
+
+\subsection{Long Method}
+Um eine Long Method zu beheben kann ebebnfalls eine Extract Method angewendet werden. Alternativ können aber auch die Berechnungen von lokalen Variablen ausgelagert werden. Durch die Anwendung dieser Techniken konnte der Quellcode aus \ref{code:longmethod} von der Long Method befreit werden. Der neue Quellcode ist in Abbildung \ref{code:fixlongmethod} zu sehen.
+
+\lstinputlisting[
+	label={code:fixlongmethod},
+	caption={Long Method behoben},
+	captionpos=b,
+	style=EigenerJavaStyle,
+	firstline=1, 
+	lastline=44
+]{Quellcode/fixlongmethod.java}
+
+Um die Methode getMoeglicheZuege zu verkürzen, wurde die Berechnung von Einzel- bzw. Doppelschritten des Bauern ausgelagert. Somit wird nur noch eine Methode aufgerufen, um zu bestimmen, ob der gewünschte Schritt möglich ist. Weiterhin wurde die Berechnung, ob der Bauer eine andere Figur schlagen kann, in eine neue Methode ausgelagert. Die neuen Methoden sind in Quellcode \ref{code:fixlongmethodextreaction} zu sehen. 
+
+
+\lstinputlisting[
+	label={code:fixlongmethodextreaction},
+	caption={Long Method augelagerte Methoden},
+	captionpos=b,
+	style=EigenerJavaStyle,
+	firstline=46, 
+	lastline=90
+]{Quellcode/fixlongmethod.java}
+
+Mit der Methode berechneSchrittMoeglich wurde weiterhin eine Code Duplication behoben. Zuvor gab es bei der Berechnung der Möglichen Schritte eine Code Duplication (siehe Quellcode \ref{code:longmethod} Zeile 18-47 und Zeile 50-79).
+
+Durch das Refactoring konnte die Long-Method um 43 Zeilen (nahezu 50 Prozent) verkürzt werden und der Code-Abschnitt im Allgemeinen konnte ebenfalls um 9 Zeilen durch die Entfernung der Code Duplication verkürzt werden. Somit konnte der verständlicher und wartbarer gemacht.
