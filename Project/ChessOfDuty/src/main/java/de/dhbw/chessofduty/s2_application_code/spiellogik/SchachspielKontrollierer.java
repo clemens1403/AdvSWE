@@ -12,7 +12,7 @@ import de.dhbw.chessofduty.s3_domain_code.spielzug.Spielzug;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SchachspielKontrollierer implements SchachspielSubject {
+public class SchachspielKontrollierer implements SchachspielSubjekt {
 
     private Schachspiel schachspiel;
 
@@ -35,7 +35,7 @@ public class SchachspielKontrollierer implements SchachspielSubject {
     private SpielzugDienst spielzugDienst;
     private Spielzug spielzug;
 
-    private List<SchachspielBeobachter> schachspielBeobachtern = new ArrayList<>();
+    private List<SchachspielBeobachter> schachspielBeobachter = new ArrayList<>();
 
     public SchachspielKontrollierer(Schachspiel schachspiel, FigurDienst figurDienst, BauerDienst bauerDienst, DameDienst dameDienst, KoenigDienst koenigDienst, LaeuferDienst laeuferDienst, SpringerDienst springerDienst, TurmDienst turmDienst, FeldDienst feldDienst, SchachbrettDienst schachbrettDienst, SchachzugDienst schachzugDienst, SpielzugDienst spielzugDienst) {
         this.schachspiel = schachspiel;
@@ -399,17 +399,17 @@ public class SchachspielKontrollierer implements SchachspielSubject {
 
     @Override
     public void registriereBeobachter(SchachspielBeobachter schachspielBeobachter) {
-        schachspielBeobachtern.add(schachspielBeobachter);
+        this.schachspielBeobachter.add(schachspielBeobachter);
     }
 
     @Override
     public void unregistriereBeobachter(SchachspielBeobachter schachspielBeobachter) {
-        schachspielBeobachtern.remove(schachspielBeobachter);
+        this.schachspielBeobachter.remove(schachspielBeobachter);
     }
 
     @Override
     public void benachrichtigeBeobachter() {
-        for (SchachspielBeobachter schachspielBeobachter : schachspielBeobachtern) {
+        for (SchachspielBeobachter schachspielBeobachter : schachspielBeobachter) {
             schachspielBeobachter.aktualisiereSchachspiel(this);
         }
     }
