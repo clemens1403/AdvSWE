@@ -13,7 +13,7 @@ Die Regeln setzen sich wiefolgt zusammen:
 \end{itemize}
 
 \subsection{Automatic}
-Die Regel \glqq{}Automatic\grqq{} besagt, dass die Tests ohne manuelle Eingriffe selbstständigablaufen müssen. Weiterhin müssen die Tests auch ihre Ergebnisse selbst überprüfen. Als Ergebnisse sind dabei nur \glqq{}bestanden\grqq{} oder \glqq{}nicht bestanden\grqq{} zulässig. Durch die Anwendung dieser Regel ist es möglich Unit Tests zu automatisieren.
+Die Regel \glqq{}Automatic\grqq{} besagt, dass die Tests ohne manuelle Eingriffe selbstständig ablaufen müssen. Weiterhin müssen die Tests auch ihre Ergebnisse selbst überprüfen. Als Ergebnisse sind dabei nur \glqq{}bestanden\grqq{} oder \glqq{}nicht bestanden\grqq{} zulässig. Durch die Anwendung dieser Regel ist es möglich Unit Tests zu automatisieren. \pagebreak
 
 \lstinputlisting[
 	label={code:automatic},
@@ -27,10 +27,10 @@ In Quellcode \ref{code:automatic} ist ein Unit Test aus der Klasse BauerDienstTe
 \subsection{Thorough}
 Die Regel \glqq{}Thorough\grqq{} besagt, dass alles Notwendige getestet werden muss. Die Definition von notwendig hängt dabei immer mit den Rahmenbedingungen zusammen. Mindestens muss aber jede missionskritische Funktionalität getestet werden und für jeden aufgetretenen Fehler muss ein Testfall existieren, welcher das erneute Auftreten des Fehlers verhindert. Durch diese Regel entstehen zusätzliche Tests im Umfeld von einem Fehler, um weitere Fehler zu verhindern.
 
-Für den konkreten Fall des Schachspiels ist es notwendig jegliche Figuren-Dienste sowie den Kontrollierer für das Schachspiel zu testen. Daher sind für alle diese Klassen Unit Tests erstellt worden. Da es sich bei dem Programm um ein Spiel handelt, ist nahezu jede Funktion die Klassen missionskritisch. Da der Aufwand für jede Methode einen Unit Test zu programmieren zu hoch für dieses Projekt wäre, wurden zu jeder Klasse ein bis zwei Unit Tests implementiert.
+Für den konkreten Fall des Schachspiels ist es notwendig jegliche Figuren-Dienste sowie den Kontrollierer für das Schachspiel zu testen. Daher sind für alle diese Klassen Unit Tests erstellt worden. Da es sich bei dem Programm um ein Spiel handelt, ist nahezu jede Funktion die Klassen missionskritisch. Da der Aufwand für jede Methode einen Unit Test zu programmieren zu hoch für dieses Projekt wäre, wurden zu jeder Klasse der Figuren-Dienste ein bis zwei Unit Tests implementiert.
 
 \subsection{Repeatable}
-Die Regel \glqq{}Repeatable\grqq{} besagt, dass jeder Test automatisch durchführbar sein sollte und dabei stets das gleiche Ergebnis liefern sollte. Dazu muss der test unabhängig von der Umgebung sein. Dabei sind vor allem der Umgang mit einem Datum oder mit Zufallszahlen problematisch. Auch der Zugriff auf das Dateisystem stellt eine Abhängigkeit von der Umgebung dar.
+Die Regel \glqq{}Repeatable\grqq{} besagt, dass jeder Test automatisch durchführbar sein sollte und dabei stets das gleiche Ergebnis liefern sollte. Dazu muss der Test unabhängig von der Umgebung sein. Dabei sind vor allem der Umgang mit einem Datum oder mit Zufallszahlen problematisch. Auch der Zugriff auf das Dateisystem stellt eine Abhängigkeit von der Umgebung dar.
 
 Bei den implementierten Unit Tests gibt es keine Abhängigkeiten von der Umgebung. Die standardmäßigen Problemquellen sind für das Testen der Anwendung irrelevant, da weder Daten oder Zufallszahlen für das Testen des Schachspiels relevant sind noch ein Zugriff auf das Dateisystem in den Tests erfolgt. Das Spiel ist in sich selbst abgeschlossen, weshalb die Umgebung automatisch immer gleich ist.
 

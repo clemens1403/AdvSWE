@@ -44,7 +44,7 @@ public class BauerDienst extends FigurDienst {
             if (istFigurSchlagbar(bauer, f, richtung)) moeglicheZuege.add(f.getPosition());
         }
 
-        if (einzelschritt) {
+        if (einzelschritt && aktuelleZeile < 8 && aktuelleZeile > 1) {
             moeglicheZuege.add(schachbrett.getFeld(aktuelleSpalte, aktuelleZeile + 1 * richtung));
         }
         if (doppelschritt) {
