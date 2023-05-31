@@ -61,26 +61,26 @@ public class BauerDienstTest {
         ArrayList<Feld> moeglicheZuegeBauer2 = new ArrayList<>();
 
         // Mock Figuren
-        when(bauer.getPosition()).thenReturn(new Feld(1,8));
+        when(bauer.getPosition()).thenReturn(new Feld(1,7));
         when(bauer.getFarbe()).thenReturn(0);
         when(bauer.getDoppelschrittMoeglich()).thenReturn(true);
 
-        when(bauer2.getPosition()).thenReturn(new Feld(1,1));
+        when(bauer2.getPosition()).thenReturn(new Feld(1,2));
         when(bauer2.getFarbe()).thenReturn(1);
         when(bauer2.getDoppelschrittMoeglich()).thenReturn(true);
 
-        when(laeufer.getPosition()).thenReturn(new Feld(1,3));
+        when(laeufer.getPosition()).thenReturn(new Feld(1,4));
         when(laeufer.getFarbe()).thenReturn(1);
 
-        when(turm.getPosition()).thenReturn(new Feld(2,2));
+        when(turm.getPosition()).thenReturn(new Feld(2,3));
         when(turm.getFarbe()).thenReturn(0);
 
         //erwartete Felder hinzufügen
-        moeglicheZuegeBauer.add(new Feld(1,7));
         moeglicheZuegeBauer.add(new Feld(1,6));
+        moeglicheZuegeBauer.add(new Feld(1,5));
 
-        moeglicheZuegeBauer2.add(new Feld(2,2));
-        moeglicheZuegeBauer2.add(new Feld(1,2));
+        moeglicheZuegeBauer2.add(new Feld(2,3));
+        moeglicheZuegeBauer2.add(new Feld(1,3));
 
         
         ArrayList<Feld> ergebnisBauer = bauerDienst.getMoeglicheZuege(figuren, schachbrett, bauer);

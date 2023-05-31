@@ -1,4 +1,5 @@
 \chapter{Programming Principles}
+Dieses Kapitel befasst sich mit der Anwendung der in der Vorlesung behandelten Programming Principles und beschreibt die Anwendung dieser im Quellcode.
 
 \section{SOLID}
 Die SOLID-Regeln wurden Anfang der Nullerjahre von Michael Feathers und Robert C. Martin gesammelt und formuliert. Die Regeln haben die Ziele Software wartbar, Systeme erweiterbar und Codebasen langlebiger zu machen.
@@ -24,7 +25,7 @@ Mithilfe von ISP sollen Schnittstellen mindestens in Nutzergruppen aufgeteilt we
 ISP wurde im Quellcode nicht angewendet, da keine Interfaces für das Spiel implementiert wurden. Die einzige sinnvolle Stelle für die verwendung eines Interfaces wäre bei den Diensten für die Figuren, da diese alle eine Methode getMoeglicheZuege implementieren. Allerdings würde dieses Interface nur eine einzelne Methode umfassen, weshalb die Anwendung von ISP hier nicht sinnvoll ist.
 
 \subsection{Dependency inversion principle}
-Das DIP besagt, dass Klassen höherer Ebenen nicht von Klassen niederer Ebe abhängig sein sollen, sondern beide im Idealfall von einem Interface abhängig sind. Dies verhindert, dass Änderungen aus einem niedrigerem Modul zu Änderungen in höheren Modulen führen. Umgesetzt wird das indem das hohe Modul eine Schnittstelle definiert, welche vom niedrigem Modul implementiert wird. Die Referenz auf die Konkrete Instanz wird dem höheren Modul dann per Dependency Injection übergeben. 
+Das DIP besagt, dass Klassen höherer Ebenen nicht von Klassen niederer Ebe abhängig sein sollen, sondern beide im Idealfall von einem Interface abhängig sind. Dies verhindert, dass Änderungen aus einem niedrigerem Modul zu Änderungen in höheren Modulen führen. Umgesetzt wird das indem das hohe Modul eine Schnittstelle definiert, welche vom niedrigen Modul implementiert wird. Die Referenz auf die Konkrete Instanz wird dem höheren Modul dann per Dependency Injection übergeben. 
 
 DIP wurde im Quellcode nicht angewendet. Die einzige Möglichkeit DIP anzuwenden besteht erneut bei den Figur-Diensten, welche für dieses Beispiel die niedrigeren Module darstellen. Das höhere Modul wäre der SchachspielKontrollierer. Der SchachspielKontrollierer könnte die verschiedenen Figur-Dienste als Interface definieren und die Figur-Dienste würden dann ein Interface mit der Methode getMoeglicheZuege definieren. Die Abhängigkeiten würden wie bisher per Dependency Injection übergeben werden. Jedoch wurde sich dazu entschieden dies nicht umzusetzen, da die Verständlichkeit des Codes dadurch sinkt (unserem empfinden nach). Durch die klare Typisierung der verschiedenen Figur-Dienste ist der Code strukturierter und man kann zusätzlich zum Name der Variable auch Anhand des Typs erkennen, welche Aufgabe der entsprechende Dienst hat.
 
@@ -36,6 +37,7 @@ GRASP steht für General Responsibility Assignment Software Patterns/Principles 
     \item Indirection
     \item Polymorphism
     \item Pure Fabrication
+    \item Protected Variations
     \item Controller
     \item Information Expert
     \item Creator
@@ -56,6 +58,6 @@ Die Kohäsion des Quellcodes ist relativ hoch. In den Klassen der Figur-Dienste 
 
 \section{DRY}
 
-DRY steht für Don't Repeat Yourself und besagt, dass man alles einmal machen soll und nur einmal machen soll. Das Motto von Dry ist kann wiefolgt definiert werden: \glqq{} Jeder Wissensaspekt darf nur eine einzige, nicht zweideutige verbindliche Repräsentation in einem System besitzen\grqq{}. Mechanische Duplikation ist dabei jedoch erlaubt, solange die Originalquelle klar definiert ist. Somit ändert eine Modifikation alle verknüpften Elemente in gleicher Weise, aber ändert keine nicht verknüpften Elemente.
+DRY steht für Don't Repeat Yourself und besagt, dass man alles einmal machen soll und nur einmal machen soll. Das Motto von Dry kann wiefolgt definiert werden: \glqq{} Jeder Wissensaspekt darf nur eine einzige, nicht zweideutige verbindliche Repräsentation in einem System besitzen\grqq{}. Mechanische Duplikation ist dabei jedoch erlaubt, solange die Originalquelle klar definiert ist. Somit ändert eine Modifikation alle verknüpften Elemente in gleicher Weise, aber ändert keine nicht verknüpften Elemente.
 
 Im Quellcode ist dieses Prinzip zum Beispiel in der Klasse SpringerDienst zu erkennen. Die Klasse definiert wiederverwendbare und universell anwendbare Methoden ohne sich zu wiederholen.

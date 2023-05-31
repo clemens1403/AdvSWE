@@ -35,23 +35,23 @@ Die Regel \glqq{}Repeatable\grqq{} besagt, dass jeder Test automatisch durchfüh
 Bei den implementierten Unit Tests gibt es keine Abhängigkeiten von der Umgebung. Die standardmäßigen Problemquellen sind für das Testen der Anwendung irrelevant, da weder Daten oder Zufallszahlen für das Testen des Schachspiels relevant sind noch ein Zugriff auf das Dateisystem in den Tests erfolgt. Das Spiel ist in sich selbst abgeschlossen, weshalb die Umgebung automatisch immer gleich ist.
 
 \subsection{Independent}
-Die Regel \glqq{}Repeatable\grqq{} besagt, dass Tests unabhängig von einander funktionieren müssen. Reihenfolge und Zusammenstellung müssen für ds ausführen der Tests irrelevant sein. Im Idealfall testet jeder Test genau einen Aspekt der zu testenden Komponente.
+Die Regel \glqq{}Independent\grqq{} besagt, dass Tests unabhängig von einander funktionieren müssen. Reihenfolge und Zusammenstellung müssen für das ausführen der Tests irrelevant sein. Im Idealfall testet jeder Test genau einen Aspekt der zu testenden Komponente.
 
 Da jeder Test alle benötigten Abhängigkeiten für sich selbst erzeugt erzeugt (mit zum Beispiel Mocks) gibt es keine Abhängigkeiten zu anderen Tests.
 
 \subsection{Professional}
-Die Regel \glqq{}Repeatable\grqq{} besagt, dass Testcode zum relevanten Produktionscode gehört und so leicht verständlich wie mögich sein sollte.
+Die Regel \glqq{}Professional\grqq{} besagt, dass Testcode zum relevanten Produktionscode gehört und so leicht verständlich wie mögich sein sollte.
 
-Um dies umzusetzen wurden zum einen sinnvolle Namen für die Testmethoden vergeben. So sind die Namen der Tests stets so aufgebaut, dass sie aus Methodenname + \glqq{}Test\grqq{} bestehen. Weiterhin sind die Tests an sich alle stets gleich aufgebaut. Zuerst werden die benötigten Abhängigkeiten erzeugt. Im Anschluss wird die zu testende Funktion ausgeführt und zum Schluss wird das Ergebnis überprüft. Durch diese Einheitliche Struktur wird für die Lesbarkeit der Tests gesorgt.  Weiterhin trägt auch eine simple Benennung von Variablen für gute Lesbarkeit.
+Um dies umzusetzen wurden zum einen sinnvolle Namen für die Testmethoden vergeben. So sind die Namen der Tests stets so aufgebaut, dass sie aus Methodenname + \glqq{}Test\grqq{} bestehen. Weiterhin sind die Tests an sich alle stets gleich aufgebaut. Zuerst werden die benötigten Abhängigkeiten erzeugt. Im Anschluss wird die zu testende Funktion ausgeführt und zum Schluss wird das Ergebnis überprüft. Durch diese Einheitliche Struktur wird für die Lesbarkeit der Tests gesorgt.  Weiterhin sorgt auch eine simple Benennung von Variablen für gute Lesbarkeit.
 
 \section{Code Coverage}
-Die Code Coverage gibt an wie viel Quellcode mit Tests abgedeckt ist. Um die Code Coverage zu ermitteln kann eine Code Coverage Analyse in einer IDE ausgeführt werden. Bei Code Coverage unterschiedet man zwischen Line Coverage und Branch Coverage. Bei Line Coverage wird die Anzahl der getesten Zeilen des Quellcodes ins Verhältnis zur Gesamtzahl der Zeilen des Quellcodes gestellt. Branch Coverage hingegen beschreibt die Abdeckung von Verzweigungen im Code (if-statements). Wenn ein Test nur einen von zwei Pfaden abdeckt so liegt die Branch Coverage bei nur 50 Prozent. Bei der Code Coverage ist es wichtig dass stets angegeben wird, ob Line Coverage oder Branch Coverage verwendet wurde, da sich das Ergebnis dieser beiden Verfahren stark unterscheiden kann.
+Die Code Coverage gibt an wie viel Quellcode mit Tests abgedeckt ist. Um die Code Coverage zu ermitteln kann eine Code Coverage Analyse in einer IDE ausgeführt werden. Bei Code Coverage unterschiedet man zwischen Line Coverage und Branch Coverage. Bei Line Coverage wird die Anzahl der getesten Zeilen des Quellcodes ins Verhältnis zur Gesamtzahl der Zeilen des Quellcodes gestellt. Branch Coverage hingegen beschreibt die Abdeckung von Verzweigungen im Code (if-Statements). Wenn ein Test nur einen von zwei Pfaden abdeckt so liegt die Branch Coverage bei nur 50 Prozent. Bei der Code Coverage ist es wichtig dass stets angegeben wird, ob Line Coverage oder Branch Coverage verwendet wurde, da sich das Ergebnis dieser beiden Verfahren stark unterscheiden kann.
 
 In Abbildung \ref{fig:CodeCoverage} sind die Ergebnisse einer Code Coverage Analyse für die Figuren-Dienste zu sehen. Dabei werden alle Klassen abgedeckt. Auch die Abdeckung der Methoden ist mit 94 Prozent sehr gut. Bei der Line Coverage kommen die Tests auf 59 Prozent und bei Branch Coverage nur auf 37 Prozent.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=0.8\textwidth]{Bilder/CodeCoverage.png} 
-	\caption{Code Coverage-Analyse in IntelliJ für die Figuren-Dienste}
+	\caption{Code Coverage-Analyse in IntelliJ für die Figuren-Dienste (nicht aktuell)}
 	\label{fig:CodeCoverage}
 \end{figure}
 

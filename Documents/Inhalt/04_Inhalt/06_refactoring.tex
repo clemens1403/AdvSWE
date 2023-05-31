@@ -1,8 +1,8 @@
 \chapter{Refactoring}
-Dieses Kapitel befasst sich mit dem Refactoring der Anwendung. Dazu werden zuerst Code Smells identifiziert und erläutert, warum diese so schlecht sind. Danach wird darauf eingegangen wie diese Code Smells durch Refactoring behoben werden können und wie die Probleme des Code Smells dadurch aufgehoben werden.
+Dieses Kapitel befasst sich mit dem Refactoring der Anwendung. Dazu werden zuerst Code Smells identifiziert und erläutert warum diese so schlecht sind. Danach wird darauf eingegangen wie diese Code Smells durch Refactoring behoben werden können und wie die Probleme des Code Smells dadurch aufgehoben werden.
 
 \section{Code Smells}
-Bie Code Smells handelt es sich um eine verbesserungswürdige Quellcodestelle. Um festzustellen, ob eine Quellcodestelle verbesserungswürdig ist, gibt es keine festen Messwerte. Stattdessen werden solche Stellen hauptsächlich durch Erfahrung, aber auch teilweise durch Algorithmen oder Heuristiken lokalisiert. Code Smells können in verschiedene Kategorien gegliedert werden: Duplicated Code, Long Method, Large Class, Shotgun Surgery, Switch Statement und Code Comments. In den folgende Abschnitten werden Duplicated Code, Long Method und Switch Statement genauer an einem Beispiel aus dem Quellcode der ChessOfDuty-Anwendung erläutert.
+Bei Code Smells handelt es sich um eine verbesserungswürdige Quellcodestelle. Um festzustellen, ob eine Quellcodestelle verbesserungswürdig ist, gibt es keine festen Messwerte. Stattdessen werden solche Stellen hauptsächlich durch Erfahrung, aber auch teilweise durch Algorithmen oder Heuristiken lokalisiert. Code Smells können in verschiedene Kategorien gegliedert werden: Duplicated Code, Long Method, Large Class, Shotgun Surgery, Switch Statement und Code Comments. In den folgende Abschnitten werden Duplicated Code, Long Method und Switch Statement genauer an einem Beispiel aus dem Quellcode der ChessOfDuty-Anwendung erläutert.
 
 \subsection{Code Duplication}
 Eine Code Duplication beschreibt eine Stelle im Quellcode, an welcher doppelter Code vorhanden ist. Dies ist sehr problematisch, da im Falle einer Änderung alle Stellen des duplizierten Codes geändert werden müssen. Somit entsteht ein vielfacher Pflegeaufwand. Ein extremer Fall von Code Duplication ist in Quellcode \ref{code:codeduplication} zu sehen.  
@@ -28,7 +28,7 @@ Eine Long Method ist eine lange Methode. Lange Methoden sind schlecht, weil sie 
 
 \subsection{Switch-Statement}
 Switch-Statements haben verschiedene Probleme.
-Das erste Problem ist, dass meist gleiche Switch-Statements an mehreren Stellen verwendet werden. Weiterhin können Switch-Statements nicht aufgeteilt werden, sondern nur wachsen, wodurch eine hohe Komplexität entsteht. Zuletzt ist auch die Syntax sehr Fehleranfällig durch die Verwendung von Breaks oder Fall-Throughs. Ein Beispiel für die hohe Komplexität von Switch-Statements ist in Quellcode \ref{code:switchstatement} aus der Klasse ChessOfDuty zu sehen. Dargestellt ist die Methode mousePressed. In dieser Methode wird 
+Das erste Problem ist, dass meist gleiche Switch-Statements an mehreren Stellen verwendet werden. Weiterhin können Switch-Statements nicht aufgeteilt werden, sondern nur wachsen, wodurch eine hohe Komplexität entsteht. Zuletzt ist auch die Syntax sehr Fehleranfällig durch die Verwendung von Breaks oder Fall-Throughs. Ein Beispiel für die hohe Komplexität von Switch-Statements ist in Quellcode \ref{code:switchstatement} aus der Klasse ChessOfDuty zu sehen. Dargestellt ist die Methode mousePressed. In dieser Methode wird zuerst mit einem Switch-Statement überprüft in welcher Ansicht man sich befindet, bevor über alle Buttons der Ansicht iteriert wird und im Falle eines geklickten Buttons mit einem weiteren Switch-Statement eine auszuführende Funktion zugeordnet wird.
 
 \lstinputlisting[
 	label={code:switchstatement},
@@ -38,11 +38,11 @@ Das erste Problem ist, dass meist gleiche Switch-Statements an mehreren Stellen 
 ]{Quellcode/switchstatement.java}
 
 \section{Refactoring der Code Smells}
-In den folgenden Abschnitten wird erläutert, wie die Code Smells aus dem vorherigen Abschnitt behoben werden können. Dabei wird zum einen die Code Duplication aus Quellcode \ref{code:codeduplication} und zum anderen die Long Method aus Quellcode \ref{code:longmethod}
+In den folgenden Abschnitten wird erläutert, wie die Code Smells aus dem vorherigen Abschnitt behoben werden können. Dabei wird zum einen auf die Code Duplication aus Quellcode \ref{code:codeduplication} und zum anderen auf die Long Method aus Quellcode \ref{code:longmethod} eingegangen.
 
 
 \subsection{Code Duplication}
-Um eine Code Duplication zu beheben kann die Extract Method-Technik angewendet werden. Dabei werden zusammenhängende Quellcodefragmente in eigene Methoden ausgelagert Dadurch wird der Code Feingranularer und es bilden sich Abstraktionsstufen aus. Bei extrahierten Methoden sollte nach Möglichkeit auf Eingabe- und Ausgabe-Parameter verzichtet werden.
+Um eine Code Duplication zu beheben kann die Extract Method-Technik angewendet werden. Dabei werden zusammenhängende Quellcodefragmente in eigene Methoden ausgelagert Dadurch wird der Code feingranularer und es bilden sich Abstraktionsstufen aus. Bei extrahierten Methoden sollte nach Möglichkeit auf Eingabe- und Ausgabe-Parameter verzichtet werden.
 
 Im Quellcode \ref{code:codeduplication} ist es jedoch nicht sinnvoll eine Methode zu extrahieren, da die Methoden, in welchen die Code Duplication vorliegt, nahezu identisch sind. Daher werden die Methoden zu einer Methode, die alle 8 Methoden ersetzt, zusammengefasst. Dazu wird die Bewegung als zusätzliches Parameter übergeben und anstatt der fest definierten Integerwerte verwendet (siehe Quellcode \ref{code:fixduplication}). 
 
@@ -55,7 +55,7 @@ Im Quellcode \ref{code:codeduplication} ist es jedoch nicht sinnvoll eine Method
 
 
 \subsection{Long Method}
-Um eine Long Method zu beheben kann ebebnfalls eine Extract Method angewendet werden. Alternativ können aber auch die Berechnungen von lokalen Variablen ausgelagert werden. Durch die Anwendung dieser Techniken konnte der Quellcode aus \ref{code:longmethod} von der Long Method befreit werden. Der neue Quellcode ist in Abbildung \ref{code:fixlongmethod} zu sehen.
+Um eine Long Method zu beheben kann ebenfalls eine Extract Method angewendet werden. Alternativ können aber auch die Berechnungen von lokalen Variablen ausgelagert werden. Durch die Anwendung dieser Techniken konnte der Quellcode aus \ref{code:longmethod} von der Long Method befreit werden. Der neue Quellcode ist in Abbildung \ref{code:fixlongmethod} zu sehen.
 
 \lstinputlisting[
 	label={code:fixlongmethod},
@@ -66,7 +66,7 @@ Um eine Long Method zu beheben kann ebebnfalls eine Extract Method angewendet we
 	lastline=44
 ]{Quellcode/fixlongmethod.java}
 
-Um die Methode getMoeglicheZuege zu verkürzen, wurde die Berechnung von Einzel- bzw. Doppelschritten des Bauern ausgelagert. Somit wird nur noch eine Methode aufgerufen, um zu bestimmen, ob der gewünschte Schritt möglich ist. Weiterhin wurde die Berechnung, ob der Bauer eine andere Figur schlagen kann, in eine neue Methode ausgelagert. Die neuen Methoden sind in Quellcode \ref{code:fixlongmethodextreaction} zu sehen. 
+Um die Methode getMoeglicheZuege zu verkürzen, wurde die Berechnung von Einzel- bzw. Doppelschritten des Bauern ausgelagert. Somit wird nur noch eine Methode aufgerufen, um zu bestimmen, ob der gewünschte Schritt möglich ist. Weiterhin wurde die Berechnung, ob der Bauer eine andere Figur schlagen kann, in eine neue Methode ausgelagert. Die ausgelagerten Methoden sind in Quellcode \ref{code:fixlongmethodextreaction} zu sehen. 
 
 
 \lstinputlisting[
@@ -80,4 +80,4 @@ Um die Methode getMoeglicheZuege zu verkürzen, wurde die Berechnung von Einzel-
 
 Mit der Methode berechneSchrittMoeglich wurde weiterhin eine Code Duplication behoben. Zuvor gab es bei der Berechnung der Möglichen Schritte eine Code Duplication (siehe Quellcode \ref{code:longmethod} Zeile 18-47 und Zeile 50-79).
 
-Durch das Refactoring konnte die Long-Method um 43 Zeilen (nahezu 50 Prozent) verkürzt werden und der Code-Abschnitt im Allgemeinen konnte ebenfalls um 9 Zeilen durch die Entfernung der Code Duplication verkürzt werden. Somit konnte der verständlicher und wartbarer gemacht.
+Durch das Refactoring konnte die Long-Method um 43 Zeilen (nahezu 50 Prozent) verkürzt werden und der Code-Abschnitt im Allgemeinen konnte ebenfalls um 9 Zeilen durch die Entfernung der Code Duplication verkürzt werden. Somit konnte der Quellcode verständlicher und wartbarer gemacht.
