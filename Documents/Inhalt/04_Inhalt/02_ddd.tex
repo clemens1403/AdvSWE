@@ -9,7 +9,7 @@ Domäne und im Sourcecode verwendet werden und Missverständnisse minimiert werd
 
 Der Auftraggeber des Programmentwurfs ist ein deutscher Kunde. 
 Obwohl in der Programmierung Englisch als die Standardsprache angenommen wird, wird aufgrund der Kundenlokalität die Projektsprache als \glqq Deutsch\grqq{} festgelegt. 
-Dadurch wird versucht die meisten Ausdrücke aus der Domäne ins Deutsche zu übernehmen. 
+Dadurch wird versucht, die meisten Ausdrücke aus der Domäne ins Deutsche zu übernehmen. 
 
 Von der deutschen Bezeichnung ausgeschlossen sind in diesem Projekt jedoch allgemein anerkannte Java-Konventionen wie \glqq getter\grqq{} und \glqq{} setter\grqq{}. 
 IDEs wie Eclipse oder Intelij sind in der Lage diese speziellen Funktionsarten automatisch zu generieren und um diese Funktion zu nutzen, werden diese Funktionsbezeichnungen auch auf Englisch akzeptiert. 
@@ -29,7 +29,7 @@ Dazu wird versucht die Quelldomaine, Schachspiel, so detailgetreu wie möglich i
 Ein Value Object repräsentiert ein bestimmtes unveränderliches Objekt, das einen bestimmten Wert besitzt und keine eigene Identität aufweist. 
 Es definiert sich durch seine Eigenschaften und wird daher als austauschbar und vergleichbar angesehen.
 
-Im Standardschach repräsentiert ein \textbf{Feld} eine Position, die durch eine Kombination aus \texttt{Spalte}, \texttt{Zeile} und \texttt{Farbe} definiert wird. 
+Im Standardschach repräsentiert ein \textbf{Feld} eine Position, die durch eine Kombination aus \textit{Spalte}, \textit{Zeile} und \textit{Farbe} definiert wird. 
 Schachfelder haben keinen Lebenszyklus und werden aus diesem Grund als Value Objects betrachtet. 
 Es ist von grundlegender Bedeutung für die Funktion eines Schachspiels, dass Schachfelder als unveränderliche Objekte behandelt werden, da ein Schachspiel auf einer \glqq festen Unterlage\grqq{} gespielt wird. 
 
@@ -40,7 +40,7 @@ Die Gleichheit von zwei Schachbrettern basiert auf der Gleichheit ihrer Felder, 
 Da die Felder als Value Objects behandelt werden und ein Schachbrett zu Beginn eines Spiels initial erzeugt und danach unverändert bleibt, wird diese Klasse auch als Value Object geführt. 
 Die Integrität des Objekts muss während des Spiels gewahrt bleiben, da es keine Verhaltensänderungen aufweist. 
 
-Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \texttt{Figur}, der \texttt{Startposition}, der \texttt{Endposition} und textuellen Darstellung des Zugs zusammen.
+Ein \textbf{Schachzug} setzt sich aus einer ausgewählten \textit{Figur}, der \textit{Startposition}, der \textit{Endposition} und textuellen Darstellung des Zugs zusammen.
 Bei der textuellen Darstellung werden Angaben darüber, ob eine andere Figur geschlagen wird, ob durch den Zug Schach geboten wird, ob eine Bauernumwandlung stattfindet oder ob eine Rochade durchgeführt wird, berücksichtigt. 
 Die Implementierung eines Schachzugs als eigene Klasse dient der Protokollierung der gespielten Schachpartie. 
 Ein Schachzug wird als Value Objekt klassifiziert, da er keinen erkennbaren Lebenszyklus vorweisen kann. 
@@ -55,7 +55,7 @@ Im Domainencode existiert die Klasse \textbf{Figur}, die als abstrakte Oberklass
 Da die Figur als \textit{abstract class} implementiert ist, kann sie nicht instanziiert werden. 
 Aus diesem Grund wird nicht die Klasse Figur selbst, sondern alle Spielfiguren, die von Figur erben, als Entitäten zu betrachten. 
 Zu diesen Spielfiguren gehören \textbf{König, Dame, Turm, Läufer, Springer} und \textbf{Bauer}.
-Jede Figur kann über das Attribut \texttt{position} eindeutig identifiziert werden.
+Jede Figur kann über das Attribut \textit{position} eindeutig identifiziert werden.
 Der Schlüssel, den das genannte Attribut darstellt, ist kein natürlicher Schlüssel, da es kein wirklicher Identifikator aus der Domaine ist, sondern eine für den Betrachtungszeitpunkt eindeutige Eigenschaft der Figur. 
 Da auf einem Feld im Schach immer nur eine Figur stehen kann, ist die Eindeutigkeit durch die Positionen gewährleistet. 
 Wenn eine Figur auf ein Feld zieht, auf dem sich bereits eine andere Figur befindet, wird die Figur, welche ursprünglich auf dem Feld stand, geschlagen und aus dem Spiel entfernt. 
@@ -70,7 +70,7 @@ Während des Spiels können die Figuren nahezu unbegrenzt bewegt werden.
 Wenn eine Figur geschlagen wird, wird sie wieder gelöscht. 
 
 Obwohl ein Schachzug ein Value Object ist, wird in diesem Projekt der \textbf{Spielzug} als Entity gewertet, obwohl nur zwei Schachzüge mit einer ID zusammengefasst werden. 
-Der Spielzug lässt sich eindeutig durch eine \texttt{zugNummer} identifizieren, die mit jedem Spielzug um eins inkrementiert wird.
+Der Spielzug lässt sich eindeutig durch eine \textit{zugNummer} identifizieren, die mit jedem Spielzug um eins inkrementiert wird.
 Da diese Art der Zählung und Zugidentifizierung ebenfalls in der Domaine verwendet wird, ist die Einordnung als natürlicher Schlüssel passender als eine Bezeichnung als Surrogatschlüssel.
 Der Grund, warum der Spielzug als Entity und nicht als Value Object gehandelt wird, liegt am Lebenszyklus des Objekts. 
 Nach dem Erstellen einer Instanz des Spielzugs wird zuerst der Zug des Spielers \glqq Weiß\grqq{} gesetzt.
@@ -81,7 +81,7 @@ Sie bildet die übergeordnete logische Ebene, welche eine bestimmte Figurenkonst
 Im Schach sind pro Zug durchschnittlich 35 unterschiedliche Züge möglich, was die Anzahl der Stellungen in einem Schachspiel exponentiell steigen lässt, abhängig von der Anzahl bereits gespielter Züge, der Positionierung der Figuren und der Anzahl der geschlagenen Figuren. 
 Obwohl die Ausgangslage der Figuren immer gleich ist, unterscheidet sich die Partie Schach individuell sehr stark in ihrem Verlauf.
 Um die Schachspiele eindeutig zu identifizieren, bietet sich die Verwendung eines Surrogatschlüssels an.
-In der verwendeten Programmiersprache Processing, einer Java-Erweiterung, eignet sich hierfür die Verwendung einer \texttt{UUID}.
+In der verwendeten Programmiersprache Processing, einer Java-Erweiterung, eignet sich hierfür die Verwendung einer \textit{UUID}.
 
 \subsection{Aggregate}
 
@@ -98,10 +98,10 @@ In der Domaine \glqq Schach\grqq{} können die Klassen \textbf{Schachbrett} und 
 Für ein Schachbrett werden 64 Instanzen der Klasse Feld in einer zweidimensionalen Datenstruktur gespeichert. 
 Da über das Schachbrett in der Domaine die gesamte Handlung des Spiels stattfindet (Figuren werden über das Schachbrett bewegt), hat die Klasse Schachbrett eine zentrale Rolle.
 Um die feste Anordnung der Felder im zweidimensionalen Rahmen des Spielfeldes durch Zeilen und Spaten positionsgetreu abzufragen, kann auf jedes Feld auf dem Schachbrett nur über das übergeordnete Schachbrett zugegriffen werden. 
-Durch diese Art des Zugriffs fungiert die Klasse Schachbrett automatisch als \texttt{Root-Entity} für die Klasse Feld.
+Durch diese Art des Zugriffs fungiert die Klasse Schachbrett automatisch als \textit{Root-Entity} für die Klasse Feld.
 Zwischen der Root-Entität Schachbrett und der Entität Schachspiel kann die Assoziation nicht durch eine Entity-ID gelöst werden, da es sich bei dem Schachbrett um ein Value Object handelt und einem Schachbrett daher keine ID zugewiesen wird. 
 
-Die Klasse \textbf{Spielzug} dient ebenfalls als \texttt{Root-Entity} für das Aggregat, das aus den Klassen  Spielzug und \textbf{Schachzug} besteht. 
+Die Klasse \textbf{Spielzug} dient ebenfalls als \textit{Root-Entity} für das Aggregat, das aus den Klassen  Spielzug und \textbf{Schachzug} besteht. 
 In der Domaine kann jeder Spieler, wenn er an der Reihe ist, einen Schachzug ausführen, indem er eine Figur von Position A nach Position B bewegt. 
 Ein Spielzug fasst jeweils zwei aufeinanderfolgende Schachzüge von Spieler \glqq Weiß\grqq{} und Spieler \glqq Schwarz\grqq{} zusammen. 
 Die schriftliche Protokollierung einer Partie Schach erfolgt immer über die Spielzüge und gibt jeweils die einzelnen Schachzüge der unterschiedlichen Spieler an. 
