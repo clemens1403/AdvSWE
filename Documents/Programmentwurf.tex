@@ -122,6 +122,13 @@
 \usepackage{todonotes}
 \setlength {\marginparwidth }{2cm}      % Abstand für Todo Notizen
 
+\usepackage{framed}
+\newenvironment{balken}{% minimale Abwandlung von leftbar
+  \def\FrameCommand##1{\textcolor{black}{\vrule width 3pt} \hspace{10pt}##1}%
+  \MakeFramed {\advance\hsize-\width \FrameRestore}}%
+ {\endMakeFramed}
+\newcommand*{\tip}{\hspace{-16pt}\colorbox{black}{\textbf{\textcolor{white}{ Hinweis }}}}
+
 
 % ---- Elektronische Version oder Gedruckte Version?
 % ---- Unterschied: Die elektronische Version enthält keinen Platzhalter für die Unterschrift
